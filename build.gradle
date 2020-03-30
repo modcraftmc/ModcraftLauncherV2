@@ -1,17 +1,21 @@
 buildscript {
     dependencies {
         classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
     }
 
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
     }
 }
 plugins {
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
     id 'java'
 }
 
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'javafx-gradle-plugin'
 
 group 'fr.modcraftmc.launcher'

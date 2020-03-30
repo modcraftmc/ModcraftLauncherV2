@@ -5,8 +5,9 @@ import javafx.stage.Stage;
 
 public class ModcraftApplication extends Application {
 
+
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
 
     }
 }
