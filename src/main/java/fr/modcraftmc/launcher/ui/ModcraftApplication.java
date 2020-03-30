@@ -1,13 +1,32 @@
 package fr.modcraftmc.launcher.ui;
 
+import fr.modcraftmc.launcher.core.Constants;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class ModcraftApplication extends Application {
 
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setTitle(Constants.TITLE);
+        stage.setResizable(false);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/login.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+
+        stage.setScene(scene);
+        stage.show();
+
 
     }
 }
