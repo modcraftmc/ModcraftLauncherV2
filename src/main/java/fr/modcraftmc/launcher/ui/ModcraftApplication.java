@@ -29,9 +29,11 @@ public class ModcraftApplication extends Application {
         FXMLLoader loader = new FXMLLoader(resourcesManager.getResource("login.fxml"));
         Parent login = loader.load();
         LoginController controller = loader.getController();
+
         Scene scene = new Scene(login);
         scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.setFill(Color.TRANSPARENT);
+
         stage.setScene(scene);
         stage.getIcons().add(new Image(resourcesManager.getResource("favicon.png").toString()));
         stage.show();
