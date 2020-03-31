@@ -2,6 +2,7 @@ package fr.modcraftmc.launcher.ui;
 
 import fr.modcraftmc.launcher.core.Constants;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
+import fr.modcraftmc.launcher.ui.controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,12 +12,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.net.URL;
-
 public class ModcraftApplication extends Application {
 
     public static ResourcesManager resourcesManager = new ResourcesManager();
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -25,15 +23,16 @@ public class ModcraftApplication extends Application {
         stage.setTitle(Constants.TITLE);
         stage.setResizable(false);
 
-        FXMLLoader loader = new FXMLLoader((URL) resourcesManager.getResource("login.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
+        FXMLLoader loader = new FXMLLoader(resourcesManager.getResource("login.fxml"));
+        Parent login = loader.load();
+        LoginController controller = loader.getController();
+        Scene scene = new Scene(login);
+        scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.setFill(Color.TRANSPARENT);
 
         stage.setScene(scene);
         stage.getIcons().add(new Image(resourcesManager.getResource("favicon.png").toString()));
         stage.show();
-
 
     }
 }

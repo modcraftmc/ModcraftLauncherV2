@@ -1,6 +1,6 @@
 package fr.modcraftmc.launcher.core.resources;
 
-import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,20 +10,22 @@ public class ResourcesManager {
 
     private List<String> fxmlExtentions = Arrays.asList(".fxml");
 
+    private List<String> cssExtentions = Arrays.asList(".css");
+
     public ResourcesManager() {
 
     }
 
-    public Object getResource(String name) {
+    public URL getResource(String name) {
 
         int lastIndexOf = name.lastIndexOf(".");
         String extention = name.substring(lastIndexOf);
-        System.out.println(extention);
-
         if (imagesExtentions.contains(extention)) {
             return getClass().getClassLoader().getResource("images/" + name);
         } else if (fxmlExtentions.contains(extention)) {
             return getClass().getClassLoader().getResource("fxml/" + name);
+        } else if (cssExtentions.contains(extention)) {
+            return getClass().getClassLoader().getResource("css/" + name);
         }
 
         return null;
