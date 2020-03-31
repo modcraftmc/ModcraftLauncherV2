@@ -32,7 +32,6 @@ public class ModcraftApplication extends Application {
         Scene scene = new Scene(login);
         scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.setFill(Color.TRANSPARENT);
-
         stage.setScene(scene);
         stage.getIcons().add(new Image(resourcesManager.getResource("favicon.png").toString()));
         stage.show();
