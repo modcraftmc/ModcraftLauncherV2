@@ -15,9 +15,12 @@ import javafx.stage.StageStyle;
 public class ModcraftApplication extends Application {
 
     public static ResourcesManager resourcesManager = new ResourcesManager();
+    public static Stage window;
+
 
     @Override
     public void start(Stage stage) throws Exception {
+        window = stage;
 
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle(Constants.TITLE);

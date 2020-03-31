@@ -1,15 +1,36 @@
 package fr.modcraftmc.launcher.ui.controllers;
 
-public class LoginController extends Controller {
+import animatefx.animation.AnimationFX;
+import animatefx.animation.FadeOut;
+import fr.modcraftmc.launcher.ui.ModcraftApplication;
+import javafx.fxml.FXML;
+import javafx.scene.layout.Pane;
+
+public class LoginController   {
+
+    @FXML
+    public Pane container;
 
 
-    @Override
+
     public void close() {
+
+        AnimationFX hide = new FadeOut(container);
+        hide.setSpeed(5D);
+        hide.setResetOnFinished(true);
+        hide.play();
+        hide.setOnFinished(event -> System.exit(0));
 
     }
 
-    @Override
+
     public void hide() {
+
+        AnimationFX hide = new FadeOut(container);
+        hide.setSpeed(5D);
+        hide.setResetOnFinished(true);
+        hide.play();
+        hide.setOnFinished(event -> ModcraftApplication.window.setIconified(true));
 
     }
 }
