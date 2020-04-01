@@ -15,11 +15,11 @@ public class LoginController   {
 
     public void close() {
 
-        AnimationFX hide = new FadeOut(container);
-        hide.setSpeed(5D);
-        hide.setResetOnFinished(true);
-        hide.play();
-        hide.setOnFinished(event -> System.exit(0));
+        AnimationFX close = new FadeOut(container);
+        close.setSpeed(5D);
+        close.setResetOnFinished(true);
+        close.play();
+        close.setOnFinished(event -> System.exit(0));
 
     }
 
