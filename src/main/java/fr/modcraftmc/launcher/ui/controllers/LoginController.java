@@ -20,7 +20,6 @@ public class LoginController   {
         close.setResetOnFinished(true);
         close.play();
         close.setOnFinished(event -> System.exit(0));
-
     }
 
 

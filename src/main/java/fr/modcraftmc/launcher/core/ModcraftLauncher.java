@@ -10,9 +10,9 @@ public class ModcraftLauncher {
 
     public final static String OS_NAME = System.getProperty("os.name");
     public final static String JAVA_VERSION = System.getProperty("java.version");
-    public final static File DEFAULT_PATH = new File(System.getenv("appdata") + "\\.modcraftmc\\");
-    public final static File OPTIONS_PATH = new File(DEFAULT_PATH, "modcraftlauncher.json");
-    public static final File INSTANCES_PATH = new File(DEFAULT_PATH, "instances");
+    public static File DEFAULT_PATH = new File(System.getenv("appdata") + "\\.modcraftmc\\");
+    public static File OPTIONS_PATH = new File(DEFAULT_PATH, "modcraftlauncher.json");
+    public static File INSTANCES_PATH = new File(DEFAULT_PATH, "instances");
 
     public static void main(String[] args) throws IOException {
 
@@ -43,6 +43,11 @@ public class ModcraftLauncher {
 
     public static void checkEnvironement() {
 
+    }
+
+    public static void refreshPaths(){
+        OPTIONS_PATH = new File(DEFAULT_PATH, "modcraftlauncher.json");
+        INSTANCES_PATH = new File(DEFAULT_PATH, "instances");
     }
 
 }
