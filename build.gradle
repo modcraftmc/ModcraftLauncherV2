@@ -30,6 +30,8 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'io.github.typhon0:AnimateFX:1.2.1'
+    compile group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
+
 }
 
 jfx {
