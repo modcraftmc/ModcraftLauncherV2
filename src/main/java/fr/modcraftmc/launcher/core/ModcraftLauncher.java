@@ -1,6 +1,6 @@
 package fr.modcraftmc.launcher.core;
 
-import fr.modcraftmc.launcher.libs.files.FileManager;
+import fr.modcraftmc.launcher.libs.files.FilesManager;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
 import javafx.application.Application;
 
@@ -10,7 +10,7 @@ public class ModcraftLauncher {
 
     public final static String OS_NAME = System.getProperty("os.name");
     public final static String JAVA_VERSION = System.getProperty("java.version");
-    public final static FileManager fileManager = new FileManager();
+    public final static FilesManager filesManager = new FilesManager();
 
 
     public static void main(String[] args) throws IOException {
