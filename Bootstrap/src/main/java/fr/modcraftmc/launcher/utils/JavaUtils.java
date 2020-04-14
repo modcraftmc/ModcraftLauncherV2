@@ -1,4 +1,4 @@
-package fr.modcraft.launcher.utils;
+package fr.modcraftmc.launcher.utils;
 
 public class JavaUtils {
 

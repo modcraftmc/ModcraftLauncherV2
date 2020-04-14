@@ -1,9 +1,9 @@
-package fr.modcraft.launcher;
+package fr.modcraftmc.launcher;
 
-import fr.modcraft.launcher.alert.AlertBuilder;
-import fr.modcraft.launcher.downloader.DownloaderManager;
-import fr.modcraft.launcher.maintenance.MaintenanceManager;
-import fr.modcraft.launcher.utils.JavaUtils;
+import fr.modcraftmc.launcher.alert.AlertBuilder;
+import fr.modcraftmc.launcher.downloader.DownloaderManager;
+import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
+import fr.modcraftmc.launcher.utils.JavaUtils;
 import fr.theshark34.openlauncherlib.JavaUtil;
 import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.external.ClasspathConstructor;

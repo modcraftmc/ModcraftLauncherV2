@@ -1,7 +1,7 @@
-package fr.modcraft.launcher.downloader;
+package fr.modcraftmc.launcher.downloader;
 
-import fr.modcraft.launcher.Bootstrap;
-import fr.modcraft.launcher.alert.AlertBuilder;
+import fr.modcraftmc.launcher.Bootstrap;
+import fr.modcraftmc.launcher.alert.AlertBuilder;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;

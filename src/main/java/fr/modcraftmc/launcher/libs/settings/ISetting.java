@@ -6,5 +6,4 @@ public abstract class ISetting {
 
     public abstract String getDescription();
 
-
 }

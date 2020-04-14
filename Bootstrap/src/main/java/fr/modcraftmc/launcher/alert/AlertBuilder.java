@@ -1,6 +1,6 @@
-package fr.modcraft.launcher.alert;
+package fr.modcraftmc.launcher.alert;
 
-import fr.modcraft.launcher.Bootstrap;
+import fr.modcraftmc.launcher.Bootstrap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;

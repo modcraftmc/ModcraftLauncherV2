@@ -1,7 +1,7 @@
-package fr.modcraft.launcher.utils;
+package fr.modcraftmc.launcher.utils;
 
 import com.google.gson.Gson;
-import fr.modcraft.launcher.maintenance.Maintenance;
+import fr.modcraftmc.launcher.maintenance.Maintenance;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

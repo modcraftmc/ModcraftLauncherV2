@@ -1,6 +1,6 @@
-package fr.modcraft.launcher.maintenance;
+package fr.modcraftmc.launcher.maintenance;
 
-import fr.modcraft.launcher.utils.JsonUtils;
+import fr.modcraftmc.launcher.utils.JsonUtils;
 
 import java.io.IOException;
 

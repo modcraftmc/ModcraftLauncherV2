@@ -1,4 +1,4 @@
-package fr.modcraft.launcher.maintenance;
+package fr.modcraftmc.launcher.maintenance;
 
 public class Maintenance {
 

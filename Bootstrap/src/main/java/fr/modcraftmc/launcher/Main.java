@@ -1,4 +1,4 @@
-package fr.modcraft.launcher;
+package fr.modcraftmc.launcher;
 
 import javafx.application.Application;
 
