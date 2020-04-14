@@ -2,18 +2,10 @@ package fr.modcraftmc.launcher;
 
 import fr.modcraftmc.launcher.alert.AlertBuilder;
 import fr.modcraftmc.launcher.downloader.DownloaderManager;
+import fr.modcraftmc.launcher.downloader.gameUpdater.EnumModcraft;
+import fr.modcraftmc.launcher.downloader.gameUpdater.GameUpdater;
 import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
 import fr.modcraftmc.launcher.utils.JavaUtils;
-import fr.theshark34.openlauncherlib.JavaUtil;
-import fr.theshark34.openlauncherlib.LaunchException;
-import fr.theshark34.openlauncherlib.external.ClasspathConstructor;
-import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
-import fr.theshark34.openlauncherlib.external.ExternalLauncher;
-import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
-import fr.theshark34.openlauncherlib.util.CrashReporter;
-import fr.theshark34.openlauncherlib.util.explorer.ExploredDirectory;
-import fr.theshark34.openlauncherlib.util.explorer.Explorer;
-import fr.theshark34.supdate.SUpdate;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -31,8 +23,7 @@ import java.io.File;
 
 public class Bootstrap extends Application {
 
-    public static final File DIR = new File(GameDirGenerator.createGameDir("modcraft/"), "Launcher/beta");
-    private static CrashReporter crashReporter = new CrashReporter("Bootstrap-Crash", new File(DIR, "crash/"));
+    public static final File DIR = new File(System.getProperty("app.data") + "/.modcraftmc");
 
     private static ProgressBar progressBar = new ProgressBar();
     public static Stage stage;
@@ -93,42 +84,27 @@ public class Bootstrap extends Application {
         try {
             doUpdate();
         } catch (Exception e) {
-            crashReporter.catchError(e, "Impossible de mettre à jour le Launcher !");
         }
 
         try {
             Thread.sleep(2000);
             launchLauncher();
-        } catch (LaunchException | InterruptedException e) {
-            crashReporter.catchError(e, "Impossible de lancer le Launcher !");
+        } catch (InterruptedException e) {
         }
     }
 
     public static void doUpdate() throws Exception {
 
-        SUpdate su = new SUpdate("http://v1.modcraftmc.fr:300", DIR);
-        su.getServerRequester().setRewriteEnabled(true);
-        su.start();
+        GameUpdater.setToDownload(EnumModcraft.BOOTSTRAP);
+        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/gameupdater/", DIR);
+        gameUpdater.start();
+
+
+
     }
 
-    private static void launchLauncher() throws LaunchException {
-        JavaUtil.setJavapath("");
-        ClasspathConstructor constructor = new ClasspathConstructor();
+    private static void launchLauncher() {
 
-        ExploredDirectory gameDir = Explorer.dir(DIR);
-
-        constructor.add(gameDir.get("launcher.jar"));
-        ExternalLaunchProfile profile = new ExternalLaunchProfile("fr.modcraft.launcher.ModcraftLauncher", constructor.make());
-        ExternalLauncher launcher = new ExternalLauncher(profile);
-
-
-        Process p = launcher.launch();
-        try {
-            Platform.runLater(() -> Bootstrap.stage.hide());
-            p.waitFor();
-        } catch (InterruptedException ignored) {
-        }
-        System.exit(0);
     }
 
     public static ProgressBar getProgressBar() {
