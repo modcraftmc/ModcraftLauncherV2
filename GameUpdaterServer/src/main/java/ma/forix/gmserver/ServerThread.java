@@ -17,8 +17,8 @@ public class ServerThread extends Thread implements Runnable {
     private PrintWriter writer;
     private BufferedInputStream reader;
     private String prelauncherJson, bootstrapJson;
-    private File bootstrap = new File("prelauncher/bootstrap.jar");
-    private File launcher = new File("bootsrap/launcher.jar");
+    private File bootstrap = new File(System.getProperty("user.dir")+"/prelauncher/bootstrap.jar");
+    private File launcher = new File(System.getProperty("user.dir")+"/bootstrap/launcher.jar");
 
     public ServerThread(Socket client){
         this.client = client;
@@ -81,18 +81,20 @@ public class ServerThread extends Thread implements Runnable {
                 System.out.println("["+TimeManager.getTime()+"] ["+getName()+"] New input from client received: "+reponse);
                 switch (reponse){
                     case "getContent":
-                        writer.write(Objects.requireNonNull(readContent()));
+                        writer.write(readContent());
                         writer.flush();
+                        writer.close();
                         break;
-                    case "getContent-PRELAUNCHER":
+                    case "getContent-LAUNCHER":
                         writer.write(Objects.requireNonNull(readContent()));
                         writer.flush();
                         break;
                     case "getContent-BOOTSTRAP":
                         writer.write(bootstrapJson);
                         writer.flush();
+                        writer.close();
                         break;
-                    case "getContent-LAUNCHER":
+                    case "getContent-PRELAUNCHER":
                         writer.write(prelauncherJson);
                         writer.flush();
                         break;

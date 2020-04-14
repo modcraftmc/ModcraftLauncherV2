@@ -23,7 +23,7 @@ import java.io.File;
 
 public class Bootstrap extends Application {
 
-    public static final File DIR = new File(System.getProperty("app.data") + "/.modcraftmc");
+    public static File DEFAULT_PATH = new File(System.getenv("appdata") + "\\.modcraftmc\\");
 
     private static ProgressBar progressBar = new ProgressBar();
     public static Stage stage;
@@ -96,8 +96,11 @@ public class Bootstrap extends Application {
     public static void doUpdate() throws Exception {
 
         GameUpdater.setToDownload(EnumModcraft.BOOTSTRAP);
-        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/gameupdater/", DIR);
+        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/gameupdater/", new File(DEFAULT_PATH, "test"), progressBar);
+        gameUpdater.setDeleter(false);
+        gameUpdater.updater();
         gameUpdater.start();
+
 
     }
 

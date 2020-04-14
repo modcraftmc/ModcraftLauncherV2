@@ -2,6 +2,7 @@ package ma.forix.gameUpdater;
 
 import javafx.concurrent.Task;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -156,7 +157,10 @@ public class Downloader extends Task<Void> {
             writer.flush();
             reponse = read();
             try (InputStreamReader streamReader = new InputStreamReader(new URL(this.url+"/content.json").openStream())){
-                Object obj = new JSONParser().parse(streamReader);
+                String json = IOUtils.toString(socket.getInputStream());
+                System.out.println(json);
+
+                Object obj = new JSONParser().parse(reponse);
                 jsonArray = (JSONArray) obj;
             } catch (ParseException | IOException e) {
                 e.printStackTrace();
@@ -168,6 +172,16 @@ public class Downloader extends Task<Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private String read() throws IOException {
+        String response = "";
+        int stream;
+        byte[] b = new byte[1024];
+        stream = reader.read();
+        response = new String(b, 0, stream);
+        return response;
     }
 
     private void getIgnoreList(){
@@ -221,15 +235,6 @@ public class Downloader extends Task<Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String read() throws IOException{
-        String response = "";
-        int stream;
-        byte[] b = new byte[1024];
-        stream = reader.read();
-        response = new String(b, 0, stream);
-        return response;
     }
 
     private String UrlAdapter(String url){
@@ -458,7 +463,13 @@ public class Downloader extends Task<Void> {
             String fileName = obj.get("filename").toString();
             try {
                 threadsNumber++;
-                URL fileUrl = new URL(this.url+"/downloads/" + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
+                URL fileUrl;
+                if (GameUpdater.toDownload.name().equalsIgnoreCase("launcher")) {
+                    fileUrl = new URL(this.url+"/downloads/" + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
+                } else {
+                    fileUrl = new URL(this.url + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
+                }
+
                 System.out.println("[GameUpdater] Téléchargement du fichier: "+fileUrl.toString());
                 BufferedInputStream bis = new BufferedInputStream(fileUrl.openStream());
                 FileOutputStream fos = new FileOutputStream(new File(cursor.toString().replaceAll("#var#", ".var")));

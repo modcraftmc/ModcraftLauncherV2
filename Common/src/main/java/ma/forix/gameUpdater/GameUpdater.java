@@ -2,7 +2,6 @@ package ma.forix.gameUpdater;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 
 import java.io.File;
@@ -12,10 +11,10 @@ public class GameUpdater {
     private String url;
     private File gameDir;
     private ProgressBar progressBar;
-    private Label label;
     private Task<Void> task;
     public static Thread update;
     public static EnumModcraft toDownload;
+    public boolean deleter = true;
 
     //EXCEPTION HANDLER
     public static Thread.UncaughtExceptionHandler exceptionHandler = new Thread.UncaughtExceptionHandler() {
@@ -29,11 +28,10 @@ public class GameUpdater {
 
     private Downloader downloader;
 
-    public GameUpdater(String url, File gameDir, ProgressBar bar, Label label){
+    public GameUpdater(String url, File gameDir, ProgressBar bar){
         this.url = url;
         this.gameDir = gameDir;
         this.progressBar = bar;
-        this.label = label;
         downloader = new Downloader(url, gameDir);
     }
 
@@ -44,10 +42,15 @@ public class GameUpdater {
     }
 
     public void start(){
-        downloader.deleter();
+        if (deleter)
+            downloader.deleter();
+
         update.start();
     }
 
+    public void setDeleter(boolean deleter) {
+        this.deleter = deleter;
+    }
 
     public Task updater(){
         task = new Downloader(url, gameDir);
