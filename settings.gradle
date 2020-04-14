@@ -1,2 +1,5 @@
 rootProject.name = 'ModcraftLauncher'
+include 'PreLauncher'
+include 'Bootstrap'
+include 'Launcher'
 

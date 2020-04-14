@@ -13,6 +13,7 @@ buildscript {
 plugins {
     id 'com.github.johnrengelman.shadow' version '5.2.0'
     id 'java'
+    id 'application'
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -25,12 +26,18 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven { url "http://wytrem.github.io/maven/" }
+    jcenter()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'io.github.typhon0:AnimateFX:1.2.1'
     compile group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
+    compile 'net.wytrem:wylog:2.0'
+    compile 'club.minnced:java-discord-rpc:2.0.2'
+
 
 }
 

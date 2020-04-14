@@ -2,7 +2,9 @@ package fr.modcraftmc.launcher.libs.settings;
 
 public abstract class ISetting {
 
-    public abstract void getName();
+    public abstract String getName();
 
-    public abstract void getDescription();
+    public abstract String getDescription();
+
+
 }

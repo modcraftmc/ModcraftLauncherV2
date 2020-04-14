@@ -11,8 +11,6 @@ public class LoginController   {
     @FXML
     public Pane container;
 
-
-
     public void close() {
 
         AnimationFX close = new FadeOut(container);
@@ -21,7 +19,6 @@ public class LoginController   {
         close.play();
         close.setOnFinished(event -> System.exit(0));
     }
-
 
     public void hide() {
 
