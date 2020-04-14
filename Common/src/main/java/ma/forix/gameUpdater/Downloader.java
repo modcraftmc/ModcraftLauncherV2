@@ -1,4 +1,4 @@
-package fr.modcraftmc.launcher.downloader.gameUpdater;
+package ma.forix.gameUpdater;
 
 import javafx.concurrent.Task;
 import org.apache.commons.io.FileUtils;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.jar.JarFile;
 
 public class Downloader extends Task<Void> {
+
 
     private String url;
     private File gameDir;
@@ -106,7 +107,7 @@ public class Downloader extends Task<Void> {
         System.out.println("getIgnoreList time: "+(System.currentTimeMillis()-start));
         //Suppresser();
         //Verification();
-        Suppresser();
+        deleter();
         //Analyzer();
     }
 
@@ -297,7 +298,7 @@ public class Downloader extends Task<Void> {
     int fileAnalyzed = 0;
     int simultane = 0;
 
-    public void Suppresser(){
+    public void deleter(){
         long time1 = System.currentTimeMillis();
         File[] listing = FileUtils.listFiles(gameDir, null, true).toArray(new File[0]);
         long time2 = System.currentTimeMillis();
@@ -451,7 +452,7 @@ public class Downloader extends Task<Void> {
         System.out.println("[VERIFICATION] Files to download: "+toDownload);
     }
 
-    private void download(File cursor, JSONObject obj){
+    private void download(File cursor, JSONObject obj) throws Exception {
         Thread download = new Thread(() -> {
             String path = obj.get("path").toString();
             String fileName = obj.get("filename").toString();
@@ -477,6 +478,7 @@ public class Downloader extends Task<Void> {
                 e.printStackTrace();
             }
         });
+        download.setUncaughtExceptionHandler(GameUpdater.exceptionHandler);
         download.start();
         if (threadsNumber > SIMULTANEOUS) {
             try {
@@ -490,7 +492,7 @@ public class Downloader extends Task<Void> {
     private long time;
 
     @Override
-    protected Void call() {
+    protected Void call() throws Exception {
         File cursor;
         Verification();
         threadsNumber = 0;

@@ -2,4 +2,6 @@ rootProject.name = 'ModcraftLauncher'
 include 'PreLauncher'
 include 'Bootstrap'
 include 'Launcher'
+include 'Common'
+include 'GameUpdaterServer'
 

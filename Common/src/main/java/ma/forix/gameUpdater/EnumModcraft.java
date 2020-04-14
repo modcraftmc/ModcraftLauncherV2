@@ -1,4 +1,4 @@
-package fr.modcraftmc.launcher.libs.downloader;
+package ma.forix.gameUpdater;
 
 public enum EnumModcraft {
     LAUNCHER, BOOTSTRAP, PRELAUNCHER;

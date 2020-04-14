@@ -1,5 +1,6 @@
 package fr.modcraftmc.launcher.ui;
 
+import fr.modcraftmc.exception.CrashReporter;
 import fr.modcraftmc.launcher.core.Constants;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;
@@ -37,6 +38,8 @@ public class ModcraftApplication extends Application {
         stage.setScene(scene);
         stage.getIcons().add(new Image(resourcesManager.getResource("favicon.png").toString()));
         stage.show();
+
+        CrashReporter.catchException(new Exception(), stage);
 
     }
 }

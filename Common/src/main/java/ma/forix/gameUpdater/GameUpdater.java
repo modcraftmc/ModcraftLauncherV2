@@ -1,4 +1,4 @@
-package fr.modcraftmc.launcher.downloader.gameUpdater;
+package ma.forix.gameUpdater;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -14,9 +14,18 @@ public class GameUpdater {
     private ProgressBar progressBar;
     private Label label;
     private Task<Void> task;
-    private Thread update;
-    private boolean delete = true;
+    public static Thread update;
     public static EnumModcraft toDownload;
+
+    //EXCEPTION HANDLER
+    public static Thread.UncaughtExceptionHandler exceptionHandler = new Thread.UncaughtExceptionHandler() {
+        @Override
+        public void uncaughtException(Thread t, Throwable e) {
+            //TODO: CRASH REPORTTER
+            update.interrupt();
+
+        }
+    };
 
     private Downloader downloader;
 
@@ -35,14 +44,10 @@ public class GameUpdater {
     }
 
     public void start(){
-        if (delete)
-            downloader.Suppresser();
+        downloader.deleter();
         update.start();
     }
 
-    public void Suppresser(boolean value){
-        delete = value;
-    }
 
     public Task updater(){
         task = new Downloader(url, gameDir);

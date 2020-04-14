@@ -2,8 +2,6 @@ package fr.modcraftmc.launcher;
 
 import fr.modcraftmc.launcher.alert.AlertBuilder;
 import fr.modcraftmc.launcher.downloader.DownloaderManager;
-import fr.modcraftmc.launcher.downloader.gameUpdater.EnumModcraft;
-import fr.modcraftmc.launcher.downloader.gameUpdater.GameUpdater;
 import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
 import fr.modcraftmc.launcher.utils.JavaUtils;
 import javafx.application.Application;
@@ -18,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ma.forix.gameUpdater.EnumModcraft;
+import ma.forix.gameUpdater.GameUpdater;
 
 import java.io.File;
 
@@ -98,8 +98,6 @@ public class Bootstrap extends Application {
         GameUpdater.setToDownload(EnumModcraft.BOOTSTRAP);
         GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/gameupdater/", DIR);
         gameUpdater.start();
-
-
 
     }
 

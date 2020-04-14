@@ -1,4 +1,4 @@
-package fr.modcraftmc.launcher.libs.downloader.Threads;
+package ma.forix.gameUpdater.Threads;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
