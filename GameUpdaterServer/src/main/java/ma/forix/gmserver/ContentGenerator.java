@@ -118,6 +118,7 @@ public class ContentGenerator extends Thread implements Runnable {
             fileWriter.write(content.toJSONString());
             fileWriter.flush();
             fileWriter.close();
+            ServerThread.contentCache = ServerThread.readContent();
         } catch (IOException e) {
             e.printStackTrace();
         }

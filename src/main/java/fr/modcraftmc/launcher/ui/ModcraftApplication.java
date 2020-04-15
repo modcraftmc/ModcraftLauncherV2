@@ -1,6 +1,6 @@
 package fr.modcraftmc.launcher.ui;
 
-import fr.modcraftmc.exception.CrashReporter;
+import fr.modcraftmc.crashreporter.CrashReporter;
 import fr.modcraftmc.launcher.core.Constants;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;

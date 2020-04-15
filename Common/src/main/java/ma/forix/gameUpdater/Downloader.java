@@ -2,7 +2,6 @@ package ma.forix.gameUpdater;
 
 import javafx.concurrent.Task;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -146,6 +145,7 @@ public class Downloader extends Task<Void> {
     }
 
     private void getContent(String content){
+
         try {
             Socket socket = new Socket("v1.modcraftmc.fr", 25667);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
@@ -155,7 +155,22 @@ public class Downloader extends Task<Void> {
 
             writer.write("getContent-" + content);
             writer.flush();
-            reponse = read();
+
+            InputStream  socketInputStream = socket.getInputStream();
+            int expectedDataLength = 128;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedDataLength);
+            byte[] chunk = new byte[expectedDataLength];
+            int numBytesJustRead;
+            while((numBytesJustRead = socketInputStream.read(chunk)) != -1) {
+                baos.write(chunk, 0, numBytesJustRead);
+            }
+            String msg =  baos.toString("UTF-8");
+            System.out.println(msg);
+            Object obj = new JSONParser().parse(msg);
+            jsonArray = (JSONArray) obj;
+
+            /**
+             * eponse = read();
             try (InputStreamReader streamReader = new InputStreamReader(new URL(this.url+"/content.json").openStream())){
                 String json = IOUtils.toString(socket.getInputStream());
                 System.out.println(json);
@@ -165,11 +180,13 @@ public class Downloader extends Task<Void> {
             } catch (ParseException | IOException e) {
                 e.printStackTrace();
             }
+
+             **/
             System.out.println("content.json recovered");
             writer.write("close");
             writer.flush();
             socket.close();
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
@@ -245,6 +262,8 @@ public class Downloader extends Task<Void> {
         return sb.toString();
     }
 
+    /**
+
     private void vSync(){
         File optionsFile = new File(gameDir.toString()+"\\options.txt");
         StringBuilder optionsBuilder = new StringBuilder();
@@ -288,6 +307,7 @@ public class Downloader extends Task<Void> {
             e.printStackTrace();
         }
     }
+     **/
 
     public int GetDownloadSize(JSONArray toDownload){
         File cursor;
@@ -546,8 +566,6 @@ public class Downloader extends Task<Void> {
 
     @Override
     protected void succeeded() {
-        vSync();
-        fullScreen();
         System.out.println("[GameUpdater] Downloading time: "+(System.currentTimeMillis()/1000-time)+" sec");
         System.out.println("[GameUpdater] Update finished !");
         super.succeeded();

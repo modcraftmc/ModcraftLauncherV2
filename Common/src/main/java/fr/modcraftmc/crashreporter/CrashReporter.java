@@ -1,4 +1,4 @@
-package fr.modcraftmc.exception;
+package fr.modcraftmc.crashreporter;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;

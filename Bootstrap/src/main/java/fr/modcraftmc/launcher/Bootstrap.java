@@ -101,7 +101,6 @@ public class Bootstrap extends Application {
         gameUpdater.updater();
         gameUpdater.start();
 
-
     }
 
     private static void launchLauncher() {

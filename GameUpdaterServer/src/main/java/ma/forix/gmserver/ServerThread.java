@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
 
 
 public class ServerThread extends Thread implements Runnable {
@@ -19,6 +18,8 @@ public class ServerThread extends Thread implements Runnable {
     private String prelauncherJson, bootstrapJson;
     private File bootstrap = new File(System.getProperty("user.dir")+"/prelauncher/bootstrap.jar");
     private File launcher = new File(System.getProperty("user.dir")+"/bootstrap/launcher.jar");
+
+    public static String contentCache = readContent();
 
     public ServerThread(Socket client){
         this.client = client;
@@ -32,7 +33,7 @@ public class ServerThread extends Thread implements Runnable {
 
         JSONArray prelauncher = new JSONArray();
         JSONObject object = new JSONObject();
-        object.put("path", "prelauncher/");
+        object.put("path", "/prelauncher/");
         object.put("filename", "bootstrap.jar");
         try {
             MessageDigest md5Digest = MessageDigest.getInstance("MD5");
@@ -52,7 +53,7 @@ public class ServerThread extends Thread implements Runnable {
 
         JSONArray bootstrap = new JSONArray();
         JSONObject object = new JSONObject();
-        object.put("path", "bootstrap/");
+        object.put("path", "/bootstrap/");
         object.put("filename", "launcher.jar");
         try {
             MessageDigest md5Digest = MessageDigest.getInstance("MD5");
@@ -81,12 +82,12 @@ public class ServerThread extends Thread implements Runnable {
                 System.out.println("["+TimeManager.getTime()+"] ["+getName()+"] New input from client received: "+reponse);
                 switch (reponse){
                     case "getContent":
-                        writer.write(readContent());
+                        writer.write(contentCache);
                         writer.flush();
                         writer.close();
                         break;
                     case "getContent-LAUNCHER":
-                        writer.write(Objects.requireNonNull(readContent()));
+                        writer.write(contentCache);
                         writer.flush();
                         break;
                     case "getContent-BOOTSTRAP":
@@ -128,7 +129,7 @@ public class ServerThread extends Thread implements Runnable {
         }
     }
 
-    private String readContent(){
+    public static String readContent(){
         try {
             FileReader fileReader = new FileReader(new File(System.getProperty("user.dir")+"/content.json"));
             int i = fileReader.read();

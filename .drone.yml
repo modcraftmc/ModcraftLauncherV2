@@ -1,0 +1,6 @@
+  name:
+    type: digitalocean
+    steps:
+      -
+    kind: pipeline
+  token:
