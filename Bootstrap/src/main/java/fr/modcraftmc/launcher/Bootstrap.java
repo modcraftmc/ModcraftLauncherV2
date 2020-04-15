@@ -1,7 +1,6 @@
 package fr.modcraftmc.launcher;
 
-import fr.modcraftmc.launcher.alert.AlertBuilder;
-import fr.modcraftmc.launcher.downloader.DownloaderManager;
+import fr.modcraftmc.alerts.AlertBuilder;
 import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
 import fr.modcraftmc.launcher.utils.JavaUtils;
 import javafx.application.Application;
@@ -24,12 +23,23 @@ import java.io.File;
 public class Bootstrap extends Application {
 
     public static File DEFAULT_PATH = new File(System.getenv("appdata") + "\\.modcraftmc\\");
+    public static MaintenanceManager maintenanceManager = new MaintenanceManager();
+
 
     private static ProgressBar progressBar = new ProgressBar();
     public static Stage stage;
 
     @Override
     public void start(Stage stage) {
+        if (maintenanceManager.isMaintenance()) {
+            AlertBuilder TEST_ALERT = new AlertBuilder(stage, "ModcraftMC", maintenanceManager.getMaintenance().getInfos(), AlertBuilder.ButtonsType.JUST_OK, Alert.AlertType.ERROR);
+            TEST_ALERT.show();
+            if (maintenanceManager.getMaintenance().isExit()) {
+                System.exit(0);
+            }
+
+        }
+
         System.out.println("JAVA INFORMATIONS : " + JavaUtils.getArchitecture() + " | " + JavaUtils.getVersion());
         Bootstrap.stage = stage;
         stage.initStyle(StageStyle.DECORATED);
@@ -48,25 +58,11 @@ public class Bootstrap extends Application {
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
         stage.setX((screen.getWidth() - stage.getWidth()) / 2);
         stage.setY((screen.getHeight() - stage.getHeight()) / 2);
+
         initComponents(root);
 
 
-        MaintenanceManager maintenanceManager = new MaintenanceManager();
-        maintenanceManager.checkIfMaintenance();
-
-        if (maintenanceManager.isMaintenance()) {
-            AlertBuilder alertBuilder = new AlertBuilder("Maintenance", maintenanceManager.getInfos(), AlertBuilder.ButtonsType.JUST_OK, Alert.AlertType.ERROR);
-            alertBuilder.show();
-            if (maintenanceManager.isExit()) {
-                System.exit(0);
-            }
-        }
-
-        if (!JavaUtils.is64Bits()) {
-            DownloaderManager.askToDownload();
-        } else {
             new Thread(Bootstrap::run).start();
-        }
     }
 
     private void initComponents(StackPane root) {

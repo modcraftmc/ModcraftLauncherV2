@@ -1,23 +1,25 @@
-package fr.modcraftmc.launcher.alert;
+package fr.modcraftmc.alerts;
 
-import fr.modcraftmc.launcher.Bootstrap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Window;
 
 import java.util.Optional;
 
-public class AlertBuilder {
+public class AlertBuilder  {
 
     private Optional<ButtonType> result;
 
+    private Window window;
     private String title, content;
     private ButtonsType buttonsType;
     private Alert.AlertType alertType;
     private Alert alert;
 
-    public AlertBuilder(String title, String content, ButtonsType type, Alert.AlertType alertType) {
+    public AlertBuilder(Window window, String title, String content, ButtonsType type, Alert.AlertType alertType) {
+        this.window = window;
         this.title = title;
         this.content = content;
         this.buttonsType = type;
@@ -27,17 +29,12 @@ public class AlertBuilder {
 
     public void show() {
 
-        if (alertType == Alert.AlertType.CONFIRMATION) {
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-        } else if (alertType == Alert.AlertType.ERROR) {
-            alert = new Alert(Alert.AlertType.ERROR);
-        }
-
+        alert = new Alert(alertType);
 
         Button button = new Button("Discord");
 
         alert.setTitle(title);
-        alert.initOwner(Bootstrap.stage);
+        alert.initOwner(window);
         alert.setHeaderText(content);
 
         alert.getDialogPane().getChildren().add(button);
@@ -78,6 +75,4 @@ public class AlertBuilder {
     public enum ButtonsType {
         YES_OR_NO, OK, JUST_OK
     }
-
-
 }

@@ -5,13 +5,14 @@ import fr.modcraftmc.launcher.maintenance.Maintenance;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URL;
 
 public class JsonUtils {
 
-    public static Maintenance readJson(String URL) throws IOException {
+    public static Maintenance readJson(Type clasz,String URL) throws IOException {
         URL url = new URL(URL);
         InputStreamReader reader = new InputStreamReader(url.openStream());
-        return new Gson().fromJson(reader, Maintenance.class);
+        return new Gson().fromJson(reader, clasz);
     }
 }

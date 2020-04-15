@@ -6,36 +6,28 @@ import java.io.IOException;
 
 public class MaintenanceManager {
 
-    private boolean maintenance;
-    private boolean exit;
-    private String infos;
+    private boolean Ismaintenance;
+    Maintenance maintenance;
 
-    public  void checkIfMaintenance() {
+
+    public MaintenanceManager() {
 
         try {
-            Maintenance maintenance = JsonUtils.readJson("http://v1.modcraftmc.fr/server.json");
-            this.maintenance = maintenance.isMaintenance();
-            this.exit = maintenance.isExit();
-            this.infos = maintenance.getInfos();
+             maintenance = JsonUtils.readJson(Maintenance.class,"http://v1.modcraftmc.fr/server.json");
+            this.Ismaintenance = maintenance.isMaintenance();
 
         } catch (IOException e) {
             e.printStackTrace();
-            maintenance = true;
+            Ismaintenance = true;
         }
 
     }
 
     public boolean isMaintenance() {
+        return Ismaintenance;
+    }
+
+    public Maintenance getMaintenance() {
         return maintenance;
-    }
-
-    public boolean isExit() {
-        return exit;
-    }
-
-    public String getInfos() {
-        return infos;
-
-
     }
 }
