@@ -95,7 +95,7 @@ public class Bootstrap extends Application {
 
     public static void doUpdate() throws Exception {
 
-        GameUpdater.setToDownload(EnumModcraft.BOOTSTRAP);
+        GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
         GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/gameupdater/", new File(DEFAULT_PATH, "test"), progressBar);
         gameUpdater.setDeleter(false);
         gameUpdater.updater();

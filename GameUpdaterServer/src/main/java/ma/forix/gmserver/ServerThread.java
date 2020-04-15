@@ -146,11 +146,16 @@ public class ServerThread extends Thread implements Runnable {
     }
 
     private String read() throws IOException{
-        String response = "";
-        int stream;
-        byte[] b = new byte[4096];
-        stream = reader.read(b);
-        response = new String(b, 0, stream);
-        return response;
+        InputStream  socketInputStream = client.getInputStream();
+        int expectedDataLength = 1024;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedDataLength);
+        byte[] chunk = new byte[expectedDataLength];
+        int numBytesJustRead;
+        while((numBytesJustRead = socketInputStream.read(chunk)) != -1) {
+            baos.write(chunk, 0, numBytesJustRead);
+        }
+        String msg =  baos.toString("UTF-8");
+        System.out.println(msg);
+        return msg;
     }
 }

@@ -153,35 +153,25 @@ public class Downloader extends Task<Void> {
             String reponse = null;
             jsonArray = new JSONArray();
 
-            writer.write("getContent-" + content);
-            writer.flush();
-
-            InputStream  socketInputStream = socket.getInputStream();
-            int expectedDataLength = 128;
-            ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedDataLength);
-            byte[] chunk = new byte[expectedDataLength];
-            int numBytesJustRead;
-            while((numBytesJustRead = socketInputStream.read(chunk)) != -1) {
-                baos.write(chunk, 0, numBytesJustRead);
-            }
-            String msg =  baos.toString("UTF-8");
-            System.out.println(msg);
-            Object obj = new JSONParser().parse(msg);
-            jsonArray = (JSONArray) obj;
-
-            /**
-             * eponse = read();
-            try (InputStreamReader streamReader = new InputStreamReader(new URL(this.url+"/content.json").openStream())){
-                String json = IOUtils.toString(socket.getInputStream());
-                System.out.println(json);
-
-                Object obj = new JSONParser().parse(reponse);
+            if (content.equalsIgnoreCase("LAUNCHER")) {
+                readLaucherContent();
+            } else {
+                writer.write("getContent-" + content);
+                writer.flush();
+                InputStream  socketInputStream = socket.getInputStream();
+                int expectedDataLength = 1024;
+                ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedDataLength);
+                byte[] chunk = new byte[expectedDataLength];
+                int numBytesJustRead;
+                while((numBytesJustRead = socketInputStream.read(chunk)) != -1) {
+                    baos.write(chunk, 0, numBytesJustRead);
+                }
+                String msg =  baos.toString("UTF-8");
+                System.out.println(msg);
+                Object obj = new JSONParser().parse(msg);
                 jsonArray = (JSONArray) obj;
-            } catch (ParseException | IOException e) {
-                e.printStackTrace();
             }
 
-             **/
             System.out.println("content.json recovered");
             writer.write("close");
             writer.flush();
@@ -191,15 +181,18 @@ public class Downloader extends Task<Void> {
         }
     }
 
+    public void readLaucherContent() {
 
-    private String read() throws IOException {
-        String response = "";
-        int stream;
-        byte[] b = new byte[1024];
-        stream = reader.read();
-        response = new String(b, 0, stream);
-        return response;
+        try (InputStreamReader streamReader = new InputStreamReader(new URL(this.url+"/content.json").openStream())){
+            Object obj = new JSONParser().parse(streamReader);
+            jsonArray = (JSONArray) obj;
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
+
 
     private void getIgnoreList(){
         try(InputStreamReader streamReader = new InputStreamReader(new URL(this.url+"/ignore.txt").openStream())){
