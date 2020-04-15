@@ -75,12 +75,12 @@ public class ContentGenerator extends Thread implements Runnable {
         scheduledTime = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(timeFile))) {
             String line;
-            System.out.println("["+TimeManager.getTime()+"] Reloading Scheduling time file...");
+            Server.LOGGER.info("Reloading Scheduling time file...");
             while ((line = br.readLine()) != null) {
                 System.out.println("    New scheduled hour: "+line);
                 scheduledTime.add(line);
             }
-            System.out.println("["+TimeManager.getTime()+"] Reloading process finished !");
+            Server.LOGGER.info("Reloading process finished !");
         } catch (IOException e) {
             e.printStackTrace();
         }

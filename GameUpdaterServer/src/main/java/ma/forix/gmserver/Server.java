@@ -1,11 +1,13 @@
 package ma.forix.gmserver;
 
 
+import net.wytrem.logging.Logger;
+import net.wytrem.logging.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class Server {
 
@@ -14,6 +16,7 @@ public class Server {
     private CommandReceiver commandReceiver;
     private final File gameDir = new File(System.getProperty("user.dir")+"/downloads/");
     private boolean isRunning = true;
+    public final static Logger LOGGER = LoggerFactory.getLogger("GameUpdaterServer");
 
 
     public static void main(String[] args) {
@@ -46,12 +49,11 @@ public class Server {
                 super.run();
                 while (isRunning){
                     try {
-                        System.out.println("["+TimeManager.getTime()+"] En attente d'une connexion...");
+                        Server.LOGGER.info("En attente d'une connexion...");
                         Socket client = server.accept();
-                        System.out.println("["+ TimeManager.getTime()+"] New client attempt to connect...");
-                        System.out.println("["+ TimeManager.getTime()+"] Client informations:");
-                        System.out.println("    IP: "+ Arrays.toString(client.getInetAddress().getAddress()));
-                        System.out.println("    Host Name: "+client.getInetAddress().getHostName());
+                        Server.LOGGER.info("New client attempt to connect...");
+                        Server.LOGGER.info("Client informations:");
+                        Server.LOGGER.info("    IP: "+client.getInetAddress().getHostName());
                         Thread thread = new Thread(new ServerThread(client));
                         thread.start();
                     } catch (IOException e) {

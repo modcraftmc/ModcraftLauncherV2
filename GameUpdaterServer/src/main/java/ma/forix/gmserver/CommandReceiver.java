@@ -17,26 +17,26 @@ public class CommandReceiver extends Thread implements Runnable {
             String command = input.next();
             switch (command.toUpperCase()){
                 case "GENERATE":
-                    System.out.println("["+TimeManager.getTime()+"] Generating content.json");
+                    Server.LOGGER.info("Generating content.json");
                     ContentGenerator.generate();
-                    System.out.println("["+TimeManager.getTime()+"] content.json file generated !");
+                    Server.LOGGER.info("content.json file generated !");
                     break;
                 case "RELOAD":
-                    System.out.println("["+TimeManager.getTime()+"] Reloading schedule time file...");
+                    Server.LOGGER.info("Reloading schedule time file...");
                     ContentGenerator.loadTimeFile();
-                    System.out.println("["+TimeManager.getTime()+"] Schedule time reloaded !");
+                    Server.LOGGER.info("Schedule time reloaded !");
                     break;
                 case "HELP":
-                    System.out.println("["+TimeManager.getTime()+"] Command list:");
-                    System.out.println("    GENERATE : Scan game folder to create content.json file \n which contains downloads subfiles information");
-                    System.out.println("    RELOAD : Reload Scheduled Time.txt file which contains \n in each line the time of when game folder will be scanned");
+                    Server.LOGGER.info("[Command list:");
+                    Server.LOGGER.info("    GENERATE : Scan game folder to create content.json file \n which contains downloads subfiles information");
+                    Server.LOGGER.info("    RELOAD : Reload Scheduled Time.txt file which contains \n in each line the time of when game folder will be scanned");
                     break;
                 case "SHUTDOWN":
-                    System.out.println("["+TimeManager.getTime()+"] Closing the server.");
+                    Server.LOGGER.info("Closing the server.");
                     System.exit(0);
                     break;
                 default:
-                    System.err.println("["+TimeManager.getTime()+"] Unknown command");
+                    Server.LOGGER.info("Unknown command");
                     break;
             }
         }
