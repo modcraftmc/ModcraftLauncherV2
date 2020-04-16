@@ -63,11 +63,15 @@ public class LoginController   {
 
 
         if (emailField.getText().length() == 0 || !emailpattern.matcher(emailField.getText()).find()) {
-            throw new AuthentificationException("L'email est invalide");
+            throw new AuthentificationException("L'email est invalide", 1);
         }
         if (passwordField.getText().length() == 0) {
-            throw new AuthentificationException("Le mot de passe est invalide");
+            throw new AuthentificationException("Le mot de passe est invalide", 2);
         }
+
+       // Authenticator.auth(emailField.getText(), passwordField.getText());
+
+        ModcraftApplication.loginFinish();
 
     }
 

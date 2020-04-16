@@ -40,7 +40,7 @@ public class Bootstrap extends Application {
 
 
         if (maintenanceManager.isMaintenance()) {
-            AlertBuilder TEST_ALERT = new AlertBuilder(stage, "ModcraftMC", maintenanceManager.getMaintenance().getInfos(), AlertBuilder.ButtonsType.JUST_OK, Alert.AlertType.ERROR);
+            AlertBuilder TEST_ALERT = new AlertBuilder(stage, "ModcraftMC", maintenanceManager.getMaintenance().getInfos(), 10, AlertBuilder.ButtonsType.JUST_OK, Alert.AlertType.ERROR);
             TEST_ALERT.show();
             if (maintenanceManager.getMaintenance().isExit()) {
                 System.exit(0);

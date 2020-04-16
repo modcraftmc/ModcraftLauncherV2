@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="container" prefHeight="600.0" prefWidth="1000.0" styleClass="container" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.LoginController">
+<AnchorPane fx:id="container" prefHeight="600.0" prefWidth="1000.0" styleClass="frame-container" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.LoginController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="400.0" layoutY="45.0" prefHeight="56.0" prefWidth="201.0" text="ModcraftMC" textAlignment="CENTER" textFill="#6a7187">
          <font>
