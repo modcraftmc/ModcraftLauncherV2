@@ -1,7 +1,6 @@
 package fr.modcraftmc.launcher;
 
 import fr.modcraftmc.alerts.AlertBuilder;
-import fr.modcraftmc.i18n.Message;
 import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
 import fr.modcraftmc.launcher.utils.JavaUtils;
 import javafx.application.Application;
@@ -39,8 +38,6 @@ public class Bootstrap extends Application {
     public void start(Stage stage) {
         Bootstrap.LOGGER.info("Starting system check...");
 
-
-        Bootstrap.LOGGER.info(Message.getString("bootstrap.start"));
 
         if (maintenanceManager.isMaintenance()) {
             AlertBuilder TEST_ALERT = new AlertBuilder(stage, "ModcraftMC", maintenanceManager.getMaintenance().getInfos(), AlertBuilder.ButtonsType.JUST_OK, Alert.AlertType.ERROR);
