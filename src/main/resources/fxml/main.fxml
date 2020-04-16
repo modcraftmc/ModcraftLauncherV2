@@ -2,6 +2,10 @@
 
 
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.MainController">
-
+<?import java.net.URL?>
+<AnchorPane fx:id="container" prefHeight="600.0" prefWidth="1000.0" styleClass="container" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.MainController">
+   <stylesheets>
+      <URL value="@../css/global.css" />
+      <URL value="@../css/main.css" />
+   </stylesheets>
 </AnchorPane>

@@ -30,9 +30,8 @@ public class AlertBuilder  {
 
     public AlertBuilder show() {
 
+
         alert = new Alert(alertType);
-
-
 
         alert.setTitle(title);
         alert.initOwner(window);

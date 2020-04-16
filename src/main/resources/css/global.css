@@ -1,3 +1,6 @@
+.container {
+    -fx-background-color: #181818;
+}
 .dialog-pane{
     -fx-border-color:#181818;
     -fx-border-width:2.0px;

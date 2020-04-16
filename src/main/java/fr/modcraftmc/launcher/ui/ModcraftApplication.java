@@ -68,7 +68,7 @@ public class ModcraftApplication extends Application {
             {
                 try {
                     Desktop.getDesktop().browse(new URI("https://www.modcraftmc.fr/passwordlost"));
-                } catch (IOException | URISyntaxException e1) {
+                } catch (IOException | URISyntaxException ignored) {
                 }
             }
         });
