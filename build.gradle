@@ -17,7 +17,7 @@ plugins {
 apply plugin: 'javafx-gradle-plugin'
 
 group 'fr.modcraftmc.launcher'
-version '1.0-SNAPSHOT'
+version '2.0-ALPHA'
 
 sourceCompatibility = 1.8
 
@@ -43,6 +43,14 @@ dependencies {
     compile project(':Common')
 
 
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'fr.modcraftmc.launcher.core.ModcraftLauncher'
+    }
+
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 jfx {

@@ -23,18 +23,18 @@
       <Pane layoutX="329.0" layoutY="224.0" prefHeight="106.0" prefWidth="343.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="4.0" prefHeight="21.0" prefWidth="48.0" text="EMAIL" textAlignment="CENTER" textFill="#6a7187" />
-            <TextField layoutX="15.0" layoutY="28.0" prefHeight="42.0" prefWidth="313.0" styleClass="email-field" stylesheets="@../css/login.css" />
+            <TextField fx:id="emailField" layoutX="15.0" layoutY="28.0" prefHeight="42.0" prefWidth="313.0" styleClass="email-field" stylesheets="@../css/login.css" />
          </children>
       </Pane>
       <Pane layoutX="329.0" layoutY="306.0" prefHeight="82.0" prefWidth="343.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="4.0" prefHeight="21.0" prefWidth="86.0" text="MOT DE PASSE" textAlignment="CENTER" textFill="#6a7187" />
-            <PasswordField layoutX="14.0" layoutY="30.0" prefHeight="42.0" prefWidth="313.0" styleClass="password-field" stylesheets="@../css/login.css" />
+            <PasswordField fx:id="passwordField" layoutX="14.0" layoutY="30.0" prefHeight="42.0" prefWidth="313.0" styleClass="password-field" stylesheets="@../css/login.css" />
          </children>
       </Pane>
       <CheckBox layoutX="343.0" layoutY="396.0" mnemonicParsing="false" selected="true" styleClass="checkbox" stylesheets="@../css/login.css" text="Se souvenir de moi" />
       <Hyperlink fx:id="passwordLost" layoutX="529.0" layoutY="393.0" prefHeight="23.0" prefWidth="130.0" styleClass="link" stylesheets="@../css/login.css" text="Mot de passe oublié ?" />
-      <Button layoutX="344.0" layoutY="448.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="313.0" styleClass="login" stylesheets="@../css/login.css" text="Se connecter" />
+      <Button layoutX="344.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#button" prefHeight="42.0" prefWidth="313.0" styleClass="login" stylesheets="@../css/login.css" text="Se connecter" />
       <Button fx:id="close" layoutX="976.0" mnemonicParsing="false" onMouseReleased="#close" prefHeight="17.0" prefWidth="20.0" styleClass="close" stylesheets="@../css/login.css" textAlignment="CENTER">
          <font>
             <Font name="Droid Sans" size="15.0" />
