@@ -4,6 +4,7 @@ import fr.modcraftmc.launcher.core.Constants;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;
 import fr.modcraftmc.launcher.ui.controllers.MainController;
+import fr.modcraftmc.launcher.ui.events.LoginEvent;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,6 +40,7 @@ public class ModcraftApplication extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
 
+
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle(Constants.TITLE);
         stage.setResizable(false);
@@ -71,6 +73,7 @@ public class ModcraftApplication extends Application {
 
         });
 
+
         stage.setScene(scene);
         stage.getIcons().add(new Image(resourcesManager.getResource("favicon.png").toString()));
         stage.show();
@@ -79,9 +82,7 @@ public class ModcraftApplication extends Application {
         stage.addEventFilter(MOUSE_DRAGGED, e -> { window.setX(e.getScreenX() - sx); window.setY(e.getScreenY() - sy); });
 
 
-
-
-        logincontroller.passwordLost.setOnAction(e -> {
+        logincontroller.passwordLost.setOnAction(event -> {
             if(Desktop.isDesktopSupported())
             {
                 try {
@@ -91,13 +92,13 @@ public class ModcraftApplication extends Application {
             }
         });
 
-        //CrashReporter.catchException(new Exception(), stage);
+        window.addEventHandler(LoginEvent.LOGIN_SUCCES, event -> switchScene(main));
 
     }
 
-    public static void loginFinish() {
-        Scene scene = new Scene(main);
-        window.setScene(scene);
+    public void switchScene(Parent scene) {
+        Scene switchto = new Scene(scene);
+        window.setScene(switchto);
 
     }
 }
