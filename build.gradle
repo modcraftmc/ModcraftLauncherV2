@@ -40,10 +40,10 @@ dependencies {
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile 'com.google.code.gson:gson:2.8.6'
-    compile 'com.jfoenix:jfoenix:8.0.8'
     compile project(':Common')
     compile files('libs/openauth-1.0.4.jar')
     compile files('libs/openlauncherlib-3.0.5.jar')
+    compile files("libs/jfoenix-8.0.8.jar")
 
 
 }
@@ -59,6 +59,7 @@ jar {
 jfx {
     // minimal requirement for jfxJar-task
     mainClass = 'fr.modcraftmc.launcher.core.ModcraftLauncher'
+    version = "8"
 
     // minimal requirement for jfxNative-task
     vendor = 'Modcraftmc'

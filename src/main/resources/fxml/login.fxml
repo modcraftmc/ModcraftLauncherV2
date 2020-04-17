@@ -35,7 +35,7 @@
             <PasswordField fx:id="passwordField" layoutX="14.0" layoutY="30.0" prefHeight="42.0" prefWidth="313.0" styleClass="password-field" stylesheets="@../css/login.css" />
          </children>
       </Pane>
-      <JFXCheckBox layoutX="343.0" layoutY="396.0" mnemonicParsing="false" selected="true" styleClass="checkbox" stylesheets="@../css/login.css" text="Se souvenir de moi" />
+      <JFXCheckBox fx:id="keepLogin" layoutX="343.0" layoutY="396.0" mnemonicParsing="false" selected="true" styleClass="checkbox" stylesheets="@../css/login.css" text="Se souvenir de moi" />
       <Hyperlink fx:id="passwordLost" layoutX="529.0" layoutY="393.0" prefHeight="23.0" prefWidth="130.0" styleClass="link" stylesheets="@../css/login.css" text="Mot de passe oublié ?" />
       <Button fx:id="close" layoutX="976.0" mnemonicParsing="false" onMouseReleased="#close" prefHeight="17.0" prefWidth="20.0" styleClass="close" stylesheets="@../css/login.css" textAlignment="CENTER">
          <font>
@@ -44,7 +44,7 @@
          <effect>
             <Blend />
          </effect></Button>
-      <JFXButton fx:id="loginbutton" layoutX="343.0" layoutY="450.0" mnemonicParsing="false" onMouseReleased="#button" prefHeight="44.0" prefWidth="313.0" styleClass="login" stylesheets="@../css/login.css" text="Se connecter" />
+      <JFXButton fx:id="loginbutton" layoutX="343.0" layoutY="450.0" mnemonicParsing="false" onMouseReleased="#tryLogin" prefHeight="44.0" prefWidth="313.0" styleClass="login" stylesheets="@../css/login.css" text="Se connecter" />
    </children>
    <stylesheets>
       <URL value="@../css/login.css" />
