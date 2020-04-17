@@ -2,7 +2,6 @@ package fr.modcraftmc.launcher.ui;
 
 import fr.modcraftmc.launcher.core.Constants;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
-import fr.modcraftmc.launcher.libs.authentification.exception.AuthentificationException;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;
 import fr.modcraftmc.launcher.ui.controllers.MainController;
 import javafx.application.Application;
@@ -66,11 +65,7 @@ public class ModcraftApplication extends Application {
         scene.setOnKeyPressed(event -> {
             if (emailField.isFocused() || passwordField.isFocused()) {
                 if (event.getCode().equals(KeyCode.ENTER)) {
-                    try {
                         logincontroller.tryLogin();
-                    } catch (AuthentificationException e) {
-                        login.setDisable(false);
-                    }
                 }
             }
 
