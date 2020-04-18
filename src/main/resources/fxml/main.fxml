@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
 <AnchorPane fx:id="container" prefHeight="600.0" prefWidth="1000.0" styleClass="container" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.MainController">
@@ -8,4 +9,14 @@
       <URL value="@../css/global.css" />
       <URL value="@../css/main.css" />
    </stylesheets>
+   <children>
+      <Button fx:id="close" layoutX="976.0" mnemonicParsing="false" onMouseReleased="#close" prefHeight="17.0" prefWidth="20.0" styleClass="close">
+         <stylesheets>
+            <URL value="@../css/global.css" />
+            <URL value="@../css/main.css" />
+         </stylesheets>
+         <effect>
+            <Blend />
+         </effect></Button>
+   </children>
 </AnchorPane>

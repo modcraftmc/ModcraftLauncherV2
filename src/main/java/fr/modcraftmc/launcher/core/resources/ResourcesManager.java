@@ -1,7 +1,5 @@
 package fr.modcraftmc.launcher.core.resources;
 
-import fr.modcraftmc.launcher.core.exceptions.ResourceNotFoundException;
-
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -28,14 +26,20 @@ public class ResourcesManager {
             return getClass().getClassLoader().getResource("fxml/" + name);
         } else if (cssExtentions.contains(extention)) {
             return getClass().getClassLoader().getResource("css/" + name);
+        } else {
+            return getClass().getClassLoader().getResource(name);
         }
 
+
+/**
         try {
             throw new ResourceNotFoundException("resource not found : " + name);
         } catch (ResourceNotFoundException e) {
             e.printStackTrace();
         }
 
+
         return null;
+ **/
     }
 }

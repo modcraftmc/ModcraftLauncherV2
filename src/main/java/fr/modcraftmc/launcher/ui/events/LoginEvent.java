@@ -5,12 +5,24 @@ import javafx.event.EventType;
 
 public class LoginEvent extends Event {
 
-    public static final EventType<LoginEvent> LOGIN_SUCCES = new EventType(ANY, "LOGIN_SUCCES");
-    public static final EventType<LoginEvent> LOGIN_FAILED = new EventType(ANY, "LOGIN_FAILED");
+    public static final EventType<LoginEvent> LOGIN = new EventType(ANY, "LOGIN");
+    public boolean succes = false;
+
+    public LoginEvent() {
+        super(LOGIN);
+    }
 
 
     public LoginEvent(EventType<? extends Event> eventType) {
         super(eventType);
+    }
+
+    public void setSucces(boolean value) {
+        this.succes = value;
+    }
+
+    public boolean getSucces() {
+        return this.succes;
     }
 
     public EventType<? extends LoginEvent> getEventType() {
