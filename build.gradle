@@ -17,7 +17,7 @@ plugins {
 apply plugin: 'javafx-gradle-plugin'
 
 group 'fr.modcraftmc.launcher'
-version '2.0-ALPHA'
+version ''
 
 sourceCompatibility = 1.8
 
@@ -59,7 +59,7 @@ jar {
 jfx {
     // minimal requirement for jfxJar-task
     mainClass = 'fr.modcraftmc.launcher.core.ModcraftLauncher'
-    version = "8"
+    version '1'
 
     // minimal requirement for jfxNative-task
     vendor = 'Modcraftmc'

@@ -15,8 +15,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -65,17 +63,15 @@ public class ModcraftApplication extends Application {
         download = loader.load();
         DownloadController downloadController = loader.getController();
 
-        MediaPlayer player = new MediaPlayer(new Media(resourcesManager.getResource("vi.mp4").toURI().toURL().toString()));
-        player.setAutoPlay(true);
 
 
+        Scene scene = new Scene(logincontroller.checkToken() ? main : login);
 
-        Scene scene = new Scene(download);
+
         scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
         scene.setFill(Color.TRANSPARENT);
 
-        downloadController.media.setMediaPlayer(player);
 
         scene.setOnKeyPressed(event -> {
             if (emailField.isFocused() || passwordField.isFocused()) {

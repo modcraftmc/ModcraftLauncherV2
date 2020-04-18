@@ -12,6 +12,8 @@ public class ResourcesManager {
 
     private List<String> cssExtentions = Arrays.asList(".css");
 
+    private List<String> jsonExtentions = Arrays.asList(".json");
+
     public ResourcesManager() {
 
     }
@@ -26,6 +28,8 @@ public class ResourcesManager {
             return getClass().getClassLoader().getResource("fxml/" + name);
         } else if (cssExtentions.contains(extention)) {
             return getClass().getClassLoader().getResource("css/" + name);
+        } else if (jsonExtentions.contains(extention)) {
+            return getClass().getClassLoader().getResource("json" + name);
         } else {
             return getClass().getClassLoader().getResource(name);
         }

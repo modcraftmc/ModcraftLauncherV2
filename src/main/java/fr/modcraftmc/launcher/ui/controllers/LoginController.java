@@ -5,6 +5,7 @@ import animatefx.animation.FadeOut;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
+import fr.modcraftmc.launcher.libs.authentification.Authenticator;
 import fr.modcraftmc.launcher.libs.authentification.exception.AuthentificationException;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
 import fr.modcraftmc.launcher.ui.events.LoginEvent;
@@ -15,6 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
+import java.io.FileNotFoundException;
 import java.util.regex.Pattern;
 
 public class LoginController {
@@ -76,7 +78,7 @@ public class LoginController {
 
             loginEvent.setSucces(true);
 
-            //Authenticator.auth(emailField.getText(), passwordField.getText());
+            Authenticator.auth(emailField.getText(), passwordField.getText(), keepLogin.isSelected());
         } catch (AuthentificationException e) {
             loginEvent.setSucces(false);
             changeState(false);
@@ -84,6 +86,28 @@ public class LoginController {
         }
 
         Event.fireEvent(ModcraftApplication.window, loginEvent);
+    }
+
+    public boolean checkToken() {
+        boolean logged = false;
+
+        try {
+
+            String token = ModcraftLauncher.settingsManager.getSetting().getAccesToken();
+            if (token == null) {
+                throw new FileNotFoundException();
+            }
+
+            Authenticator.auth(token);
+            logged = true;
+            
+        } catch (FileNotFoundException | AuthentificationException e) {
+            logged = false;
+
+        } finally {
+            return logged;
+        }
+
     }
 
     public void changeState(boolean value) {
