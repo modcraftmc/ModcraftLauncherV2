@@ -28,7 +28,7 @@ public class SettingsManager {
         }
 
         discordIntegration = new DiscordIntegration();
-        //discordIntegration.setState(setting.useDiscordRPC());
+        discordIntegration.setState(setting.useDiscordRPC());
     }
 
     public void save() {
