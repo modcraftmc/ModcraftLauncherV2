@@ -90,7 +90,6 @@ public class LoginController {
 
     public boolean checkToken() {
         boolean logged = false;
-
         try {
 
             String token = ModcraftLauncher.settingsManager.getSetting().getAccesToken();

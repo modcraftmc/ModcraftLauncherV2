@@ -33,6 +33,7 @@ public class FilesManager {
                 JAVA_PATH.mkdirs();
             }
         } catch (Exception e) {
+            OPTIONS_PATH.delete();
             e.printStackTrace();
         }
     }

@@ -67,7 +67,6 @@ public class ModcraftApplication extends Application {
 
         Scene scene = new Scene(logincontroller.checkToken() ? main : login);
 
-
         scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
         scene.setFill(Color.TRANSPARENT);
@@ -79,7 +78,6 @@ public class ModcraftApplication extends Application {
                         logincontroller.tryLogin();
                 }
             }
-
         });
 
 
@@ -110,6 +108,9 @@ public class ModcraftApplication extends Application {
 
     public void switchScene(Parent scene) {
         Scene switchto = new Scene(scene);
+        switchto.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
+        switchto.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
+        switchto.setFill(Color.TRANSPARENT);
         window.setScene(switchto);
 
     }

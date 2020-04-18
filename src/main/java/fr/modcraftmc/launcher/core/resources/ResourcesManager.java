@@ -1,5 +1,6 @@
 package fr.modcraftmc.launcher.core.resources;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -34,16 +35,22 @@ public class ResourcesManager {
             return getClass().getClassLoader().getResource(name);
         }
 
+    }
 
-/**
-        try {
-            throw new ResourceNotFoundException("resource not found : " + name);
-        } catch (ResourceNotFoundException e) {
-            e.printStackTrace();
+    public InputStream getResourceAsStream(String name) {
+
+        int lastIndexOf = name.lastIndexOf(".");
+        String extention = name.substring(lastIndexOf);
+        if (imagesExtentions.contains(extention)) {
+            return getClass().getClassLoader().getResourceAsStream("images/" + name);
+        } else if (fxmlExtentions.contains(extention)) {
+            return getClass().getClassLoader().getResourceAsStream("fxml/" + name);
+        } else if (cssExtentions.contains(extention)) {
+            return getClass().getClassLoader().getResourceAsStream("css/" + name);
+        } else if (jsonExtentions.contains(extention)) {
+            return getClass().getClassLoader().getResourceAsStream("json" + name);
+        } else {
+            return getClass().getClassLoader().getResourceAsStream(name);
         }
-
-
-        return null;
- **/
     }
 }
