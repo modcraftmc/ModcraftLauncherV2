@@ -22,7 +22,7 @@ public class FilesManager {
                 OPTIONS_PATH.createNewFile();
                 Gson gson = new Gson();
                 FileWriter fileWriter = new FileWriter(OPTIONS_PATH);
-                fileWriter.write(gson.toJson(new Settings("", true)));
+                fileWriter.write(gson.toJson(new Settings("", true, true)));
                 fileWriter.flush();
                 fileWriter.close();
             }

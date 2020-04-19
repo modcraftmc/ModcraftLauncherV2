@@ -12,7 +12,7 @@ public class Authenticator {
     public static AuthInfos authInfos;
     public static boolean isLogged = false;
 
-    public static void auth(String email, String password, boolean save) throws AuthentificationException {
+    public static void auth(String email, String password) throws AuthentificationException {
 
         fr.litarvan.openauth.Authenticator authenticator = new fr.litarvan.openauth.Authenticator(fr.litarvan.openauth.Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
 
@@ -24,8 +24,11 @@ public class Authenticator {
         }
         authInfos = new AuthInfos(response.getSelectedProfile().getName(), response.getAccessToken(), response.getSelectedProfile().getId());
         isLogged = true;
-        if (save) {
+        if (   ModcraftLauncher.settingsManager.getSetting().getKeepLogin()) {
             ModcraftLauncher.settingsManager.getSetting().setAccesToken(authInfos.getAccessToken());
+            ModcraftLauncher.settingsManager.save();
+        } else {
+            ModcraftLauncher.settingsManager.getSetting().setAccesToken("null");
             ModcraftLauncher.settingsManager.save();
         }
 

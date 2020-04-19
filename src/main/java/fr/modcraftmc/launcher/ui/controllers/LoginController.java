@@ -78,7 +78,8 @@ public class LoginController {
 
             loginEvent.setSucces(true);
 
-            Authenticator.auth(emailField.getText(), passwordField.getText(), keepLogin.isSelected());
+            ModcraftLauncher.settingsManager.getSetting().setKeepLogin(keepLogin.isSelected());
+            Authenticator.auth(emailField.getText(), passwordField.getText());
         } catch (AuthentificationException e) {
             loginEvent.setSucces(false);
             changeState(false);

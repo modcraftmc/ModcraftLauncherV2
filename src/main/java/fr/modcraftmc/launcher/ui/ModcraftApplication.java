@@ -1,6 +1,7 @@
 package fr.modcraftmc.launcher.ui;
 
 import fr.modcraftmc.launcher.core.Constants;
+import fr.modcraftmc.launcher.core.ModcraftLauncher;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.ui.controllers.DownloadController;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;
@@ -53,6 +54,9 @@ public class ModcraftApplication extends Application {
 
         TextField emailField = logincontroller.emailField;
         PasswordField passwordField = logincontroller.passwordField;
+        logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSetting().getKeepLogin());
+
+
         Button loginButton = logincontroller.loginbutton;
 
         loader = new FXMLLoader(resourcesManager.getResource("main.fxml"));
@@ -94,7 +98,7 @@ public class ModcraftApplication extends Application {
             if(Desktop.isDesktopSupported())
             {
                 try {
-                    Desktop.getDesktop().browse(new URI("https://www.modcraftmc.fr/passwordlost"));
+                    Desktop.getDesktop().browse(new URI("https://cestpasencorefini.sorry"));
                 } catch (IOException | URISyntaxException ignored) {
                 }
             }
@@ -108,10 +112,8 @@ public class ModcraftApplication extends Application {
 
     public void switchScene(Parent scene) {
         Scene switchto = new Scene(scene);
-        switchto.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         switchto.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
         switchto.setFill(Color.TRANSPARENT);
         window.setScene(switchto);
-
     }
 }

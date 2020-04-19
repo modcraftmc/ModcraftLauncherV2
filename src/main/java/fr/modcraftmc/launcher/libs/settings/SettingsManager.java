@@ -13,17 +13,19 @@ public class SettingsManager {
     private Gson gson;
     private DiscordIntegration discordIntegration;
 
-    private Settings setting = new Settings();
+    private Settings setting;
 
     public SettingsManager() {
         gson = new Gson();
 
         try {
-            setting = gson.fromJson(new FileReader(ModcraftLauncher.filesManager.getOptionsPath()), Settings.class);
-            System.out.println(setting);
-            System.out.println(setting.useDiscordRPC());
+            FileReader reader = new FileReader(ModcraftLauncher.filesManager.getOptionsPath());
+            setting = gson.fromJson(reader, Settings.class);
+            reader.close();
         } catch (Exception e) {
             ModcraftLauncher.LOGGER.warning("Error while loading options.");
+            ModcraftLauncher.filesManager.getOptionsPath().deleteOnExit();
+            setting = gson.fromJson("{\"accesToken\":\"\",\"keepLogin\":true,\"discordRPC\":true}", Settings.class);
             e.printStackTrace();
         }
 
