@@ -20,7 +20,7 @@ public class Authenticator {
         try {
             response = authenticator.authenticate(AuthAgent.MINECRAFT, email, password, "");
         } catch (AuthenticationException e) {
-            throw new AuthentificationException("Erreur avec mojang", 3);
+            throw new AuthentificationException("Erreur avec mojang", 4);
         }
         authInfos = new AuthInfos(response.getSelectedProfile().getName(), response.getAccessToken(), response.getSelectedProfile().getId());
         isLogged = true;

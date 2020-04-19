@@ -11,9 +11,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -43,7 +40,6 @@ public class ModcraftApplication extends Application {
     public void start(Stage stage) throws Exception {
         window = stage;
 
-
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle(Constants.TITLE);
         stage.setResizable(false);
@@ -52,12 +48,9 @@ public class ModcraftApplication extends Application {
         login = loader.load();
         LoginController logincontroller = loader.getController();
 
-        TextField emailField = logincontroller.emailField;
-        PasswordField passwordField = logincontroller.passwordField;
+
         logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSetting().getKeepLogin());
 
-
-        Button loginButton = logincontroller.loginbutton;
 
         loader = new FXMLLoader(resourcesManager.getResource("main.fxml"));
         main = loader.load();
@@ -67,23 +60,11 @@ public class ModcraftApplication extends Application {
         download = loader.load();
         DownloadController downloadController = loader.getController();
 
-
-
         Scene scene = new Scene(logincontroller.checkToken() ? main : login);
 
         scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
         scene.setFill(Color.TRANSPARENT);
-
-
-        scene.setOnKeyPressed(event -> {
-            if (emailField.isFocused() || passwordField.isFocused()) {
-                if (event.getCode().equals(KeyCode.ENTER)) {
-                        logincontroller.tryLogin();
-                }
-            }
-        });
-
 
         stage.setScene(scene);
         stage.getIcons().add(new Image(resourcesManager.getResource("favicon.png").toString()));
@@ -94,13 +75,14 @@ public class ModcraftApplication extends Application {
         stage.addEventFilter(MOUSE_DRAGGED, e -> { window.setX(e.getScreenX() - sx.get()); window.setY(e.getScreenY() - sy.get()); });
 
 
+        downloadController.download();
+
         logincontroller.passwordLost.setOnAction(event -> {
             if(Desktop.isDesktopSupported())
             {
                 try {
                     Desktop.getDesktop().browse(new URI("https://cestpasencorefini.sorry"));
-                } catch (IOException | URISyntaxException ignored) {
-                }
+                } catch (IOException | URISyntaxException ignored) {}
             }
         });
 
@@ -108,6 +90,13 @@ public class ModcraftApplication extends Application {
             if (event.getSucces()) switchScene(main);
         });
 
+        scene.setOnKeyPressed(event -> {
+            if (logincontroller.emailField.isFocused() || logincontroller.passwordField.isFocused()) {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    logincontroller.tryLogin();
+                }
+            }
+        });
     }
 
     public void switchScene(Parent scene) {

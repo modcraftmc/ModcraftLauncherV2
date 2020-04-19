@@ -51,17 +51,6 @@ public class LoginController {
         close.setOnFinished(event -> System.exit(0));
     }
 
-    public void hide() {
-
-        AnimationFX hide = new FadeOut(container);
-        hide.setSpeed(5D);
-        hide.setResetOnFinished(true);
-        hide.play();
-        hide.setOnFinished(event -> ModcraftApplication.window.setIconified(true));
-
-
-    }
-
     public void tryLogin() {
         changeState(true);
         LoginEvent loginEvent = new LoginEvent();

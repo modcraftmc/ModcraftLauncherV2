@@ -14,6 +14,8 @@ plugins {
     id 'application'
 }
 
+compileJava.options.encoding = 'UTF-8'
+
 apply plugin: 'javafx-gradle-plugin'
 
 group 'fr.modcraftmc.launcher'
@@ -21,7 +23,7 @@ version ''
 
 sourceCompatibility = 1.8
 
-mainClassName = "fr.modcraftmc.launcher.core.ModcraftLauncher";
+mainClassName = "fr.modcraftmc.launcher.core.ModcraftLauncher"
 
 repositories {
     mavenCentral()

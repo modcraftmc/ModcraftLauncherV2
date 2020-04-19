@@ -15,9 +15,6 @@ public class ResourcesManager {
 
     private List<String> jsonExtentions = Arrays.asList(".json");
 
-    public ResourcesManager() {
-
-    }
 
     public URL getResource(String name) {
 
