@@ -33,11 +33,8 @@ public class DownloadController {
             gameUpdater.updater().setOnSucceeded(event -> {
                 new Thread(() -> {
 
-                    try {
                         launch();
-                    } catch (LaunchException e) {
-                        e.printStackTrace();
-                    }
+
 
                 }).start();
 
@@ -50,21 +47,23 @@ public class DownloadController {
         update.start();
     }
 
-    public void launch() throws LaunchException {
-        GameVersion VERSION = new GameVersion("1.15.2", GameType.V_1_15_2_FORGE);
-        GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"),VERSION, new GameTweak[] {});
-
-        ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(INFOS, GameFolder.BASIC, Authenticator.authInfos);
-        profile.getVmArgs().add("-Xmx8G");
-        ExternalLauncher launcher = new ExternalLauncher(profile);
-        Process p = null;
+    public void launch() {
         try {
-            p = launcher.launch();
-            sleep(5000);
-            p.waitFor();
-        } catch (InterruptedException | LaunchException e) {
-            e.printStackTrace();
-        }
+            GameVersion VERSION = new GameVersion("1.15.2", GameType.V_1_15_2_FORGE);
+            GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"), VERSION, new GameTweak[]{});
+
+            ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(INFOS, GameFolder.BASIC, Authenticator.authInfos);
+            profile.getVmArgs().add("-Xmx8G");
+            ExternalLauncher launcher = new ExternalLauncher(profile);
+            Process p = null;
+            try {
+                p = launcher.launch();
+                sleep(5000);
+                p.waitFor();
+            } catch (InterruptedException | LaunchException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {}
     }
 
 }

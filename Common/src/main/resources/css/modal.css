@@ -3,3 +3,8 @@
     -fx-background-radius: 15 15 15 15;
     -fx-background-color: #181818;
 }
+
+.emoij {
+    -fx-background-image: url("emoij.png");
+    -fx-background-repeat: no-repeat;
+}

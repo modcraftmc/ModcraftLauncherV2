@@ -90,7 +90,7 @@ public class ModcraftApplication extends Application {
         window.addEventHandler(LoginEvent.LOGIN, event -> {
             if (event.getSucces())  {
                 switchScene(download);
-                new Thread(downloadController::download).start();
+                new Thread(downloadController::launch).start();
             }
 
         });
