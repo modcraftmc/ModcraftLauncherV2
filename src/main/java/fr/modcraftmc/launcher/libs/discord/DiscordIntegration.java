@@ -8,16 +8,21 @@ import fr.modcraftmc.launcher.core.ModcraftLauncher;
 public class DiscordIntegration {
 
     private Thread discord;
+    private DiscordRPC lib = DiscordRPC.INSTANCE;
+    private static DiscordRichPresence pre;
+
 
     public DiscordIntegration() {
 
-        DiscordRPC lib = DiscordRPC.INSTANCE;
         DiscordEventHandlers handlers = new DiscordEventHandlers();
         handlers.ready = (user) -> ModcraftLauncher.LOGGER.info("Connected to user : " + user.username + user.discriminator);
         lib.Discord_Initialize("637707031804903425", handlers, true, "");
         DiscordRichPresence presence = new DiscordRichPresence();
+        pre = presence;
         presence.startTimestamp = System.currentTimeMillis() / 1000;
-        presence.details = "modcraftmc.fr";
+        presence.state = "Sur le launcher";
+        presence.details = "joue sur ModcraftMC";
+        presence.largeImageKey = "logo";
         lib.Discord_UpdatePresence(presence);
         discord = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
@@ -27,15 +32,14 @@ public class DiscordIntegration {
                 } catch (InterruptedException ignored) {}
             }
         }, "RPC-Callback-Handler");
+        discord.start();
 
     }
 
-    public void setState(boolean state) {
-        if (state) {
-            discord.start();
-        } else {
-            discord.interrupt();
-        }
+
+    public static void setState(int size, int max) {
+        pre.partySize = size;
+        pre.partyMax = max;
     }
 
 }

@@ -67,7 +67,7 @@ public class LoginController {
 
             loginEvent.setSucces(true);
 
-            ModcraftLauncher.settingsManager.getSetting().setKeepLogin(keepLogin.isSelected());
+            //ModcraftLauncher.settingsManager.getSetting().setKeepLogin(keepLogin.isSelected());
             Authenticator.auth(emailField.getText(), passwordField.getText());
         } catch (AuthentificationException e) {
             loginEvent.setSucces(false);
@@ -82,7 +82,7 @@ public class LoginController {
         boolean logged = false;
         try {
 
-            String token = ModcraftLauncher.settingsManager.getSetting().getAccesToken();
+            String token = "a";
             if (token == null) {
                 throw new FileNotFoundException();
             }

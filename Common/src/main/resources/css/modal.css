@@ -1,0 +1,5 @@
+.container {
+    -fx-border-radius: 15 15 15 15;
+    -fx-background-radius: 15 15 15 15;
+    -fx-background-color: #181818;
+}

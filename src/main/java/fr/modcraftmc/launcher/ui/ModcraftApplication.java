@@ -1,7 +1,6 @@
 package fr.modcraftmc.launcher.ui;
 
 import fr.modcraftmc.launcher.core.Constants;
-import fr.modcraftmc.launcher.core.ModcraftLauncher;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.ui.controllers.DownloadController;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;
@@ -49,7 +48,9 @@ public class ModcraftApplication extends Application {
         LoginController logincontroller = loader.getController();
 
 
-        logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSetting().getKeepLogin());
+       // logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSetting().getKeepLogin());
+
+
 
 
         loader = new FXMLLoader(resourcesManager.getResource("main.fxml"));
@@ -75,7 +76,6 @@ public class ModcraftApplication extends Application {
         stage.addEventFilter(MOUSE_DRAGGED, e -> { window.setX(e.getScreenX() - sx.get()); window.setY(e.getScreenY() - sy.get()); });
 
 
-        downloadController.download();
 
         logincontroller.passwordLost.setOnAction(event -> {
             if(Desktop.isDesktopSupported())
@@ -86,8 +86,13 @@ public class ModcraftApplication extends Application {
             }
         });
 
+
         window.addEventHandler(LoginEvent.LOGIN, event -> {
-            if (event.getSucces()) switchScene(main);
+            if (event.getSucces())  {
+                switchScene(download);
+                new Thread(downloadController::download).start();
+            }
+
         });
 
         scene.setOnKeyPressed(event -> {
@@ -105,4 +110,6 @@ public class ModcraftApplication extends Application {
         switchto.setFill(Color.TRANSPARENT);
         window.setScene(switchto);
     }
+
+
 }

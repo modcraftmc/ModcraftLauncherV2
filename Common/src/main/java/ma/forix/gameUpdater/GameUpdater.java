@@ -42,7 +42,6 @@ public class GameUpdater {
     }
 
     public void start(){
-        updater();
         if (deleter)
             downloader.deleter();
 
@@ -55,13 +54,10 @@ public class GameUpdater {
 
     public Task updater(){
         task = new Downloader(url, gameDir);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (progressBar != null) {
-                    progressBar.progressProperty().unbind();
-                    progressBar.progressProperty().bind(task.progressProperty());
-                }
+        Platform.runLater(() -> {
+            if (progressBar != null) {
+                progressBar.progressProperty().unbind();
+                progressBar.progressProperty().bind(task.progressProperty());
             }
         });
 

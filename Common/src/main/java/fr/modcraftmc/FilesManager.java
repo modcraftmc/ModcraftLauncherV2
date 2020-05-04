@@ -1,10 +1,6 @@
-package fr.modcraftmc.launcher.libs.files;
-
-import com.google.gson.Gson;
-import fr.modcraftmc.launcher.libs.settings.Settings;
+package fr.modcraftmc;
 
 import java.io.File;
-import java.io.FileWriter;
 
 public class FilesManager {
 
@@ -20,11 +16,6 @@ public class FilesManager {
             }
             if (!OPTIONS_PATH.exists()) {
                 OPTIONS_PATH.createNewFile();
-                Gson gson = new Gson();
-                FileWriter fileWriter = new FileWriter(OPTIONS_PATH);
-                fileWriter.write(gson.toJson(new Settings("", true, true)));
-                fileWriter.flush();
-                fileWriter.close();
             }
             if (!INSTANCES_PATH.exists()) {
                 INSTANCES_PATH.mkdirs();
@@ -36,6 +27,7 @@ public class FilesManager {
             OPTIONS_PATH.delete();
             e.printStackTrace();
         }
+
     }
 
     public File getDefaultPath() {
@@ -50,7 +42,7 @@ public class FilesManager {
         return INSTANCES_PATH;
     }
 
-    public static File getJavaPath() {
+    public  File getJavaPath() {
         return JAVA_PATH;
     }
 
@@ -69,4 +61,6 @@ public class FilesManager {
     public static void setJavaPath(File javaPath) {
         JAVA_PATH = javaPath;
     }
+
+
 }

@@ -16,7 +16,7 @@
             <effect>
                 <Blend />
             </effect></Button>
-      <ProgressBar layoutY="562.0" prefHeight="38.0" prefWidth="1000.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" layoutY="548.0" prefHeight="38.0" prefWidth="1000.0" progress="0.0" />
       <MediaView fx:id="media" fitHeight="200.0" fitWidth="200.0" layoutX="357.0" layoutY="179.0" />
     </children>
     <stylesheets>

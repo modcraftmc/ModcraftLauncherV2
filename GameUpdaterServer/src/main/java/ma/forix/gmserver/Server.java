@@ -34,7 +34,7 @@ public class Server {
 
     public Server(){
         try {
-            server = new ServerSocket(25667, 50);
+            server = new ServerSocket(2020, 50);
             contentGenerator = new ContentGenerator(gameDir);
             commandReceiver = new CommandReceiver();
         } catch (IOException e) {

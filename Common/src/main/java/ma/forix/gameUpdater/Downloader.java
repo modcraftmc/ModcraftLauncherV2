@@ -147,7 +147,7 @@ public class Downloader extends Task<Void> {
     private void getContent(String content){
 
         try {
-            Socket socket = new Socket("v1.modcraftmc.fr", 25667);
+            Socket socket = new Socket("v1.modcraftmc.fr", 2020);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             reader = new BufferedInputStream(socket.getInputStream());
             String reponse = null;
@@ -546,6 +546,8 @@ public class Downloader extends Task<Void> {
 
         boolean finished = false;
         while (!finished){
+            System.out.println("fileDownloaded" + fileDownloaded);
+            System.out.println("filesToDownload" + filesToDownload);
             if (fileDownloaded >= filesToDownload)
                 finished = true;
             try {

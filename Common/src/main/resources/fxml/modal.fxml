@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane id="container" fx:id="container" prefHeight="300.0" prefWidth="450.0" styleClass="container" stylesheets="@../css/modal.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.alerts.Controller">
+
+</AnchorPane>
