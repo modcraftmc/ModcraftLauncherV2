@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
@@ -16,8 +17,9 @@
             <effect>
                 <Blend />
             </effect></Button>
-      <ProgressBar fx:id="progressBar" layoutY="548.0" prefHeight="38.0" prefWidth="1000.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" layoutY="578.0" prefHeight="22.0" prefWidth="1000.0" progress="0.0" stylesheets="@../css/global.css" />
       <MediaView fx:id="media" fitHeight="200.0" fitWidth="200.0" layoutX="357.0" layoutY="179.0" />
+      <ImageView fx:id="imageview" fitHeight="526.0" fitWidth="952.0" layoutX="24.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
     </children>
     <stylesheets>
         <URL value="@../css/login.css" />

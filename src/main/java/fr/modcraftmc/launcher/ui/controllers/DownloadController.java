@@ -1,13 +1,19 @@
 package fr.modcraftmc.launcher.ui.controllers;
 
+import animatefx.animation.AnimationFX;
+import animatefx.animation.FadeOut;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
 import fr.modcraftmc.launcher.libs.authentification.Authenticator;
+import fr.modcraftmc.launcher.ui.ModcraftApplication;
 import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import ma.forix.gameUpdater.EnumModcraft;
 import ma.forix.gameUpdater.GameUpdater;
 
@@ -20,6 +26,12 @@ public class DownloadController {
     @FXML
     public ProgressBar progressBar;
 
+    @FXML
+    public ImageView imageview;
+
+    @FXML
+    public AnchorPane container;
+
 
     public static final File SKYBLOCK = new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock");
 
@@ -27,14 +39,16 @@ public class DownloadController {
 
         Thread update = new Thread(() -> {
 
+            imageview.setSmooth(true);
+            imageview.setPreserveRatio(true);
+            imageview.setImage(new Image("http://getwallpapers.com/wallpaper/full/2/9/a/90106.jpg"));
+
             GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
             GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", SKYBLOCK, progressBar);
 
             gameUpdater.updater().setOnSucceeded(event -> {
                 new Thread(() -> {
-
-                        launch();
-
+                    launch();
 
                 }).start();
 
@@ -58,12 +72,22 @@ public class DownloadController {
             Process p = null;
             try {
                 p = launcher.launch();
+                hide();
                 sleep(5000);
                 p.waitFor();
             } catch (InterruptedException | LaunchException e) {
                 e.printStackTrace();
             }
         } catch (Exception e) {}
+    }
+
+    public void hide() {
+
+        AnimationFX close = new FadeOut(container);
+        close.setSpeed(5D);
+        close.setResetOnFinished(true);
+        close.play();
+        close.setOnFinished(event -> ModcraftApplication.window.setIconified(true));
     }
 
 }

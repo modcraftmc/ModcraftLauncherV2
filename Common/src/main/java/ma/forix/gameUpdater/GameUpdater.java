@@ -35,11 +35,6 @@ public class GameUpdater {
         downloader = new Downloader(url, gameDir);
     }
 
-    public GameUpdater(String url, File gameDir) {
-        this.url = url;
-        this.gameDir = gameDir;
-        downloader = new Downloader(url, gameDir);
-    }
 
     public void start(){
         if (deleter)

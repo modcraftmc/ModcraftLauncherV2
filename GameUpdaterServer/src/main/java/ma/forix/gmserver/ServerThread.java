@@ -89,6 +89,7 @@ public class ServerThread extends Thread implements Runnable {
                     case "getContent-LAUNCHER":
                         writer.write(contentCache);
                         writer.flush();
+                        writer.close();
                         break;
                     case "getContent-BOOTSTRAP":
                         writer.write(bootstrapJson);
