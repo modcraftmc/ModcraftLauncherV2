@@ -115,7 +115,9 @@ public class ServerThread extends Thread implements Runnable {
                         writer.write("null");
                         writer.flush();
                         break;
+
                 }
+                client.close();
             } catch (SocketException e){
                 e.printStackTrace();
                 try {

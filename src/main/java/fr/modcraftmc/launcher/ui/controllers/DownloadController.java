@@ -18,6 +18,9 @@ import ma.forix.gameUpdater.EnumModcraft;
 import ma.forix.gameUpdater.GameUpdater;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static java.lang.Thread.sleep;
 
@@ -41,7 +44,22 @@ public class DownloadController {
 
             imageview.setSmooth(true);
             imageview.setPreserveRatio(true);
-            imageview.setImage(new Image("http://getwallpapers.com/wallpaper/full/2/9/a/90106.jpg"));
+
+
+            long delay = 2000;
+            ArrayList<Image> imageArrayList = new ArrayList();
+            imageArrayList.add(new Image(""));
+
+            new Timer().schedule(new TimerTask() {
+                int count = 0;
+                @Override
+                public void run() {
+                    imageview.setImage(imageArrayList.get(count++));
+                    if (count >= imageArrayList.size()) {
+                        count = 0;
+                    }
+                }
+            }, 0, delay);
 
             GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
             GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", SKYBLOCK, progressBar);
@@ -54,7 +72,7 @@ public class DownloadController {
 
             });
 
-            gameUpdater.setDeleter(false);
+            gameUpdater.setDeleter(true);
             gameUpdater.start();
 
         });

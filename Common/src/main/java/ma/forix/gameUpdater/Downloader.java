@@ -353,7 +353,7 @@ public class Downloader extends Task<Void> {
                         e.printStackTrace();
                     }
 
-                    if (cursor.getParent().equals(System.getProperty("user.home")+"\\AppData\\Roaming\\.modcraft\\mods")){
+                    if (cursor.getParent().equals(new File(gameDir, "mods"))){
                         for (String modid : ignoreModId){
                             try {
                                 if (getModId(cursor).equals(modid)) {
@@ -373,7 +373,7 @@ public class Downloader extends Task<Void> {
                     }
 
                     if (!ignore) {
-                        //current.delete();
+                        current.delete();
                         GameUpdater.LOGGER.info("[IGNORE LIST] Fichier '"+cursor+"' supprimé !");
                         //System.out.println("simultané: "+simultane);
                         simultane--;
@@ -472,7 +472,7 @@ public class Downloader extends Task<Void> {
         GameUpdater.LOGGER.info("[VERIFICATION] Files to download: "+toDownload);
     }
 
-    private void download(File cursor, JSONObject obj) throws Exception {
+    private void download(File cursor, JSONObject obj) {
         Thread download = new Thread(() -> {
             String path = obj.get("path").toString();
             String fileName = obj.get("filename").toString();
@@ -485,7 +485,7 @@ public class Downloader extends Task<Void> {
                     fileUrl = new URL(this.url + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
                 }
 
-                GameUpdater.LOGGER.info("[GameUpdater] Téléchargement du fichier: "+fileUrl.toString());
+                System.out.println("[GameUpdater] Téléchargement du fichier: "+ fileUrl.toString());
                 BufferedInputStream bis = new BufferedInputStream(fileUrl.openStream());
                 FileOutputStream fos = new FileOutputStream(new File(cursor.toString().replaceAll("#var#", ".var")));
                 final byte data[] = new byte[64];
@@ -537,9 +537,9 @@ public class Downloader extends Task<Void> {
             object = (JSONObject) array;
             cursor = new File(gameDir.toString() + "\\" + object.get("path").toString() + object.get("filename").toString());
             if (cursor.getParentFile().exists()) {
-                if (!cursor.exists()) {
-                    download(cursor, object);
-                }
+                    if (!cursor.exists()) {
+                        download(cursor, object);
+                    }
             } else {
                 cursor.getParentFile().mkdirs();
                 download(cursor, object);
@@ -548,8 +548,7 @@ public class Downloader extends Task<Void> {
 
         boolean finished = false;
         while (!finished){
-            System.out.println("fileDownloaded" + fileDownloaded);
-            System.out.println("filesToDownload" + filesToDownload);
+
             if (fileDownloaded >= filesToDownload)
                 finished = true;
             try {

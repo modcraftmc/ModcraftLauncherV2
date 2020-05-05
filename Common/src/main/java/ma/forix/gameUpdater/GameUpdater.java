@@ -28,6 +28,7 @@ public class GameUpdater {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
             //TODO: CRASH REPORTTER
+            e.printStackTrace();
             update.interrupt();
 
         }
@@ -75,6 +76,7 @@ public class GameUpdater {
 
         update = new Thread(task);
         update.setDaemon(true);
+        update.setUncaughtExceptionHandler(exceptionHandler);
         return task;
     }
 
