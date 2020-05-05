@@ -78,7 +78,9 @@ public class DownloadController {
             } catch (InterruptedException | LaunchException e) {
                 e.printStackTrace();
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {} finally {
+            System.exit(0);
+        }
     }
 
     public void hide() {

@@ -64,7 +64,7 @@ public class Downloader extends Task<Void> {
 
                             if (!keep) {
                                 //cursor.delete();
-                                System.out.println("[Game Analyzer] File '" + cursor.getName() + "' deleted");
+                                GameUpdater.LOGGER.info("[Game Analyzer] File '" + cursor.getName() + "' deleted");
                             }
                         } catch (NoSuchAlgorithmException | IOException e) {
                             e.printStackTrace();
@@ -81,11 +81,11 @@ public class Downloader extends Task<Void> {
                 e.printStackTrace();
             }
         }
-        System.out.println("[Game Analyzer] time elapsed: "+(System.currentTimeMillis()-start));
+        GameUpdater.LOGGER.info("[Game Analyzer] time elapsed: "+(System.currentTimeMillis()-start));
     }
 
     public Downloader(String url, File gameDir){
-        System.out.println("OS: "+System.getProperty("os.name"));
+        GameUpdater.LOGGER.info("OS: "+System.getProperty("os.name"));
         if (System.getProperty("os.name").contains("Windows"))
             os = Os.WINDAUBE;
         else
@@ -99,12 +99,17 @@ public class Downloader extends Task<Void> {
             gameDir.mkdir();
         long start;
         start = System.currentTimeMillis();
-        System.out.println("File to download : " + GameUpdater.toDownload.name());
-        getContent(GameUpdater.toDownload.name());
-        System.out.println("getcontent time: "+(System.currentTimeMillis()-start));
+        GameUpdater.LOGGER.info("File to download : " + GameUpdater.toDownload.name());
+        try {
+            getContent(GameUpdater.toDownload.name());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        GameUpdater.LOGGER.info("getcontent time: "+(System.currentTimeMillis()-start));
         start = System.currentTimeMillis();
         getIgnoreList();
-        System.out.println("getIgnoreList time: "+(System.currentTimeMillis()-start));
+        GameUpdater.LOGGER.info("getIgnoreList time: "+(System.currentTimeMillis()-start));
         //Suppresser();
         //Verification();
         deleter();
@@ -144,9 +149,8 @@ public class Downloader extends Task<Void> {
         }
     }
 
-    private void getContent(String content){
+    private void getContent(String content) throws Exception {
 
-        try {
             Socket socket = new Socket("v1.modcraftmc.fr", 2020);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             reader = new BufferedInputStream(socket.getInputStream());
@@ -167,18 +171,16 @@ public class Downloader extends Task<Void> {
                     baos.write(chunk, 0, numBytesJustRead);
                 }
                 String msg =  baos.toString("UTF-8");
-                System.out.println(msg);
+                GameUpdater.LOGGER.info(msg);
                 Object obj = new JSONParser().parse(msg);
                 jsonArray = (JSONArray) obj;
             }
 
-            System.out.println("content.json recovered");
+            GameUpdater.LOGGER.info("content.json recovered");
             writer.write("close");
             writer.flush();
+            writer.close();
             socket.close();
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public void readLaucherContent() {
@@ -320,11 +322,11 @@ public class Downloader extends Task<Void> {
         long time1 = System.currentTimeMillis();
         File[] listing = FileUtils.listFiles(gameDir, null, true).toArray(new File[0]);
         long time2 = System.currentTimeMillis();
-        System.out.println("Listing time: "+(time2-time1));
+        GameUpdater.LOGGER.info("Listing time: "+(time2-time1));
         long temp = System.currentTimeMillis();
         Thread t = null;
         fileNumber = listing.length;
-        System.out.println("filenumber: "+fileNumber);
+        GameUpdater.LOGGER.info("filenumber: "+fileNumber);
         for (File current : listing){
             t = new Thread(){
                 @Override
@@ -372,7 +374,7 @@ public class Downloader extends Task<Void> {
 
                     if (!ignore) {
                         //current.delete();
-                        System.out.println("[IGNORE LIST] Fichier '"+cursor+"' supprimé !");
+                        GameUpdater.LOGGER.info("[IGNORE LIST] Fichier '"+cursor+"' supprimé !");
                         //System.out.println("simultané: "+simultane);
                         simultane--;
                     } else
@@ -390,9 +392,9 @@ public class Downloader extends Task<Void> {
             }
         }
 
-        System.out.println("TOUT EST FINI");
+        GameUpdater.LOGGER.info("TOUT EST FINI");
 
-        System.out.println("[IGNORE LIST] time elapsed for deleting unecessary files: "+(System.currentTimeMillis()-temp));
+        GameUpdater.LOGGER.info("[IGNORE LIST] time elapsed for deleting unecessary files: "+(System.currentTimeMillis()-temp));
     }
 
     private static String getFileChecksum(MessageDigest digest, File file) throws IOException
@@ -465,9 +467,9 @@ public class Downloader extends Task<Void> {
                 }
             }
         }
-        System.out.println("[VERIFICATION] temps écoulé vérif: "+(System.currentTimeMillis()-temp));
-        System.out.println("[VERIFICATION] Download size: "+GetDownloadSize(toDownload)/1024+"Ko");
-        System.out.println("[VERIFICATION] Files to download: "+toDownload);
+        GameUpdater.LOGGER.info("[VERIFICATION] temps écoulé vérif: "+(System.currentTimeMillis()-temp));
+        GameUpdater.LOGGER.info("[VERIFICATION] Download size: "+GetDownloadSize(toDownload)/1024+"Ko");
+        GameUpdater.LOGGER.info("[VERIFICATION] Files to download: "+toDownload);
     }
 
     private void download(File cursor, JSONObject obj) throws Exception {
@@ -483,7 +485,7 @@ public class Downloader extends Task<Void> {
                     fileUrl = new URL(this.url + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
                 }
 
-                System.out.println("[GameUpdater] Téléchargement du fichier: "+fileUrl.toString());
+                GameUpdater.LOGGER.info("[GameUpdater] Téléchargement du fichier: "+fileUrl.toString());
                 BufferedInputStream bis = new BufferedInputStream(fileUrl.openStream());
                 FileOutputStream fos = new FileOutputStream(new File(cursor.toString().replaceAll("#var#", ".var")));
                 final byte data[] = new byte[64];
@@ -495,7 +497,7 @@ public class Downloader extends Task<Void> {
                 }
                 threadsNumber--;
                 fileDownloaded++;
-                System.out.println("[GameUpdater] Téléchargement du fichier terminé :"+fileName);
+                GameUpdater.LOGGER.info("[GameUpdater] Téléchargement du fichier terminé :"+fileName);
                 bis.close();
                 fos.flush();
             } catch (IOException e) {
@@ -561,8 +563,8 @@ public class Downloader extends Task<Void> {
 
     @Override
     protected void succeeded() {
-        System.out.println("[GameUpdater] Downloading time: "+(System.currentTimeMillis()/1000-time)+" sec");
-        System.out.println("[GameUpdater] Update finished !");
+        GameUpdater.LOGGER.info("[GameUpdater] Downloading time: "+(System.currentTimeMillis()/1000-time)+" sec");
+        GameUpdater.LOGGER.info("[GameUpdater] Update finished !");
         super.succeeded();
     }
 

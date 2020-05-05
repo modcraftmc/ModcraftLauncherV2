@@ -1,12 +1,19 @@
 package ma.forix.gameUpdater;
 
+import fr.modcraftmc.modal.ModalBuilder;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.ProgressBar;
+import net.wytrem.logging.Logger;
+import net.wytrem.logging.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.Socket;
 
 public class GameUpdater {
+
+    public final static Logger LOGGER = LoggerFactory.getLogger("GameUpdater");
 
     private String url;
     private File gameDir;
@@ -25,6 +32,16 @@ public class GameUpdater {
 
         }
     };
+
+    public static void checkServer() {
+        try {
+            Socket socket = new Socket("v1.modcraftmc.fr", 2121);
+        } catch (IOException e) {
+            ModalBuilder builder = new ModalBuilder();
+            //builder.show();
+
+        }
+    }
 
     private Downloader downloader;
 

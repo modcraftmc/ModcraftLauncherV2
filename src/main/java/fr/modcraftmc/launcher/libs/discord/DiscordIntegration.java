@@ -4,6 +4,7 @@ import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
+import fr.modcraftmc.launcher.ui.ModcraftApplication;
 
 public class DiscordIntegration {
 
@@ -20,7 +21,7 @@ public class DiscordIntegration {
         DiscordRichPresence presence = new DiscordRichPresence();
         pre = presence;
         presence.startTimestamp = System.currentTimeMillis() / 1000;
-        presence.state = "Sur le launcher";
+        presence.state = ModcraftApplication.statusDiscord;
         presence.details = "joue sur ModcraftMC";
         presence.largeImageKey = "logo";
         lib.Discord_UpdatePresence(presence);

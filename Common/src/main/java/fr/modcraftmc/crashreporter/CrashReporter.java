@@ -1,6 +1,6 @@
 package fr.modcraftmc.crashreporter;
 
-import fr.modcraftmc.alerts.AlertBuilder;
+import fr.modcraftmc.modal.AlertBuilder;
 import javafx.scene.control.Alert;
 import javafx.stage.Window;
 

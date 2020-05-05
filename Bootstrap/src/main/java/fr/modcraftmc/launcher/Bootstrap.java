@@ -1,8 +1,8 @@
 package fr.modcraftmc.launcher;
 
-import fr.modcraftmc.alerts.AlertBuilder;
 import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
 import fr.modcraftmc.launcher.utils.JavaUtils;
+import fr.modcraftmc.modal.AlertBuilder;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;

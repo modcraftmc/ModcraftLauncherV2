@@ -28,6 +28,8 @@ public class ModcraftLauncher {
         LOGGER.info("Starting ModcraftLauncher");
         LOGGER.info("By Modcraft developpement team");
 
+
+
         //TODO: get information form launcher.modcraftmc.fr
         getInformations();
 

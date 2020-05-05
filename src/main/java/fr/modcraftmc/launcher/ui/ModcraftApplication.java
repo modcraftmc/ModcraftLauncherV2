@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ma.forix.gameUpdater.GameUpdater;
 
 import java.awt.*;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 public class ModcraftApplication extends Application {
 
     public static ResourcesManager resourcesManager = new ResourcesManager();
+    public static String statusDiscord = "Sur le launcher";
     public static Stage window;
     private FXMLLoader loader;
     private static Parent login;
@@ -38,6 +40,8 @@ public class ModcraftApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
+
+        GameUpdater.checkServer();
 
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle(Constants.TITLE);

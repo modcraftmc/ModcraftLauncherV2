@@ -98,6 +98,7 @@ public class ServerThread extends Thread implements Runnable {
                     case "getContent-PRELAUNCHER":
                         writer.write(prelauncherJson);
                         writer.flush();
+                        writer.close();
                         break;
                     case "close":
                         client.close();

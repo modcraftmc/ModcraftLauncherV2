@@ -1,4 +1,4 @@
-package fr.modcraftmc.alerts;
+package fr.modcraftmc.modal;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
