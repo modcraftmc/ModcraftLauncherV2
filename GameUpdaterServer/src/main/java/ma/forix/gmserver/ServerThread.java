@@ -74,12 +74,11 @@ public class ServerThread extends Thread implements Runnable {
         super.run();
         System.out.println("["+TimeManager.getTime()+"] ["+getName()+"] Connection established !");
         while (!client.isClosed()) {
-            System.out.println();
             try {
                 writer = new PrintWriter(client.getOutputStream());
                 reader = new BufferedInputStream(client.getInputStream());
                 String reponse = read();
-                System.out.println("["+TimeManager.getTime()+"] ["+getName()+"] New input from client received: "+reponse);
+                Server.LOGGER.info("New input from client received: "+reponse);
                 switch (reponse){
                     case "getContent":
                         writer.write(contentCache);
