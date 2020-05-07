@@ -17,8 +17,16 @@ public class ServerManager {
 
         Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
         serverList = JSONUtils.readJson("http://v1.modcraftmc.fr/api/servers/servers.json", typeOfT);
-        ModcraftLauncher.LOGGER.info("Found {} servers", serverList.size());
+        ModcraftLauncher.LOGGER.info("Found servers : " + serverList.size());
 
+    }
 
+    public static List<Server> getServerList() {
+
+        if (serverList.size() == 0) {
+            init();
+            return serverList;
+        }
+        return serverList;
     }
 }

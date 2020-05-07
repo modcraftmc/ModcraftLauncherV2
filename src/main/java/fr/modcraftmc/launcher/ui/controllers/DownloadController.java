@@ -3,6 +3,7 @@ package fr.modcraftmc.launcher.ui.controllers;
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
+import fr.modcraftmc.launcher.core.servers.Server;
 import fr.modcraftmc.launcher.libs.authentification.Authenticator;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
 import fr.theshark34.openlauncherlib.LaunchException;
@@ -30,13 +31,13 @@ public class DownloadController {
 
     public static final File SKYBLOCK = new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock");
 
-    public void download() {
+    public void download(Server server) {
 
         Thread update = new Thread(() -> {
 
 
             GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
-            GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", SKYBLOCK, progressBar);
+            GameUpdater gameUpdater = new GameUpdater(server.update_url, SKYBLOCK, progressBar);
 
             gameUpdater.updater().setOnSucceeded(event -> new Thread(() -> launch()).start());
 

@@ -6,6 +6,7 @@ import fr.modcraftmc.launcher.ui.controllers.DownloadController;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;
 import fr.modcraftmc.launcher.ui.controllers.MainController;
 import fr.modcraftmc.launcher.ui.events.LoginEvent;
+import fr.modcraftmc.launcher.ui.events.PlayEvent;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -97,6 +98,14 @@ public class ModcraftApplication extends Application {
                 switchScene(main);
                 //new Thread(downloadController::download).start();
             }
+
+        });
+
+        window.addEventHandler(PlayEvent.PLAY, event -> {
+                switchScene(download);
+                new Thread(() -> {
+                    downloadController.download(event.getServer());
+                }).start();
 
         });
 
