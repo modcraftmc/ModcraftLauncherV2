@@ -31,7 +31,6 @@ public class ModcraftLauncher {
 
 
         new DiscordIntegration();
-        serverPingerThread.run();
 
         ServerManager.init();
 

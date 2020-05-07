@@ -103,7 +103,8 @@ public class MainController {
         servername.setText(ServerManager.getServerList().get(server - 1).name);
     }
 
-    public void setPlayerlist(String playerlist) {
-        this.playerlist.setText(playerlist);
+    public void setPlayerlist(String text) {
+        ModcraftLauncher.serverPingerThread.run();
+        playerlist.setText(text);
     }
 }

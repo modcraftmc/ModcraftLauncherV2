@@ -48,12 +48,14 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
 
 
-
-
-
-
-
 }
+
+def baseDir = "/global/build/$project.name"
+buildDir = baseDir
+subprojects {
+    buildDir = baseDir + project.path.replaceFirst(":", "/").replace(":", ".")
+}
+
 
 jar {
     manifest {

@@ -2,6 +2,7 @@
 .gradle
 .idea
 build
+global
 
 # Compiled class file
 *.class
