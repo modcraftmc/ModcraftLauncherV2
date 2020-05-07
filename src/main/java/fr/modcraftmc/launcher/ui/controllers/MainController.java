@@ -7,6 +7,7 @@ import fr.modcraftmc.launcher.core.servers.Server;
 import fr.modcraftmc.launcher.core.servers.ServerManager;
 import fr.modcraftmc.launcher.libs.authentification.Authenticator;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
+import fr.modcraftmc.launcher.ui.events.OptionsEvent;
 import fr.modcraftmc.launcher.ui.events.PlayEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -55,6 +56,9 @@ public class MainController {
         userlogo.setImage(new Image("https://minotar.net/avatar/" + Authenticator.authInfos.getUsername()));
         username.setText(Authenticator.authInfos.getUsername());
 
+        servername.setText(ServerManager.getServerList().get(0).name);
+        playerlist.setText(ModcraftLauncher.serverPingerThread.getResponse().getPlayers().getOnline() + "/" + ModcraftLauncher.serverPingerThread.getResponse().getPlayers().getMax());
+
         for (Server server : ServerManager.getServerList()) {
             Button button = new Button(server.name);
             button.getStyleClass().addAll("play", "serverbtn");
@@ -98,9 +102,15 @@ public class MainController {
 
     }
 
+    public void options() {
+        OptionsEvent event = new OptionsEvent();
+        Event.fireEvent(ModcraftApplication.window, event);
+
+    }
+
     public void switchServer(int server) {
-        selectedServer = ServerManager.getServerList().get(server - 1);
-        servername.setText(ServerManager.getServerList().get(server - 1).name);
+        selectedServer = ServerManager.getServerList().get(server);
+        servername.setText(ServerManager.getServerList().get(server).name);
     }
 
     public void setPlayerlist(String text) {

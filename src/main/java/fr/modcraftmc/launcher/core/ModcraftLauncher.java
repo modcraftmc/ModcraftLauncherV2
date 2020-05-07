@@ -26,6 +26,7 @@ public class ModcraftLauncher {
     public static void main(String[] args) {
 
 
+        new Thread(serverPingerThread).start();
         LOGGER.info("Starting ModcraftLauncher");
         LOGGER.info("By Modcraft developpement team");
 

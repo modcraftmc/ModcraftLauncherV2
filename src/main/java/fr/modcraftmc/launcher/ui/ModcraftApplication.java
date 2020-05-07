@@ -41,6 +41,8 @@ public class ModcraftApplication extends Application {
 
     private static Parent download;
 
+    private static Parent options;
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -57,11 +59,6 @@ public class ModcraftApplication extends Application {
         LoginController logincontroller = loader.getController();
 
 
-       // logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSetting().getKeepLogin());
-
-
-
-
         loader = new FXMLLoader(resourcesManager.getResource("main.fxml"));
         main = loader.load();
         mainController = loader.getController();
@@ -69,6 +66,10 @@ public class ModcraftApplication extends Application {
         loader = new FXMLLoader(resourcesManager.getResource("download.fxml"));
         download = loader.load();
         DownloadController downloadController = loader.getController();
+
+        loader = new FXMLLoader(resourcesManager.getResource("options.fxml"));
+        options = loader.load();
+        DownloadController optionsController = loader.getController();
 
         Scene scene = new Scene(logincontroller.checkToken() ? main : login);
 

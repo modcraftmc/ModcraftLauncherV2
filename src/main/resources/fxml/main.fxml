@@ -45,7 +45,7 @@
             </Label>
             <Label prefHeight="27.0" prefWidth="281.0" />
          </children></VBox>
-      <Pane fx:id="hboxmenu" layoutX="297.0" layoutY="105.0" prefHeight="379.0" prefWidth="694.0" styleClass="hboxmenu" stylesheets="@../css/main.css">
+      <Pane fx:id="hboxmenu" layoutX="297.0" layoutY="105.0" prefHeight="352.0" prefWidth="694.0" styleClass="hboxmenu" stylesheets="@../css/main.css">
          <children>
             <HBox fx:id="newsbox" layoutX="14.0" layoutY="60.0" prefHeight="259.0" prefWidth="659.0" styleClass="hbox" stylesheets="@../css/main.css" />
          </children>
@@ -53,9 +53,10 @@
       <Pane layoutX="312.0" layoutY="537.0" prefHeight="49.0" prefWidth="463.0" styleClass="serverinfos" stylesheets="@../css/main.css">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="236.0" text="Serveur " textFill="WHITE" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="24.0" prefHeight="25.0" prefWidth="236.0" text="skyblock" textFill="WHITE" />
+            <Label fx:id="servername" alignment="CENTER" contentDisplay="CENTER" layoutY="24.0" prefHeight="25.0" prefWidth="236.0" textAlignment="CENTER" textFill="WHITE" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" prefHeight="17.0" prefWidth="228.0" text="Joueurs" textAlignment="CENTER" textFill="WHITE" />
-            <Label fx:id="playerlist" alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="24.0" prefHeight="25.0" prefWidth="228.0" text="0/0 joueurs" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="playerlist" alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="24.0" prefHeight="25.0" prefWidth="228.0" textAlignment="CENTER" textFill="WHITE" />
          </children></Pane>
+      <Button fx:id="options" layoutX="801.0" layoutY="475.0" mnemonicParsing="false" onMouseClicked="#options" prefHeight="49.0" prefWidth="185.0" styleClass="play" stylesheets="@../css/main.css" text="OPTIONS" />
    </children>
 </AnchorPane>

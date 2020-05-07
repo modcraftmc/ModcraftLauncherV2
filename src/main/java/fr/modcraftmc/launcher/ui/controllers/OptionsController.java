@@ -1,4 +1,4 @@
 package fr.modcraftmc.launcher.ui.controllers;
 
-public class LoaderController {
+public class OptionsController {
 }
