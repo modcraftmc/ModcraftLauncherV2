@@ -18,6 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainController {
 
@@ -38,16 +41,37 @@ public class MainController {
     @FXML
     public VBox vboxmenu;
 
-    @FXML
-    public Button server1;
+    public List<Button> buttonList = new ArrayList<>();
 
-    @FXML
-    public Button server2;
 
     public void load() {
 
         userlogo.setImage(new Image("https://minotar.net/avatar/" + Authenticator.authInfos.getUsername()));
         username.setText(Authenticator.authInfos.getUsername());
+
+        for (Server server : ServerManager.getServerList()) {
+            Button btn = new Button(server.name);
+            btn.getStyleClass().add("play");
+            btn.setPrefWidth(287);
+            btn.setPrefHeight(58);
+            btn.setId(server.id);
+            buttonList.add(btn);
+
+            Label spacer = new Label("");
+            spacer.setPrefWidth(287);
+            spacer.setPrefHeight(27);
+            if (server.maintenance) btn.setDisable(true);
+            vboxmenu.getChildren().addAll(btn, spacer);
+        }
+
+
+
+        buttonList.get(0).setText(ServerManager.getServerList().get(0).name);
+        buttonList.get(1).setText(ServerManager.getServerList().get(1).name);
+
+        buttonList.get(0).setOnMouseClicked(event -> switchServer(1));
+
+        buttonList.get(1).setOnMouseClicked(event -> switchServer(2));
 
 
     }
@@ -66,22 +90,19 @@ public class MainController {
             return;
         }
 
+        if (selectedServer.maintenance) {
+            //TODO SHOW MODAL
+            return;
+        }
+
         ModcraftLauncher.LOGGER.info("Server to connect : " + selectedServer.name);
         PlayEvent event = new PlayEvent(selectedServer);
         Event.fireEvent(ModcraftApplication.window, event);
 
     }
 
-    public void server1()  {
-        selectedServer = ServerManager.getServerList().get(0);
-        server2.getStyleClass().add("disabled");
-        server1.getStyleClass().remove("disabled");
-
+    public void switchServer(int server) {
+        selectedServer = ServerManager.getServerList().get(server - 1);
     }
-    public void server2() {
-        selectedServer = ServerManager.getServerList().get(1);
-        server1.getStyleClass().add("disabled");
-        server2.getStyleClass().remove("disabled");
 
-    }
 }

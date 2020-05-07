@@ -29,7 +29,6 @@ public class DownloadController {
     public AnchorPane container;
 
 
-    public static final File SKYBLOCK = new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock");
 
     public void download(Server server) {
 
@@ -37,7 +36,7 @@ public class DownloadController {
 
 
             GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
-            GameUpdater gameUpdater = new GameUpdater(server.update_url, SKYBLOCK, progressBar);
+            GameUpdater gameUpdater = new GameUpdater(server.update_url, new File(ModcraftLauncher.filesManager.getInstancesPath(), server.name), progressBar);
 
             gameUpdater.updater().setOnSucceeded(event -> new Thread(() -> launch()).start());
 

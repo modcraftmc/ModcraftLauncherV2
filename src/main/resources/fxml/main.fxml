@@ -43,9 +43,7 @@
                   <Font name="Dubai Regular" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="server1" mnemonicParsing="false" onMouseClicked="#server1" prefHeight="58.0" prefWidth="287.0" styleClass="play" stylesheets="@../css/main.css" text="SERVEUR 1" />
             <Label prefHeight="27.0" prefWidth="281.0" />
-            <Button fx:id="server2" layoutX="17.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#server2" prefHeight="58.0" prefWidth="287.0" styleClass="play" stylesheets="@../css/main.css" text="SERVEUR 2" />
          </children></VBox>
       <Pane fx:id="hboxmenu" layoutX="297.0" layoutY="105.0" prefHeight="379.0" prefWidth="694.0" styleClass="hboxmenu" stylesheets="@../css/main.css">
          <children>

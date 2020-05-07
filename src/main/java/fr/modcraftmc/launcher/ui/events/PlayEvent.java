@@ -7,7 +7,7 @@ import javafx.event.EventType;
 public class PlayEvent extends Event {
 
     public static final EventType<PlayEvent> PLAY = new EventType(ANY, "PLAY");
-    public Server server;
+    private Server server;
 
     public PlayEvent(Server server) {
         super(PLAY);
