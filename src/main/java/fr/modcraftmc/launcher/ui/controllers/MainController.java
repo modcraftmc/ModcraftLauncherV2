@@ -51,16 +51,16 @@ public class MainController {
 
         for (Server server : ServerManager.getServerList()) {
             Button btn = new Button(server.name);
-            btn.getStyleClass().add("play");
+            btn.getStyleClass().addAll("play", "serverbtn");
             btn.setPrefWidth(287);
             btn.setPrefHeight(58);
             btn.setId(server.id);
+            if (server.maintenance) btn.setDisable(true);
             buttonList.add(btn);
 
             Label spacer = new Label("");
             spacer.setPrefWidth(287);
             spacer.setPrefHeight(27);
-            if (server.maintenance) btn.setDisable(true);
             vboxmenu.getChildren().addAll(btn, spacer);
         }
 

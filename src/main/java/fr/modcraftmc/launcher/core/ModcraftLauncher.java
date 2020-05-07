@@ -31,12 +31,6 @@ public class ModcraftLauncher {
 
 
 
-        //TODO: get information form launcher.modcraftmc.fr
-        getInformations();
-
-        //TODO: check system
-        checkEnvironement();
-
         new DiscordIntegration();
         serverPingerThread.run();
 
@@ -45,14 +39,5 @@ public class ModcraftLauncher {
         Application.launch(ModcraftApplication.class, args);
 
     }
-
-    public static void getInformations() {
-
-    }
-
-    public static void checkEnvironement() {
-
-    }
-
 
 }

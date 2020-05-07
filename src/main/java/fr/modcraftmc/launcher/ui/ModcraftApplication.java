@@ -96,16 +96,13 @@ public class ModcraftApplication extends Application {
             if (event.getSucces())  {
                 maincontroller.load();
                 switchScene(main);
-                //new Thread(downloadController::download).start();
             }
 
         });
 
         window.addEventHandler(PlayEvent.PLAY, event -> {
                 switchScene(download);
-                new Thread(() -> {
-                    downloadController.download(event.getServer());
-                }).start();
+                new Thread(() -> downloadController.download(event.getServer())).start();
 
         });
 
