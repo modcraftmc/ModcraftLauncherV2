@@ -11,16 +11,11 @@ import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ma.forix.gameUpdater.EnumModcraft;
 import ma.forix.gameUpdater.GameUpdater;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static java.lang.Thread.sleep;
 
@@ -28,9 +23,6 @@ public class DownloadController {
 
     @FXML
     public ProgressBar progressBar;
-
-    @FXML
-    public ImageView imageview;
 
     @FXML
     public AnchorPane container;
@@ -42,35 +34,11 @@ public class DownloadController {
 
         Thread update = new Thread(() -> {
 
-            imageview.setSmooth(true);
-            imageview.setPreserveRatio(true);
-
-
-            long delay = 2000;
-            ArrayList<Image> imageArrayList = new ArrayList();
-            imageArrayList.add(new Image(""));
-
-            new Timer().schedule(new TimerTask() {
-                int count = 0;
-                @Override
-                public void run() {
-                    imageview.setImage(imageArrayList.get(count++));
-                    if (count >= imageArrayList.size()) {
-                        count = 0;
-                    }
-                }
-            }, 0, delay);
 
             GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
             GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", SKYBLOCK, progressBar);
 
-            gameUpdater.updater().setOnSucceeded(event -> {
-                new Thread(() -> {
-                    launch();
-
-                }).start();
-
-            });
+            gameUpdater.updater().setOnSucceeded(event -> new Thread(() -> launch()).start());
 
             gameUpdater.setDeleter(true);
             gameUpdater.start();
@@ -82,7 +50,7 @@ public class DownloadController {
     public void launch() {
         try {
             GameVersion VERSION = new GameVersion("1.15.2", GameType.V_1_15_2_FORGE);
-            GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"), VERSION, new GameTweak[]{});
+            GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"), VERSION, new GameTweak[]{}, "31.1.75");
 
             ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(INFOS, GameFolder.BASIC, Authenticator.authInfos);
             profile.getVmArgs().add("-Xmx8G");
@@ -108,6 +76,15 @@ public class DownloadController {
         close.setResetOnFinished(true);
         close.play();
         close.setOnFinished(event -> ModcraftApplication.window.setIconified(true));
+    }
+
+    public void exit() {
+
+        AnimationFX close = new FadeOut(container);
+        close.setSpeed(5D);
+        close.setResetOnFinished(true);
+        close.play();
+        close.setOnFinished(event -> System.exit(0));
     }
 
 }

@@ -2,6 +2,7 @@ package fr.modcraftmc.launcher.core;
 
 import fr.modcraftmc.FilesManager;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
+import fr.modcraftmc.launcher.core.servers.ServerManager;
 import fr.modcraftmc.launcher.libs.discord.DiscordIntegration;
 import fr.modcraftmc.launcher.libs.serverpinger.ServerPingerThread;
 import fr.modcraftmc.launcher.libs.settings.SettingsManager;
@@ -38,6 +39,8 @@ public class ModcraftLauncher {
 
         new DiscordIntegration();
         serverPingerThread.run();
+
+        ServerManager.init();
 
         Application.launch(ModcraftApplication.class, args);
 

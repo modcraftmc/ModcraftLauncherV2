@@ -10,7 +10,7 @@ import static java.lang.Thread.sleep;
 public class MinecraftLauncher {
 
     public static final GameVersion VERSION = new GameVersion("1.12.2", GameType.V1_8_HIGHER);
-    public static final GameInfos INFOS = new GameInfos("modcraftmc/instances/skyblock", VERSION, new GameTweak[] {GameTweak.FORGE});
+    public static final GameInfos INFOS = new GameInfos("modcraftmc/instances/skyblock", VERSION, new GameTweak[] {GameTweak.FORGE}, "aaa");
 
 
     public void launch() throws LaunchException {

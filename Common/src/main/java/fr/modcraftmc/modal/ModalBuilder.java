@@ -3,18 +3,22 @@ package fr.modcraftmc.modal;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class ModalBuilder extends Parent {
+public class ModalBuilder extends Alert {
 
     private FXMLLoader loader;
     private static Stage window;
 
 
     public ModalBuilder() {
+        super(AlertType.INFORMATION);
+        this.initStyle(StageStyle.TRANSPARENT);
 
 
         loader = new FXMLLoader(this.getClass().getClassLoader().getResource("fxml/modal.fxml"));
