@@ -65,14 +65,10 @@ public class MainController {
         }
 
 
-
-        buttonList.get(0).setText(ServerManager.getServerList().get(0).name);
-        buttonList.get(1).setText(ServerManager.getServerList().get(1).name);
-
-        buttonList.get(0).setOnMouseClicked(event -> switchServer(1));
-
-        buttonList.get(1).setOnMouseClicked(event -> switchServer(2));
-
+        for (Button button : buttonList) {
+            button.setText(ServerManager.getServerList().get(Integer.parseInt(button.getId()) - 1).name);
+            button.setOnMouseClicked(event -> switchServer(Integer.parseInt(button.getId())));
+        }
 
     }
 
