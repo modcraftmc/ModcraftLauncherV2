@@ -1,6 +1,7 @@
 package fr.modcraftmc.launcher.libs.serverpinger;
 
 import fr.modcraftmc.launcher.libs.discord.DiscordIntegration;
+import fr.modcraftmc.launcher.ui.ModcraftApplication;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -8,9 +9,9 @@ import java.util.TimerTask;
 
 public class ServerPingerThread implements Runnable {
 
-    private static MinecraftPingOptions options = new MinecraftPingOptions().setHostname("v1.modcraftmc.fr").setPort(25565);
+    private static final MinecraftPingOptions options = new MinecraftPingOptions().setHostname("v1.modcraftmc.fr").setPort(25565);
 
-    private Timer timer = new Timer();
+    private final Timer timer = new Timer();
 
 
 
@@ -25,12 +26,15 @@ public class ServerPingerThread implements Runnable {
                     MinecraftPingReply response = new MinecraftPing().getPing(options);
                     DiscordIntegration.setState(response.getPlayers().getOnline(), response.getPlayers().getMax());
 
+                    if (ModcraftApplication.mainLoaded) ModcraftApplication.mainController.setPlayerlist(
+                            response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + "joueurs");
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }
-        }, 0, 6000);
+        }, 0, 60000);
 
     }
 }

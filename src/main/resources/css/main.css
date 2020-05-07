@@ -3,8 +3,8 @@
     -fx-font-size: 15px;
 }
 
-.serverbtn {
-
+.serverinfos {
+    -fx-background-color: #202020;
 }
 
 .serverbtn:focused{

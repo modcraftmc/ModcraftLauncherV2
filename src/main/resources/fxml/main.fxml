@@ -50,5 +50,12 @@
             <HBox fx:id="newsbox" layoutX="14.0" layoutY="60.0" prefHeight="259.0" prefWidth="659.0" styleClass="hbox" stylesheets="@../css/main.css" />
          </children>
       </Pane>
+      <Pane layoutX="312.0" layoutY="537.0" prefHeight="49.0" prefWidth="463.0" styleClass="serverinfos" stylesheets="@../css/main.css">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="236.0" text="Serveur " textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="24.0" prefHeight="25.0" prefWidth="236.0" text="skyblock" textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" prefHeight="17.0" prefWidth="228.0" text="Joueurs" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="playerlist" alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="24.0" prefHeight="25.0" prefWidth="228.0" text="0/0 joueurs" textAlignment="CENTER" textFill="WHITE" />
+         </children></Pane>
    </children>
 </AnchorPane>

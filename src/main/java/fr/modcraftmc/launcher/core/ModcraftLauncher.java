@@ -30,7 +30,6 @@ public class ModcraftLauncher {
         LOGGER.info("By Modcraft developpement team");
 
 
-
         new DiscordIntegration();
         serverPingerThread.run();
 

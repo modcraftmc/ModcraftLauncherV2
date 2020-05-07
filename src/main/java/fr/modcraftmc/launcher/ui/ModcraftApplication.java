@@ -34,7 +34,11 @@ public class ModcraftApplication extends Application {
     public static Stage window;
     private FXMLLoader loader;
     private static Parent login;
+
     private static Parent main;
+    public static MainController mainController;
+    public static boolean mainLoaded = false;
+
     private static Parent download;
 
 
@@ -60,7 +64,7 @@ public class ModcraftApplication extends Application {
 
         loader = new FXMLLoader(resourcesManager.getResource("main.fxml"));
         main = loader.load();
-        MainController maincontroller = loader.getController();
+        mainController = loader.getController();
 
         loader = new FXMLLoader(resourcesManager.getResource("download.fxml"));
         download = loader.load();
@@ -94,7 +98,8 @@ public class ModcraftApplication extends Application {
 
         window.addEventHandler(LoginEvent.LOGIN, event -> {
             if (event.getSucces())  {
-                maincontroller.load();
+                mainController.load();
+                mainLoaded = true;
                 switchScene(main);
             }
 

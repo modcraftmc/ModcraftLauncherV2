@@ -41,6 +41,12 @@ public class MainController {
     @FXML
     public VBox vboxmenu;
 
+    @FXML
+    public Label servername;
+
+    @FXML
+    public Label playerlist;
+
     public List<Button> buttonList = new ArrayList<>();
 
 
@@ -50,24 +56,24 @@ public class MainController {
         username.setText(Authenticator.authInfos.getUsername());
 
         for (Server server : ServerManager.getServerList()) {
-            Button btn = new Button(server.name);
-            btn.getStyleClass().addAll("play", "serverbtn");
-            btn.setPrefWidth(287);
-            btn.setPrefHeight(58);
-            btn.setId(server.id);
-            if (server.maintenance) btn.setDisable(true);
-            buttonList.add(btn);
+            Button button = new Button(server.name);
+            button.getStyleClass().addAll("play", "serverbtn");
+            button.setPrefWidth(287);
+            button.setPrefHeight(58);
+            button.setId(server.id);
+            if (server.maintenance) button.setDisable(true);
+            buttonList.add(button);
 
             Label spacer = new Label("");
             spacer.setPrefWidth(287);
             spacer.setPrefHeight(27);
-            vboxmenu.getChildren().addAll(btn, spacer);
+            vboxmenu.getChildren().addAll(button, spacer);
         }
 
 
         for (Button button : buttonList) {
             button.setText(ServerManager.getServerList().get(Integer.parseInt(button.getId()) - 1).name);
-            button.setOnMouseClicked(event -> switchServer(Integer.parseInt(button.getId())));
+            button.setOnMouseClicked(event -> switchServer(Integer.parseInt(button.getId()) - 1));
         }
 
     }
@@ -86,11 +92,6 @@ public class MainController {
             return;
         }
 
-        if (selectedServer.maintenance) {
-            //TODO SHOW MODAL
-            return;
-        }
-
         ModcraftLauncher.LOGGER.info("Server to connect : " + selectedServer.name);
         PlayEvent event = new PlayEvent(selectedServer);
         Event.fireEvent(ModcraftApplication.window, event);
@@ -99,6 +100,10 @@ public class MainController {
 
     public void switchServer(int server) {
         selectedServer = ServerManager.getServerList().get(server - 1);
+        servername.setText(ServerManager.getServerList().get(server - 1).name);
     }
 
+    public void setPlayerlist(String playerlist) {
+        this.playerlist.setText(playerlist);
+    }
 }
