@@ -1,10 +1,12 @@
 package fr.modcraftmc.launcher.ui;
 
 import fr.modcraftmc.launcher.core.Constants;
+import fr.modcraftmc.launcher.core.ModcraftLauncher;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.ui.controllers.DownloadController;
 import fr.modcraftmc.launcher.ui.controllers.LoginController;
 import fr.modcraftmc.launcher.ui.controllers.MainController;
+import fr.modcraftmc.launcher.ui.controllers.OptionsController;
 import fr.modcraftmc.launcher.ui.events.LoginEvent;
 import fr.modcraftmc.launcher.ui.events.PlayEvent;
 import javafx.application.Application;
@@ -58,6 +60,8 @@ public class ModcraftApplication extends Application {
         login = loader.load();
         LoginController logincontroller = loader.getController();
 
+        logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSettings().keepLogin);
+
 
         loader = new FXMLLoader(resourcesManager.getResource("main.fxml"));
         main = loader.load();
@@ -69,7 +73,7 @@ public class ModcraftApplication extends Application {
 
         loader = new FXMLLoader(resourcesManager.getResource("options.fxml"));
         options = loader.load();
-        DownloadController optionsController = loader.getController();
+        OptionsController optionsController = loader.getController();
 
         Scene scene = new Scene(logincontroller.checkToken() ? main : login);
 
@@ -119,6 +123,8 @@ public class ModcraftApplication extends Application {
                 }
             }
         });
+
+        window.setOnCloseRequest(event -> ModcraftLauncher.settingsManager.save());
     }
 
     public void switchScene(Parent scene) {

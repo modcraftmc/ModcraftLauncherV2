@@ -2,14 +2,13 @@ package fr.modcraftmc.launcher.libs.settings;
 
 public class Settings {
 
-    public String accesToken;
     public String version;
-    public Boolean keepLogin;
+
+    public String accesToken;
+
     public Boolean discordRPC;
 
-    public Settings() {
-
-    }
+    public Boolean keepLogin;
 
     public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin) {
         this.version = version;

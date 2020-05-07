@@ -67,7 +67,6 @@ public class LoginController {
 
             loginEvent.setSucces(true);
 
-            //ModcraftLauncher.settingsManager.getSetting().setKeepLogin(keepLogin.isSelected());
             Authenticator.auth(emailField.getText(), passwordField.getText());
         } catch (AuthentificationException e) {
             loginEvent.setSucces(false);
@@ -75,6 +74,14 @@ public class LoginController {
             ModcraftLauncher.LOGGER.warning(e.getMessage());
         }
 
+        ModcraftLauncher.settingsManager.getSettings().keepLogin = keepLogin.isSelected();
+        if (keepLogin.isSelected() && loginEvent.getSucces()) {
+            ModcraftLauncher.settingsManager.getSettings().accesToken = Authenticator.authInfos.getAccessToken();
+        }
+
+
+
+        ModcraftLauncher.settingsManager.save();
         Event.fireEvent(ModcraftApplication.window, loginEvent);
     }
 
