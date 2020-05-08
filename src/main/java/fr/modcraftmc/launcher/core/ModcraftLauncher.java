@@ -1,6 +1,7 @@
 package fr.modcraftmc.launcher.core;
 
 import fr.modcraftmc.FilesManager;
+import fr.modcraftmc.launcher.core.news.NewsManager;
 import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.core.servers.ServerManager;
 import fr.modcraftmc.launcher.libs.discord.DiscordIntegration;
@@ -35,6 +36,7 @@ public class ModcraftLauncher {
         if (settingsManager.getSettings().discordRPC) new DiscordIntegration();
 
         ServerManager.init();
+        NewsManager.init();
 
         Application.launch(ModcraftApplication.class, args);
 

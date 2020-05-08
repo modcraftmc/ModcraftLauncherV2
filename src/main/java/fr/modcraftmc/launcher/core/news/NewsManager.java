@@ -1,7 +1,8 @@
-package fr.modcraftmc.launcher.core.servers;
+package fr.modcraftmc.launcher.core.news;
 
 import com.google.gson.reflect.TypeToken;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
+import fr.modcraftmc.launcher.core.servers.Server;
 import fr.modcraftmc.launcher.core.utils.JSONUtils;
 
 import java.lang.reflect.Type;
@@ -10,17 +11,17 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ServerManager {
+public class NewsManager {
 
-    private static List<Server> serverList = new ArrayList<>();
+    private static List<News> newsList = new ArrayList<>();
     private static final Timer timer = new Timer();
 
     public static void init() {
-        ModcraftLauncher.LOGGER.info("Fetching servers list...");
+        ModcraftLauncher.LOGGER.info("Fetching news...");
 
         Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
-        serverList = JSONUtils.fetchServersList("http://v1.modcraftmc.fr/api/servers/servers.json", typeOfT);
-        ModcraftLauncher.LOGGER.info("Servers found : " + serverList.size());
+        newsList = JSONUtils.fetchNews("http://v1.modcraftmc.fr/api/news/news.json", typeOfT);
+        ModcraftLauncher.LOGGER.info("News found : " + newsList.size());
 
         refresh();
 
@@ -33,14 +34,14 @@ public class ServerManager {
             public void run() {
 
                 Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
-                serverList = JSONUtils.fetchServersList("http://v1.modcraftmc.fr/api/servers/servers.json", typeOfT);
+                newsList = JSONUtils.fetchNews("http://v1.modcraftmc.fr/api/news/news.json", typeOfT);
 
             }
         }, 60000, 60000);
 
     }
 
-    public static List<Server> getServerList() {
-        return serverList;
+    public static List<News> getNewsList() {
+        return newsList;
     }
 }

@@ -17,7 +17,7 @@ public class SettingsManager {
     private Settings settings = new Settings("1", "oh no no no no", true, true, "FR_fr");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    public Settings load() {
+    public void load() {
 
             try {
                 FileReader fileReader = new FileReader(ModcraftLauncher.filesManager.getOptionsPath());
@@ -38,7 +38,6 @@ public class SettingsManager {
                 e.printStackTrace();
             }
 
-        return settings;
     }
 
     public void save() {
