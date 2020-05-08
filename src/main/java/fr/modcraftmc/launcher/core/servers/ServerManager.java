@@ -14,11 +14,11 @@ public class ServerManager {
 
     private static List<Server> serverList = new ArrayList<>();
     private static final Timer timer = new Timer();
+    private static final Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
 
     public static void init() {
         ModcraftLauncher.LOGGER.info("Fetching servers list...");
 
-        Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
         serverList = JSONUtils.fetchServersList("http://v1.modcraftmc.fr/api/servers/servers.json", typeOfT);
         ModcraftLauncher.LOGGER.info("Servers found : " + serverList.size());
 
@@ -32,7 +32,6 @@ public class ServerManager {
             @Override
             public void run() {
 
-                Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
                 serverList = JSONUtils.fetchServersList("http://v1.modcraftmc.fr/api/servers/servers.json", typeOfT);
 
             }

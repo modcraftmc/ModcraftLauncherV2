@@ -41,6 +41,8 @@ public class LoginController {
     @FXML
     public Hyperlink passwordLost;
 
+    private final int logRounds = 3;
+
 
     public void close() {
 
@@ -111,5 +113,6 @@ public class LoginController {
         emailField.setDisable(value);
         passwordField.setDisable(value);
     }
+
 
 }

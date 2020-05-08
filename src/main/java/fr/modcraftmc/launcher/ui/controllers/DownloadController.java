@@ -32,9 +32,7 @@ public class DownloadController {
 
 
     public void download(Server server) {
-        Platform.runLater(()-> {
-            progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-        });
+        Platform.runLater(()-> progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS));
 
         Thread update = new Thread(() -> {
 

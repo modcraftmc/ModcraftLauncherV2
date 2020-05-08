@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.modcraftmc.launcher.core.news.News;
 import fr.modcraftmc.launcher.core.servers.Server;
-import fr.modcraftmc.launcher.libs.settings.Settings;
+import fr.modcraftmc.launcher.core.settings.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class JSONUtils {
             return gson.fromJson(reader, clazz);
         } catch (IOException ignored) {}
 
-        return new Settings("1", "oh no no no no", true, true, "FR_fr");
+        return new Settings("1", "oh no no no no", true, true, true,"FR_fr");
     }
 
     public static List<News> fetchNews(String URL, Type clazz)  {

@@ -2,7 +2,6 @@ package fr.modcraftmc.launcher.core.news;
 
 import com.google.gson.reflect.TypeToken;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
-import fr.modcraftmc.launcher.core.servers.Server;
 import fr.modcraftmc.launcher.core.utils.JSONUtils;
 
 import java.lang.reflect.Type;
@@ -15,11 +14,11 @@ public class NewsManager {
 
     private static List<News> newsList = new ArrayList<>();
     private static final Timer timer = new Timer();
+    private static final Type typeOfT = TypeToken.getParameterized(List.class, News.class).getType();
 
     public static void init() {
         ModcraftLauncher.LOGGER.info("Fetching news...");
 
-        Type typeOfT = TypeToken.getParameterized(List.class, News.class).getType();
         newsList = JSONUtils.fetchNews("http://v1.modcraftmc.fr/api/news/news.json", typeOfT);
         ModcraftLauncher.LOGGER.info("News found : " + newsList.size());
 
@@ -33,7 +32,6 @@ public class NewsManager {
             @Override
             public void run() {
 
-                Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
                 newsList = JSONUtils.fetchNews("http://v1.modcraftmc.fr/api/news/news.json", typeOfT);
 
             }

@@ -1,4 +1,4 @@
-package fr.modcraftmc.launcher.libs.settings;
+package fr.modcraftmc.launcher.core.settings;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SettingsManager {
 
-    private Settings settings = new Settings("1", "oh no no no no", true, true, "FR_fr");
+    private Settings settings = new Settings("1", "oh no no no no", true, true, true, "FR_fr");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public void load() {
