@@ -25,12 +25,12 @@ public class ModcraftLauncher {
 
     public static void main(String[] args) {
 
+        settingsManager.load();
 
         LOGGER.info("Starting ModcraftLauncher");
         LOGGER.info("By Modcraftmc developpement team");
 
 
-        settingsManager.load();
         new Thread(serverPingerThread).start();
         if (settingsManager.getSettings().discordRPC) new DiscordIntegration();
 

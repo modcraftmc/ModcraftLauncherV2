@@ -10,12 +10,14 @@ public class Settings {
 
     public Boolean keepLogin;
 
-    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin) {
+    public String locale;
+
+    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin, String locale) {
         this.version = version;
         this.accesToken = accesToken;
         this.discordRPC = discordRPC;
         this.keepLogin = keepLogin;
-
+        this.locale = locale;
     }
 
 }

@@ -2,8 +2,10 @@ package fr.modcraftmc.launcher.libs.settings;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
+import fr.modcraftmc.launcher.core.utils.JSONUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,33 +14,31 @@ import java.io.IOException;
 
 public class SettingsManager {
 
-    private Settings settings;
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+    private Settings settings = new Settings("1", "oh no no no no", true, true, "FR_fr");
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public Settings load() {
 
-         settings = new Settings("1", "null", true, true);
+            try {
+                FileReader fileReader = new FileReader(ModcraftLauncher.filesManager.getOptionsPath());
+                BufferedReader reader = new BufferedReader(fileReader);
+                try {
+                    if (reader.readLine() != null)
+                        settings = JSONUtils.readSettings(ModcraftLauncher.filesManager.getOptionsPath(), Settings.class);
+                    else
+                        save();
+                } catch (JsonIOException | JsonSyntaxException e) {
+                    e.printStackTrace();
+                    save();
 
-        try {
-            JsonReader fileReader = new JsonReader(new FileReader(ModcraftLauncher.filesManager.getOptionsPath()));
-            BufferedReader reader = new BufferedReader(new FileReader(ModcraftLauncher.filesManager.getOptionsPath()));
-            if (reader.readLine() != null)
-                settings = gson.fromJson(fileReader, Settings.class);
-            else
-                save();
+                }
 
-            } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(settings.version);
-        System.out.println(settings.accesToken);
-        System.out.println(settings.discordRPC);
-        System.out.println(settings.keepLogin);
-
+            } catch (Exception e) {
+                //TODO: crash reporter
+                e.printStackTrace();
+            }
 
         return settings;
-
     }
 
     public void save() {
@@ -48,9 +48,9 @@ public class SettingsManager {
             writer.flush();
             writer.close();
         } catch (IOException e) {
+            //TODO: crash reporter
             e.printStackTrace();
         }
-
     }
 
     public Settings getSettings() {

@@ -32,7 +32,8 @@ public class ServerManager {
             @Override
             public void run() {
 
-                init();
+                Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
+                serverList = JSONUtils.readJson("http://v1.modcraftmc.fr/api/servers/servers.json", typeOfT);
 
             }
         }, 60000, 60000);

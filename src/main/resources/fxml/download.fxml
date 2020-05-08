@@ -15,7 +15,7 @@
             <effect>
                 <Blend />
             </effect></Button>
-      <ProgressBar fx:id="progressBar" layoutY="578.0" prefHeight="22.0" prefWidth="1000.0" progress="0.0" stylesheets="@../css/global.css" />
+      <ProgressBar fx:id="progressBar" layoutY="573.0" prefHeight="29.0" prefWidth="1000.0" progress="0.0" styleClass="progressBar" stylesheets="@../css/global.css" />
     </children>
     <stylesheets>
         <URL value="@../css/login.css" />

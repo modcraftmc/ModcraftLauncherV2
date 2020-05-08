@@ -10,6 +10,7 @@ import fr.theshark34.openlauncherlib.LaunchException;
 import fr.theshark34.openlauncherlib.external.ExternalLaunchProfile;
 import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
@@ -31,6 +32,9 @@ public class DownloadController {
 
 
     public void download(Server server) {
+        Platform.runLater(()-> {
+            progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+        });
 
         Thread update = new Thread(() -> {
 
