@@ -19,7 +19,7 @@ public class NewsManager {
     public static void init() {
         ModcraftLauncher.LOGGER.info("Fetching news...");
 
-        Type typeOfT = TypeToken.getParameterized(List.class, Server.class).getType();
+        Type typeOfT = TypeToken.getParameterized(List.class, News.class).getType();
         newsList = JSONUtils.fetchNews("http://v1.modcraftmc.fr/api/news/news.json", typeOfT);
         ModcraftLauncher.LOGGER.info("News found : " + newsList.size());
 

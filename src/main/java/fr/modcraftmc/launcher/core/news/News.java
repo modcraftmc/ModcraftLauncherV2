@@ -1,7 +1,5 @@
 package fr.modcraftmc.launcher.core.news;
 
-import java.util.Date;
-
 public class News {
 
     public String title;
@@ -10,9 +8,9 @@ public class News {
 
     public String text;
 
-    public Date date;
+    public String date;
 
-    public News(String title, String backgroundurl, String text, Date date) {
+    public News(String title, String backgroundurl, String text, String date) {
         this.title = title;
         this.backgroundurl = backgroundurl;
         this.text = text;

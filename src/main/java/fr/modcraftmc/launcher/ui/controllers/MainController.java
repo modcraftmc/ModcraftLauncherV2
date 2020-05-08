@@ -3,21 +3,22 @@ package fr.modcraftmc.launcher.ui.controllers;
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
+import fr.modcraftmc.launcher.core.news.News;
+import fr.modcraftmc.launcher.core.news.NewsManager;
 import fr.modcraftmc.launcher.core.servers.Server;
 import fr.modcraftmc.launcher.core.servers.ServerManager;
 import fr.modcraftmc.launcher.libs.authentification.Authenticator;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
 import fr.modcraftmc.launcher.ui.events.OptionsEvent;
 import fr.modcraftmc.launcher.ui.events.PlayEvent;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,11 +75,21 @@ public class MainController {
             vboxmenu.getChildren().addAll(button, spacer);
         }
 
+        for (News news : NewsManager.getNewsList()) {
+            Pane pane = new Pane();
+            pane.setBackground(new Background(new BackgroundImage(new Image(news.backgroundurl), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+            Label title = new Label(news.title);
+            Label text = new Label(news.text);
+            Label date = new Label(news.date);
+            newsbox.getChildren().addAll(title, text, date);
+        }
+
 
         for (Button button : buttonList) {
             button.setText(ServerManager.getServerList().get(Integer.parseInt(button.getId()) - 1).name);
             button.setOnMouseClicked(event -> switchServer(Integer.parseInt(button.getId()) - 1));
         }
+        
 
     }
 
@@ -115,6 +126,6 @@ public class MainController {
 
     public void setPlayerlist(String text) {
         ModcraftLauncher.serverPingerThread.run();
-        playerlist.setText(text);
+        Platform.runLater(()-> playerlist.setText(text));
     }
 }
