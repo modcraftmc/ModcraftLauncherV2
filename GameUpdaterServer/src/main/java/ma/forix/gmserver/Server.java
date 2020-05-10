@@ -15,7 +15,7 @@ public class Server {
     private ContentGenerator contentGenerator;
     private CommandReceiver commandReceiver;
     private final File gameDir = new File(System.getProperty("user.dir")+"/downloads/");
-    private boolean isRunning = true;
+    private final boolean isRunning = true;
     public final static Logger LOGGER = LoggerFactory.getLogger("GameUpdaterServer");
 
 

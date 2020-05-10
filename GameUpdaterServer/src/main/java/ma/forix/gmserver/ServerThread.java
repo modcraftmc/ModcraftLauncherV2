@@ -12,12 +12,12 @@ import java.security.NoSuchAlgorithmException;
 
 public class ServerThread extends Thread implements Runnable {
 
-    private Socket client;
+    private final Socket client;
     private PrintWriter writer;
     private BufferedInputStream reader;
     private String prelauncherJson, bootstrapJson;
-    private File bootstrap = new File(System.getProperty("user.dir")+"/prelauncher/bootstrap.jar");
-    private File launcher = new File(System.getProperty("user.dir")+"/bootstrap/launcher.jar");
+    private final File bootstrap = new File(System.getProperty("user.dir")+"/prelauncher/bootstrap.jar");
+    private final File launcher = new File(System.getProperty("user.dir")+"/bootstrap/launcher.jar");
 
     public static String contentCache = readContent();
 

@@ -18,7 +18,7 @@ public class ContentGenerator extends Thread implements Runnable {
     private static ArrayList<String> scheduledTime;
 
     public ContentGenerator(File gameDir){
-        this.gameDir = gameDir;
+        ContentGenerator.gameDir = gameDir;
         if (!gameDir.exists())
             gameDir.mkdir();
         content = new JSONArray();
@@ -136,7 +136,7 @@ public class ContentGenerator extends Thread implements Runnable {
         //Read file data and update in message digest
         while ((bytesCount = fis.read(byteArray)) != -1) {
             digest.update(byteArray, 0, bytesCount);
-        };
+        }
 
         //close the stream; We don't need it now.
         fis.close();

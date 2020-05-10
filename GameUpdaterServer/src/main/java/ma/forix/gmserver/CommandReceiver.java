@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CommandReceiver extends Thread implements Runnable {
 
-    private Scanner input;
+    private final Scanner input;
 
     public CommandReceiver(){
         input = new Scanner(System.in);

@@ -19,7 +19,7 @@ public class Downloader extends Task<Void> {
 
 
     private String url;
-    private File gameDir;
+    private final File gameDir;
     private JSONArray jsonArray, toDownload;
     private JSONObject object;
     private int downloadSize, bytesDownloaded, fileDownloaded, filesToDownload, threadsNumber;
@@ -27,7 +27,7 @@ public class Downloader extends Task<Void> {
     private ArrayList<String> ignoreFiles, ignoreModId;
     private BufferedInputStream reader;
     private Thread updateBar;
-    private Os os;
+    private final Os os;
 
     public static void main(String[] args) {
         new Downloader("http://v1.modcraftmc.fr:100/gameupdater/", new File("C:\\Users\\forix\\Desktop\\.modcraft\\"));
@@ -214,7 +214,7 @@ public class Downloader extends Task<Void> {
             }
 
             //Splitting ignore.txt content in a string list
-            String buffer[];
+            String[] buffer;
             if (reading.toString().contains("\r"))
                 buffer = reading.toString().split("\r");
             else
@@ -488,7 +488,7 @@ public class Downloader extends Task<Void> {
                 System.out.println("[GameUpdater] Téléchargement du fichier: "+ fileUrl.toString());
                 BufferedInputStream bis = new BufferedInputStream(fileUrl.openStream());
                 FileOutputStream fos = new FileOutputStream(new File(cursor.toString().replaceAll("#var#", ".var")));
-                final byte data[] = new byte[64];
+                final byte[] data = new byte[64];
                 int count;
                 while ((count = bis.read(data, 0, 32)) != -1) {
                     bytesDownloaded += count;

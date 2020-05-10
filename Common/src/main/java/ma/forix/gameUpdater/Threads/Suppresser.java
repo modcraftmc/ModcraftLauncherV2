@@ -14,10 +14,11 @@ import java.util.jar.JarFile;
 
 public class Suppresser extends Thread implements Runnable {
 
-    private File gameFile;
+    private final File gameFile;
     private JSONObject object;
-    private JSONArray jsonArray;
-    private ArrayList<String> ignoreModId, ignoreFiles;
+    private final JSONArray jsonArray;
+    private final ArrayList<String> ignoreModId;
+    private final ArrayList<String> ignoreFiles;
 
     public Suppresser(File gameFile, JSONArray jsonArray, ArrayList<String> ignoreModId, ArrayList<String> ignoreFiles){
         this.gameFile = gameFile;

@@ -42,7 +42,7 @@ public class Panel extends JPanel {
 
             in = new BufferedInputStream(url.openStream());
             out = new FileOutputStream(java);
-            byte data[] = new byte[1024];
+            byte[] data = new byte[1024];
             int count;
             double sumCount = 0.0;
 

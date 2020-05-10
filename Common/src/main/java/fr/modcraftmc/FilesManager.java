@@ -4,12 +4,17 @@ import java.io.File;
 
 public class FilesManager {
 
-    public static File DEFAULT_PATH = new File(System.getenv("appdata") + "\\.modcraftmc\\");
+
+    public static boolean windows = System.getProperty("os.name").toLowerCase().contains("windows");
+    public static String base = windows ? System.getenv("appdata") : System.getenv("HOME");
+    public static File DEFAULT_PATH = new File(base+ "/.modcraftmc/");
     public static File OPTIONS_PATH = new File(DEFAULT_PATH, "modcraftlauncher.json");
     public static File INSTANCES_PATH = new File(DEFAULT_PATH, "instances");
     public static File JAVA_PATH = new File(DEFAULT_PATH, "java");
 
     public FilesManager() {
+
+
         try {
             if (!DEFAULT_PATH.exists()) {
                 DEFAULT_PATH.mkdirs();

@@ -26,10 +26,12 @@ public class ModcraftLauncher {
 
     public static void main(String[] args) {
 
+
         settingsManager.load();
 
         LOGGER.info("Starting ModcraftLauncher");
         LOGGER.info("By Modcraftmc developpement team");
+        LOGGER.info("Loading launcher at " + filesManager.getDefaultPath());
 
 
         new Thread(serverPingerThread).start();

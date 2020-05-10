@@ -30,7 +30,7 @@ public class Bootstrap extends Application {
     public static MaintenanceManager maintenanceManager = new MaintenanceManager();
 
 
-    private static ProgressBar progressBar = new ProgressBar();
+    private static final ProgressBar progressBar = new ProgressBar();
     public static Stage stage;
 
 

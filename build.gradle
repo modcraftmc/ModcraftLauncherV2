@@ -50,11 +50,6 @@ dependencies {
 
 }
 
-def baseDir = "/global/build/$project.name"
-buildDir = baseDir
-subprojects {
-    buildDir = baseDir + project.path.replaceFirst(":", "/").replace(":", ".")
-}
 
 
 jar {

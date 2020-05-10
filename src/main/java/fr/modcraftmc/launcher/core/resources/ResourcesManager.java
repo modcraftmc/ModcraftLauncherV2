@@ -7,13 +7,13 @@ import java.util.List;
 
 public class ResourcesManager {
 
-    private List<String> imagesExtentions = Arrays.asList(".png", ".gif", ".jpg", ".jpeg");
+    private final List<String> imagesExtentions = Arrays.asList(".png", ".gif", ".jpg", ".jpeg");
 
-    private List<String> fxmlExtentions = Arrays.asList(".fxml");
+    private final List<String> fxmlExtentions = Arrays.asList(".fxml");
 
-    private List<String> cssExtentions = Arrays.asList(".css");
+    private final List<String> cssExtentions = Arrays.asList(".css");
 
-    private List<String> jsonExtentions = Arrays.asList(".json");
+    private final List<String> jsonExtentions = Arrays.asList(".json");
 
 
     public URL getResource(String name) {

@@ -15,9 +15,9 @@ public class GameUpdater {
 
     public final static Logger LOGGER = LoggerFactory.getLogger("GameUpdater");
 
-    private String url;
-    private File gameDir;
-    private ProgressBar progressBar;
+    private final String url;
+    private final File gameDir;
+    private final ProgressBar progressBar;
     private Task<Void> task;
     public static Thread update;
     public static EnumModcraft toDownload;
@@ -44,7 +44,7 @@ public class GameUpdater {
         }
     }
 
-    private Downloader downloader;
+    private final Downloader downloader;
 
     public GameUpdater(String url, File gameDir, ProgressBar bar){
         this.url = url;

@@ -1,5 +1,5 @@
 package ma.forix.gameUpdater;
 
 public enum EnumModcraft {
-    LAUNCHER, BOOTSTRAP, PRELAUNCHER;
+    LAUNCHER, BOOTSTRAP, PRELAUNCHER
 }

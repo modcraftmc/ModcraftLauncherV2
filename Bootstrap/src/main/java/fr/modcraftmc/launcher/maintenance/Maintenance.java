@@ -2,8 +2,9 @@ package fr.modcraftmc.launcher.maintenance;
 
 public class Maintenance {
 
-    private boolean maintenance, exit;
-    private String infos;
+    private final boolean maintenance;
+    private final boolean exit;
+    private final String infos;
 
     public Maintenance(boolean maintenance, boolean exit,String infos) {
         this.maintenance = maintenance;

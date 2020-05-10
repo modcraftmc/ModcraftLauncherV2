@@ -11,12 +11,13 @@ public class AlertBuilder  {
 
     private Optional<ButtonType> result;
 
-    private Window window;
-    private String title, content;
-    private ButtonsType buttonsType;
-    private Alert.AlertType alertType;
+    private final Window window;
+    private final String title;
+    private final String content;
+    private final ButtonsType buttonsType;
+    private final Alert.AlertType alertType;
     private Alert alert;
-    private int errorKey;
+    private final int errorKey;
 
     public AlertBuilder(Window window, String title, String content,int errorKey , ButtonsType type, Alert.AlertType alertType) {
         this.window = window;
@@ -37,16 +38,16 @@ public class AlertBuilder  {
         alert.initOwner(window);
         alert.setHeaderText(content);
 
-        if (buttonsType == buttonsType.YES_OR_NO) {
+        if (buttonsType == ButtonsType.YES_OR_NO) {
             ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
             ButtonType noButton = new ButtonType("Non", ButtonBar.ButtonData.NO);
             alert.getButtonTypes().setAll(okButton, noButton);
 
-        } else if (buttonsType == buttonsType.OK) {
+        } else if (buttonsType == ButtonsType.OK) {
             ButtonType okButton = new ButtonType("Accepter", ButtonBar.ButtonData.YES);
             ButtonType noButton = new ButtonType("Annuler", ButtonBar.ButtonData.NO);
             alert.getButtonTypes().setAll(okButton, noButton);
-        } else if(buttonsType == buttonsType.JUST_OK) {
+        } else if(buttonsType == ButtonsType.JUST_OK) {
             ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.YES);
             alert.setContentText("Code d'erreur : " + errorKey);
             alert.getButtonTypes().setAll(okButton);

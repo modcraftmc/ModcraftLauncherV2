@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ModalBuilder extends Alert {
 
-    private FXMLLoader loader;
+    private final FXMLLoader loader;
     private static Stage window;
 
 
