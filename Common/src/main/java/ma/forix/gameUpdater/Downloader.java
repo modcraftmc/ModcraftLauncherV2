@@ -535,7 +535,9 @@ public class Downloader extends Task<Void> {
 
         for (Object array : toDownload){
             object = (JSONObject) array;
-            cursor = new File(gameDir.toString() + "\\" + object.get("path").toString() + object.get("filename").toString());
+
+            String path = object.get("path").toString().replace("\\", "/");
+            cursor = new File(gameDir.toString() + "/" + path.replace("\\", "/") + object.get("filename").toString());
             if (cursor.getParentFile().exists()) {
                     if (!cursor.exists()) {
                         download(cursor, object);
