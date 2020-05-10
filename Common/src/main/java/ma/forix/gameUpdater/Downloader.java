@@ -33,56 +33,6 @@ public class Downloader extends Task<Void> {
         new Downloader("http://v1.modcraftmc.fr:100/gameupdater/", new File("C:\\Users\\forix\\Desktop\\.modcraft\\"));
     }
 
-    private void Analyzer(){
-        //File[] gameDirContent = FileUtils.listFiles(gameDir, null, true).toArray(new File[0]);
-        toDownload = new JSONArray();
-        Thread t = null;
-        long start = System.currentTimeMillis();
-        for (Object current : jsonArray) {
-            t = new Thread(){
-                @Override
-                public void run() {
-                    super.run();
-                    JSONObject obj = (JSONObject) current;
-                    File cursor = new File(gameDir.toString() + obj.get("path").toString() + obj.get("filename").toString());
-                    if (!cursor.exists()) {
-                        toDownload.add(obj);
-                        filesToDownload++;
-                    } else {
-                        try {
-                            MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-                            boolean keep = false;
-                            if (getFileChecksum(md5Digest, cursor).equals(obj.get("md5")))
-                                keep = true;
-
-                            for (String ignore : ignoreFiles){
-                                if (ignore.contains("/"))
-                                    ignore = ignore.replace("/", "\\");
-                                if (cursor.toString().contains(ignore))
-                                    keep = true;
-                            }
-
-                            if (!keep) {
-                                //cursor.delete();
-                                GameUpdater.LOGGER.info("[Game Analyzer] File '" + cursor.getName() + "' deleted");
-                            }
-                        } catch (NoSuchAlgorithmException | IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            };
-            t.start();
-        }
-        while (t.isAlive()){
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        GameUpdater.LOGGER.info("[Game Analyzer] time elapsed: "+(System.currentTimeMillis()-start));
-    }
 
     public Downloader(String url, File gameDir){
         GameUpdater.LOGGER.info("OS: "+System.getProperty("os.name"));
@@ -95,8 +45,8 @@ public class Downloader extends Task<Void> {
             this.url = UrlAdapter(url);
         }
         this.gameDir = gameDir;
-        if (!gameDir.exists())
-            gameDir.mkdir();
+        if (!gameDir.exists()) gameDir.mkdir();
+
         long start;
         start = System.currentTimeMillis();
         GameUpdater.LOGGER.info("File to download : " + GameUpdater.toDownload.name());
@@ -110,10 +60,7 @@ public class Downloader extends Task<Void> {
         start = System.currentTimeMillis();
         getIgnoreList();
         GameUpdater.LOGGER.info("getIgnoreList time: "+(System.currentTimeMillis()-start));
-        //Suppresser();
-        //Verification();
         deleter();
-        //Analyzer();
     }
 
     private String getModId(File file){
@@ -157,24 +104,8 @@ public class Downloader extends Task<Void> {
             String reponse = null;
             jsonArray = new JSONArray();
 
-            if (content.equalsIgnoreCase("LAUNCHER")) {
-                readLaucherContent();
-            } else {
-                writer.write("getContent-" + content);
-                writer.flush();
-                InputStream  socketInputStream = socket.getInputStream();
-                int expectedDataLength = 1024;
-                ByteArrayOutputStream baos = new ByteArrayOutputStream(expectedDataLength);
-                byte[] chunk = new byte[expectedDataLength];
-                int numBytesJustRead;
-                while((numBytesJustRead = socketInputStream.read(chunk)) != -1) {
-                    baos.write(chunk, 0, numBytesJustRead);
-                }
-                String msg =  baos.toString("UTF-8");
-                GameUpdater.LOGGER.info(msg);
-                Object obj = new JSONParser().parse(msg);
-                jsonArray = (JSONArray) obj;
-            }
+
+            readContent(content);
 
             GameUpdater.LOGGER.info("content.json recovered");
             writer.write("close");
@@ -183,9 +114,11 @@ public class Downloader extends Task<Void> {
             socket.close();
     }
 
-    public void readLaucherContent() {
+    public void readContent(String content) {
 
-        try (InputStreamReader streamReader = new InputStreamReader(new URL(this.url+"/content.json").openStream())){
+        if (content == "LAUNCHER") content = "content";
+
+        try (InputStreamReader streamReader = new InputStreamReader(new URL(this.url + "/" + content.toLowerCase() +".json").openStream())){
             Object obj = new JSONParser().parse(streamReader);
             jsonArray = (JSONArray) obj;
         } catch (ParseException | IOException e) {
@@ -257,56 +190,10 @@ public class Downloader extends Task<Void> {
         return sb.toString();
     }
 
-    /**
-
-    private void vSync(){
-        File optionsFile = new File(gameDir.toString()+"\\options.txt");
-        StringBuilder optionsBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(optionsFile))){
-            String line;
-            while ((line = br.readLine()) != null) {
-                optionsBuilder.append(line + "\n");
-            }
-
-            if (optionsBuilder.toString().contains("enableVsync:true")){
-                optionsBuilder.replace(optionsBuilder.indexOf("enableVsync")+12, optionsBuilder.indexOf("enableVsync")+16, "false");
-                optionsFile.delete();
-                FileWriter fw = new FileWriter(optionsFile);
-                fw.write(optionsBuilder.toString());
-                fw.close();
-                System.out.println("Disabled VSync");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void fullScreen(){
-        File optionsFile = new File(gameDir.toString()+"\\options.txt");
-        StringBuilder optionsBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(optionsFile))){
-            String line;
-            while ((line = br.readLine()) != null) {
-                optionsBuilder.append(line + "\n");
-            }
-
-            if (optionsBuilder.toString().contains("fullscreen:true")){
-                optionsBuilder.replace(optionsBuilder.indexOf("fullscreen")+11, optionsBuilder.indexOf("fullscreen")+15, "false");
-                optionsFile.delete();
-                FileWriter fw = new FileWriter(optionsFile);
-                fw.write(optionsBuilder.toString());
-                fw.close();
-                System.out.println("Disabled Fullscreen");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-     **/
 
     public int GetDownloadSize(JSONArray toDownload){
         File cursor;
-        for (Object array : jsonArray){
+        for (Object array : toDownload){
             object = (JSONObject) array;
             cursor = new File(gameDir.toString() + "\\" + object.get("path").toString() + object.get("filename").toString());
             if (!cursor.exists()) downloadSize += Integer.parseInt(object.get("size").toString());

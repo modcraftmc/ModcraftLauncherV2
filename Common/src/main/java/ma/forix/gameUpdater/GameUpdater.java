@@ -17,7 +17,7 @@ public class GameUpdater {
 
     private final String url;
     private final File gameDir;
-    private final ProgressBar progressBar;
+    private ProgressBar progressBar;
     private Task<Void> task;
     public static Thread update;
     public static EnumModcraft toDownload;
@@ -53,6 +53,13 @@ public class GameUpdater {
         downloader = new Downloader(url, gameDir);
     }
 
+    public GameUpdater(String url, File gameDir){
+        this.url = url;
+        this.gameDir = gameDir;
+        downloader = new Downloader(url, gameDir);
+
+    }
+
 
     public void start(){
         if (deleter)
@@ -67,12 +74,15 @@ public class GameUpdater {
 
     public Task updater(){
         task = new Downloader(url, gameDir);
-        Platform.runLater(() -> {
-            if (progressBar != null) {
-                progressBar.progressProperty().unbind();
-                progressBar.progressProperty().bind(task.progressProperty());
-            }
-        });
+        if (progressBar != null) {
+            Platform.runLater(() -> {
+                    progressBar.progressProperty().unbind();
+                    progressBar.progressProperty().bind(task.progressProperty());
+
+            });
+
+        }
+
 
         update = new Thread(task);
         update.setDaemon(true);

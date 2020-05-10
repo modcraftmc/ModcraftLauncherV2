@@ -101,6 +101,7 @@ public class ContentGenerator extends Thread implements Runnable {
             String path = builder.toString();
             obj.put("path", path);
             obj.put("filename", cursor.getName());
+
             //Use MD5 algorithm
             try {
                 MessageDigest md5Digest = MessageDigest.getInstance("MD5");
