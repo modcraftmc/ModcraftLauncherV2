@@ -61,12 +61,6 @@ public class Server {
                     }
                 }
 
-                try {
-                    server.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    server = null;
-                }
             }
         };
         opening.start();
