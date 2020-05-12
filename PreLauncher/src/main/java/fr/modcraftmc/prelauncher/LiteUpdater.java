@@ -19,6 +19,8 @@ public class LiteUpdater {
 
     public LiteUpdater() {
 
+        FilesManager.LAUNCHER_PATH.mkdirs();
+
     }
 
     public void update() {
@@ -28,14 +30,11 @@ public class LiteUpdater {
             downloadJar();
             launchJar();
         } else {
-            if (checkJar(localjar)) {
-                launchJar();
-            } else {
+            if (!checkJar(localjar)) {
                 downloadJar();
-                launchJar();
             }
+            launchJar();
         }
-
     }
 
     public boolean checkJar(File jar) {
@@ -110,7 +109,6 @@ public class LiteUpdater {
         while ((bytesCount = fis.read(byteArray)) != -1) {
             digest.update(byteArray, 0, bytesCount);
         }
-
 
         fis.close();
 

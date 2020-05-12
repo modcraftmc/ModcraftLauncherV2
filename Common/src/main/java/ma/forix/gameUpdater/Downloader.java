@@ -116,7 +116,7 @@ public class Downloader extends Task<Void> {
 
     public void readContent(String content) {
 
-        if (content == "LAUNCHER") content = "content";
+        if (content == "LAUNCHER-CONTENT") content = "content";
 
         try (InputStreamReader streamReader = new InputStreamReader(new URL(this.url + "/" + content.toLowerCase() +".json").openStream())){
             Object obj = new JSONParser().parse(streamReader);
@@ -366,7 +366,7 @@ public class Downloader extends Task<Void> {
             try {
                 threadsNumber++;
                 URL fileUrl;
-                if (GameUpdater.toDownload.name().equalsIgnoreCase("launcher")) {
+                if (GameUpdater.toDownload.name().equalsIgnoreCase("launcher-content")) {
                     fileUrl = new URL(this.url+"/downloads/" + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
                 } else {
                     fileUrl = new URL(this.url + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
@@ -387,6 +387,7 @@ public class Downloader extends Task<Void> {
                 GameUpdater.LOGGER.info("[GameUpdater] Téléchargement du fichier terminé :"+fileName);
                 bis.close();
                 fos.flush();
+                fos.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -451,6 +452,7 @@ public class Downloader extends Task<Void> {
 
     @Override
     protected void succeeded() {
+        this.updateProgress(100, 100);
         GameUpdater.LOGGER.info("[GameUpdater] Downloading time: "+(System.currentTimeMillis()/1000-time)+" sec");
         GameUpdater.LOGGER.info("[GameUpdater] Update finished !");
         super.succeeded();

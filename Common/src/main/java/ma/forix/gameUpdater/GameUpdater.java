@@ -76,13 +76,13 @@ public class GameUpdater {
         task = new Downloader(url, gameDir);
         if (progressBar != null) {
             Platform.runLater(() -> {
+                     progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
                     progressBar.progressProperty().unbind();
                     progressBar.progressProperty().bind(task.progressProperty());
 
             });
 
         }
-
 
         update = new Thread(task);
         update.setDaemon(true);

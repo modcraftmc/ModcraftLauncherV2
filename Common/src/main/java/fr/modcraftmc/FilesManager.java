@@ -7,10 +7,10 @@ public class FilesManager {
 
     public static boolean windows = System.getProperty("os.name").toLowerCase().contains("windows");
     public static String base = windows ? System.getenv("appdata") : System.getenv("HOME");
-    public static File DEFAULT_PATH = new File(base+ "/.modcraftmc/");
+    public static File DEFAULT_PATH = new File(base + "/.modcraftmc/");
+    public static File LAUNCHER_PATH = new File(DEFAULT_PATH, "launcher");
     public static File OPTIONS_PATH = new File(DEFAULT_PATH, "modcraftlauncher.json");
     public static File INSTANCES_PATH = new File(DEFAULT_PATH, "instances");
-    public static File LAUNCHER_PATH = new File(DEFAULT_PATH, "launcher");
     public static File JAVA_PATH = new File(DEFAULT_PATH, "java");
 
     public FilesManager() {
@@ -31,7 +31,6 @@ public class FilesManager {
             }
         } catch (Exception e) {
             OPTIONS_PATH.delete();
-            e.printStackTrace();
         }
 
     }

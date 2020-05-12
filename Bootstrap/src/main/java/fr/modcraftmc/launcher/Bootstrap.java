@@ -1,5 +1,6 @@
 package fr.modcraftmc.launcher;
 
+import fr.modcraftmc.FilesManager;
 import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
 import fr.modcraftmc.launcher.utils.JavaUtils;
 import fr.modcraftmc.modal.AlertBuilder;
@@ -20,13 +21,13 @@ import net.wytrem.logging.Logger;
 import net.wytrem.logging.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class Bootstrap extends Application {
 
     public final static Logger LOGGER = LoggerFactory.getLogger("ModcraftMC-Bootstrap");
 
-    public static File DEFAULT_PATH = new File(System.getenv("appdata") + "\\.modcraftmc\\");
     public static MaintenanceManager maintenanceManager = new MaintenanceManager();
 
 
@@ -85,25 +86,32 @@ public class Bootstrap extends Application {
 
          doUpdate();
 
-        try {
-            Thread.sleep(2000);
-            launchLauncher();
-        } catch (InterruptedException ignored) {}
-
     }
 
     public static void doUpdate() {
 
-        GameUpdater.setToDownload(EnumModcraft.BOOTSTRAP);
-        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/gameupdater/", new File(DEFAULT_PATH, "test"), progressBar);
+        GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
+        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", FilesManager.LAUNCHER_PATH, progressBar);
         gameUpdater.setDeleter(false);
-        gameUpdater.updater();
+        gameUpdater.updater().setOnSucceeded((event -> new Thread(Bootstrap::launchLauncher).start()));
         gameUpdater.start();
 
     }
 
     private static void launchLauncher() {
+        System.out.println("aaa");
+            File dir = new File(FilesManager.LAUNCHER_PATH, "launcher.jar").getParentFile();
 
+            ProcessBuilder builder = new ProcessBuilder();
+            builder.command("java", "-jar", "launcher.jar");
+            builder.directory(dir);
+            try {
+                builder.start();
+                Thread.sleep(2000);
+                System.exit(0);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
     }
 
 }

@@ -24,3 +24,11 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.6'
     compile project(":Common")
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'fr.modcraftmc.prelauncher.Prelauncher'
+    }
+
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
