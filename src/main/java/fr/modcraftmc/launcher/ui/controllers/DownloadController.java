@@ -51,6 +51,7 @@ public class DownloadController {
 
     public void launch() {
         try {
+
             GameVersion VERSION = new GameVersion("1.15.2", GameType.V_1_15_2_FORGE);
             GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"), VERSION, new GameTweak[]{}, "31.1.75");
 
@@ -65,6 +66,7 @@ public class DownloadController {
                 p.waitFor();
             } catch (InterruptedException | LaunchException e) {
                 e.printStackTrace();
+
             }
         } catch (Exception ignored) {} finally {
             System.exit(0);

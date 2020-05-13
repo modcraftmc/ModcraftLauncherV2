@@ -206,6 +206,7 @@ public class Downloader extends Task<Void> {
     int simultane = 0;
 
     public void deleter(){
+
         long time1 = System.currentTimeMillis();
         File[] listing = FileUtils.listFiles(gameDir, null, true).toArray(new File[0]);
         long time2 = System.currentTimeMillis();

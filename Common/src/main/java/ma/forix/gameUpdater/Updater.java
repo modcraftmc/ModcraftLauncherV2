@@ -1,0 +1,349 @@
+package ma.forix.gameUpdater;
+
+import javafx.concurrent.Task;
+import org.apache.commons.io.FileUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.*;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+public class Updater extends Task<Void> {
+
+    private int downloadSize, bytesDownloaded, fileDownloaded, filesToDownload, threadsNumber;
+
+    //INIT SETTINGS
+    public final Os operatingSystem;
+    public final String serverUrl;
+    public final File directory;
+
+    //REMOTE CONTENT
+    public JSONArray remoteContent, toDownload;
+    public List<String> ignoreList;
+
+    public Updater(String serverUrl, File directory) {
+        String os = System.getProperty("os.name");
+        GameUpdater.LOGGER.info("OS: " + os);
+
+
+        if (os.contains("Windows")) operatingSystem = Os.WINDAUBE; else operatingSystem = Os.UNIX;
+
+        this.serverUrl = serverUrl;
+        this.directory = directory;
+        if (!directory.exists()) directory.mkdir();
+
+        GameUpdater.LOGGER.info("Starting updater");
+
+        long startContent = System.currentTimeMillis();
+        GameUpdater.LOGGER.info("Fetching remote content");
+        remoteContent = getRemoteContent();
+        System.out.println(remoteContent);
+        GameUpdater.LOGGER.info("Fetch content in " + (System.currentTimeMillis() - startContent));
+
+        long startIgnore = System.currentTimeMillis();
+        GameUpdater.LOGGER.info("Fetching remote ignorelist");
+        ignoreList = getIgnoreList();
+        System.out.println(ignoreList);
+        GameUpdater.LOGGER.info("Fetch ignorelist in " + (System.currentTimeMillis() - startIgnore));
+
+
+    }
+
+    public JSONArray getRemoteContent() {
+
+        try (InputStreamReader streamReader = new InputStreamReader(new URL(this.serverUrl + "/content.json").openStream())) {
+            Object content = new JSONParser().parse(streamReader);
+            return (JSONArray) content;
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<String> getIgnoreList() {
+        ignoreList = new ArrayList<>();
+
+        try (InputStreamReader streamReader = new InputStreamReader(new URL(this.serverUrl + "/ignore.txt").openStream())) {
+
+            int list = streamReader.read();
+            StringBuilder readed = new StringBuilder();
+            boolean writing = true;
+
+            while (list != -1){
+                if (writing) {
+                    if (list == 13)
+                        writing = false;
+                    readed.append((char) list);
+                } else
+                    writing = true;
+                list = streamReader.read();
+            }
+
+            String[] buffer;
+            if (readed.toString().contains("\r"))
+                buffer = readed.toString().split("\r");
+            else
+                buffer = readed.toString().split("\n");
+
+            return Arrays.asList(buffer);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+
+    }
+
+    int fileNumber;
+    int fileAnalyzed = 0;
+    int simultane = 0;
+    public void deleter() {
+
+        Collection<File> localFileList = FileUtils.listFiles(directory, null, true);
+
+        Thread thread = null;
+
+        for (File current : localFileList) {
+
+            thread = new Thread(() -> {
+
+                File cursor = current;
+
+                boolean ignore = false;
+                MessageDigest md5Digest = null;
+                try {
+                        md5Digest = MessageDigest.getInstance("MD5");
+                        String checkSum = getFileChecksum(md5Digest, current);
+
+                        for (Object localFile : remoteContent) {
+                            JSONObject properties = (JSONObject) localFile;
+                            String md5 = (String) properties.get("md5");
+
+                            if (checkSum.equals(md5)) ignore = true;
+                        }
+
+                } catch (NoSuchAlgorithmException | IOException e) {
+                    e.printStackTrace();
+                }
+
+                for (String now : ignoreList) {
+                    if (cursor.toString().contains(now.replace("/", "\\"))) {
+                        GameUpdater.LOGGER.info("[IGNORE LIST] This file is ignored: " + current.getName());
+                        ignore = true;
+                    }
+                }
+
+                if (!ignore) {
+                    current.delete();
+                    GameUpdater.LOGGER.info("[IGNORE LIST] Fichier '"+cursor+"' supprimé !");
+                    --simultane;
+                } else {
+                    --simultane;
+                }
+                fileAnalyzed++;
+            });
+            simultane++;
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            GameUpdater.LOGGER.info(current.getName());
+
+        }
+
+        GameUpdater.LOGGER.info("TOUT EST FINI");
+
+    }
+
+    private static String getFileChecksum(MessageDigest digest, File file) throws IOException
+    {
+        //Get file input stream for reading the file content
+        FileInputStream fis = new FileInputStream(file);
+
+        //Create byte array to read data in chunks
+        byte[] byteArray = new byte[1024];
+        int bytesCount = 0;
+
+        //Read file data and update in message digest
+        while ((bytesCount = fis.read(byteArray)) != -1) {
+            digest.update(byteArray, 0, bytesCount);
+        }
+
+        //close the stream; We don't need it now.
+        fis.close();
+
+        //Get the hash's bytes
+        byte[] bytes = digest.digest();
+
+        //This bytes[] has bytes in decimal format;
+        //Convert it to hexadecimal format
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i< bytes.length ;i++)
+        {
+            sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        //return complete hash
+        return sb.toString();
+    }
+
+    public void verification() {
+        fileDownloaded = 0;
+        File cursor;
+        toDownload = new JSONArray();
+
+        MessageDigest md5Digest;
+        boolean keep = false;
+
+        for (Object array : remoteContent){
+            JSONObject object = (JSONObject) array;
+            cursor = new File(directory.toString() + "\\" + object.get("path").toString() + object.get("filename").toString().replaceAll("#var#", ".var"));
+
+            if (!cursor.exists()) {
+                toDownload.add(object);
+                filesToDownload++;
+            } else {
+                try {
+                    md5Digest = MessageDigest.getInstance("MD5");
+                    keep = false;
+                    for (String now : ignoreList){
+
+                        if (now.contains("/")){
+                            now = now.replace("/", "\\");
+                        }
+                        if (cursor.toString().contains(now)){
+                            keep = true;
+                        }
+                    }
+                    if (!getFileChecksum(md5Digest, cursor).equals(object.get("md5")) && !keep){
+                        //cursor.delete();
+                        toDownload.add(object);
+                        filesToDownload++;
+                    }
+                } catch (IOException | NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+       // GameUpdater.LOGGER.info("[VERIFICATION] temps écoulé vérif: "+(System.currentTimeMillis()-temp));
+       // GameUpdater.LOGGER.info("[VERIFICATION] Download size: "+GetDownloadSize(toDownload)/1024+"Ko");
+        GameUpdater.LOGGER.info("[VERIFICATION] Files to download: "+toDownload);
+
+    }
+
+    private final int SIMULTANEOUS = 20;
+    private void download(File cursor, JSONObject obj) {
+
+        Thread download = new Thread(() -> {
+            String path = obj.get("path").toString();
+            String fileName = obj.get("filename").toString();
+            try {
+                threadsNumber++;
+                URL fileUrl;
+                    fileUrl = new URL(this.serverUrl+"/downloads/" + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
+
+
+                System.out.println("[GameUpdater] Téléchargement du fichier: "+ fileUrl.toString());
+                BufferedInputStream bis = new BufferedInputStream(fileUrl.openStream());
+                FileOutputStream fos = new FileOutputStream(new File(cursor.toString().replaceAll("#var#", ".var")));
+                final byte[] data = new byte[64];
+                int count;
+                while ((count = bis.read(data, 0, 32)) != -1) {
+                    bytesDownloaded += count;
+                    updateProgress(bytesDownloaded, downloadSize);
+                    fos.write(data, 0, count);
+                }
+                threadsNumber--;
+                fileDownloaded++;
+                GameUpdater.LOGGER.info("[GameUpdater] Téléchargement du fichier terminé :"+fileName);
+                bis.close();
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        download.setUncaughtExceptionHandler(GameUpdater.exceptionHandler);
+        download.start();
+        if (threadsNumber > SIMULTANEOUS) {
+            try {
+                download.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected Void call() throws Exception {
+        Thread updateBar = null;
+
+        File cursor;
+        verification();
+        threadsNumber = 0;
+
+        updateBar = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                updateProgress(bytesDownloaded, downloadSize);
+            }
+        };
+        updateBar.start();
+
+        for (Object array : toDownload){
+            JSONObject object = (JSONObject) array;
+
+            String path = object.get("path").toString().replace("\\", "/");
+            cursor = new File(directory.toString() + "/" + path.replace("\\", "/") + object.get("filename").toString());
+            if (cursor.getParentFile().exists()) {
+                if (!cursor.exists()) {
+                    download(cursor, object);
+                }
+            } else {
+                cursor.getParentFile().mkdirs();
+                download(cursor, object);
+            }
+        }
+
+        boolean finished = false;
+        while (!finished){
+
+            if (fileDownloaded >= filesToDownload)
+                finished = true;
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+
+    }
+
+    @Override
+    protected void succeeded() {
+        this.updateProgress(100, 100);
+        //GameUpdater.LOGGER.info("[GameUpdater] Downloading time: "+(System.currentTimeMillis()/1000-time)+" sec");
+        GameUpdater.LOGGER.info("[GameUpdater] Update finished !");
+        super.succeeded();
+    }
+
+    @Override
+    protected void cancelled() {
+        super.cancelled();
+    }
+}

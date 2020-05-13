@@ -44,6 +44,8 @@ dependencies {
     compile files('libs/openlauncherlib-3.1.0-FLOWARGVERSION.jar')
     compile files("libs/jfoenix-8.0.8.jar")
 
+    compile 'club.minnced:discord-webhooks:0.3.1'
+
     compile group: 'org.json', name: 'json', version: '20190722'
     compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
 
