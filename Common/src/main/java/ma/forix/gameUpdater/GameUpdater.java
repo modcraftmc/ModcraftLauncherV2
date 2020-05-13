@@ -50,20 +50,18 @@ public class GameUpdater {
         this.url = url;
         this.gameDir = gameDir;
         this.progressBar = bar;
-        downloader = new Updater(url, gameDir);
+        downloader = new Updater(url, gameDir, bar);
     }
 
     public GameUpdater(String url, File gameDir){
         this.url = url;
         this.gameDir = gameDir;
-        downloader = new Updater(url, gameDir);
+        downloader = new Updater(url, gameDir, new ProgressBar());
 
     }
 
 
     public void start(){
-        if (deleter)
-            downloader.deleter();
 
         update.start();
     }
@@ -73,13 +71,12 @@ public class GameUpdater {
     }
 
     public Task updater(){
-        task = new Updater(url, gameDir);
+        task = new Updater(url, gameDir, progressBar);
         if (progressBar != null) {
             Platform.runLater(() -> {
                      progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-                    progressBar.progressProperty().unbind();
-                    progressBar.progressProperty().bind(task.progressProperty());
-
+                progressBar.progressProperty().unbind();
+                progressBar.progressProperty().bind(task.progressProperty());
             });
 
         }

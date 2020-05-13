@@ -111,7 +111,7 @@ public class ContentGenerator extends Thread implements Runnable {
             } catch (NoSuchAlgorithmException | IOException e) {
                 e.printStackTrace();
             }
-            //obj.put("size", cursor.length());
+            obj.put("size", cursor.length());
             content.add(obj);
         }
         try {

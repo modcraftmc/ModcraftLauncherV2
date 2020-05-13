@@ -1,6 +1,7 @@
 package ma.forix.gameUpdater;
 
 import javafx.concurrent.Task;
+import javafx.scene.control.ProgressBar;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,12 +25,13 @@ public class Updater extends Task<Void> {
     public final Os operatingSystem;
     public final String serverUrl;
     public final File directory;
+    public final ProgressBar progressBar;
 
     //REMOTE CONTENT
     public JSONArray remoteContent, toDownload;
     public List<String> ignoreList;
 
-    public Updater(String serverUrl, File directory) {
+    public Updater(String serverUrl, File directory, ProgressBar progressBar) {
         String os = System.getProperty("os.name");
         GameUpdater.LOGGER.info("OS: " + os);
 
@@ -38,6 +40,7 @@ public class Updater extends Task<Void> {
 
         this.serverUrl = serverUrl;
         this.directory = directory;
+        this.progressBar = progressBar;
         if (!directory.exists()) directory.mkdir();
 
         GameUpdater.LOGGER.info("Starting updater");
@@ -161,8 +164,11 @@ public class Updater extends Task<Void> {
             }
 
             GameUpdater.LOGGER.info("current file : " + current.getName());
+            this.updateProgress(fileAnalyzed, localFileList.size());
 
         }
+
+
 
         GameUpdater.LOGGER.info("TOUT EST FINI");
 
@@ -241,6 +247,7 @@ public class Updater extends Task<Void> {
        // GameUpdater.LOGGER.info("[VERIFICATION] temps écoulé vérif: "+(System.currentTimeMillis()-temp));
        // GameUpdater.LOGGER.info("[VERIFICATION] Download size: "+GetDownloadSize(toDownload)/1024+"Ko");
         GameUpdater.LOGGER.info("[VERIFICATION] Files to download: "+toDownload);
+        GetDownloadSize(toDownload);
 
     }
 
@@ -287,11 +294,25 @@ public class Updater extends Task<Void> {
         }
     }
 
+
+    public int GetDownloadSize(JSONArray toDownload){
+        File cursor;
+        for (Object array : toDownload){
+            JSONObject object = (JSONObject) array;
+            cursor = new File(directory.toString() + "\\" + object.get("path").toString() + object.get("filename").toString());
+            if (!cursor.exists()) downloadSize += Integer.parseInt(object.get("size").toString());
+        }
+        return downloadSize;
+    }
+
     @Override
     protected Void call() throws Exception {
+
+
         Thread updateBar = null;
 
         File cursor;
+        deleter();
         verification();
         threadsNumber = 0;
 
