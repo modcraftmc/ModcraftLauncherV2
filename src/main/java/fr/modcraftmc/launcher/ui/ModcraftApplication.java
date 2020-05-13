@@ -48,6 +48,7 @@ public class ModcraftApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         window = stage;
 
         GameUpdater.checkServer();

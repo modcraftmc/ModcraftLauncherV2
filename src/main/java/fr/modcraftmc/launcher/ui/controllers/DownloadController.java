@@ -53,7 +53,7 @@ public class DownloadController {
         try {
 
             GameVersion VERSION = new GameVersion("1.15.2", GameType.V_1_15_2_FORGE);
-            GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"), VERSION, new GameTweak[]{}, "31.1.75");
+            GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"), VERSION, new GameTweak[]{}, "31.1.87");
 
             ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(INFOS, GameFolder.BASIC, Authenticator.authInfos);
             profile.getVmArgs().add("-Xmx8G");

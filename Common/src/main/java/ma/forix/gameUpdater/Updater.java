@@ -160,7 +160,7 @@ public class Updater extends Task<Void> {
                 e.printStackTrace();
             }
 
-            GameUpdater.LOGGER.info(current.getName());
+            GameUpdater.LOGGER.info("current file : " + current.getName());
 
         }
 

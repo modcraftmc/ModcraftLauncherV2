@@ -24,8 +24,8 @@ public class ServerThread extends Thread implements Runnable {
     public ServerThread(Socket client){
         this.client = client;
 
-        generatePrelauncher();
-        generateBootstrap();
+        //generatePrelauncher();
+        //generateBootstrap();
 
     }
 
