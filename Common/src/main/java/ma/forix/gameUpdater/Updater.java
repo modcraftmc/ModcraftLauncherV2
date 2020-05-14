@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Updater extends Task<Void> {
 
-    private int downloadSize, bytesDownloaded, fileDownloaded, filesToDownload, threadsNumber;
+    private int downloadSize, bytesDownloaded, fileDownloaded, filesToDownload, threadsNumber, bytesTodownload;
 
     //INIT SETTINGS
     public final Os operatingSystem;
@@ -45,17 +45,11 @@ public class Updater extends Task<Void> {
 
         GameUpdater.LOGGER.info("Starting updater");
 
-        long startContent = System.currentTimeMillis();
         GameUpdater.LOGGER.info("Fetching remote content");
         remoteContent = getRemoteContent();
-        System.out.println(remoteContent);
-        GameUpdater.LOGGER.info("Fetch content in " + (System.currentTimeMillis() - startContent));
 
-        long startIgnore = System.currentTimeMillis();
         GameUpdater.LOGGER.info("Fetching remote ignorelist");
         ignoreList = getIgnoreList();
-        System.out.println(ignoreList);
-        GameUpdater.LOGGER.info("Fetch ignorelist in " + (System.currentTimeMillis() - startIgnore));
 
 
     }
@@ -106,7 +100,6 @@ public class Updater extends Task<Void> {
 
     }
 
-    int fileNumber;
     int fileAnalyzed = 0;
     int simultane = 0;
     public void deleter() {
@@ -216,7 +209,7 @@ public class Updater extends Task<Void> {
 
         for (Object array : remoteContent){
             JSONObject object = (JSONObject) array;
-            cursor = new File(directory.toString() + "\\" + object.get("path").toString() + object.get("filename").toString().replaceAll("#var#", ".var"));
+            cursor = new File(directory + "\\" + object.get("path").toString() + object.get("filename").toString().replaceAll("#var#", ".var"));
 
             if (!cursor.exists()) {
                 toDownload.add(object);
@@ -227,9 +220,6 @@ public class Updater extends Task<Void> {
                     keep = false;
                     for (String now : ignoreList){
 
-                        if (now.contains("/")){
-                            now = now.replace("/", "\\");
-                        }
                         if (cursor.toString().contains(now)){
                             keep = true;
                         }
@@ -247,7 +237,7 @@ public class Updater extends Task<Void> {
        // GameUpdater.LOGGER.info("[VERIFICATION] temps écoulé vérif: "+(System.currentTimeMillis()-temp));
        // GameUpdater.LOGGER.info("[VERIFICATION] Download size: "+GetDownloadSize(toDownload)/1024+"Ko");
         GameUpdater.LOGGER.info("[VERIFICATION] Files to download: "+toDownload);
-        GetDownloadSize(toDownload);
+        bytesTodownload = GetDownloadSize(toDownload);
 
     }
 
@@ -263,22 +253,21 @@ public class Updater extends Task<Void> {
                     fileUrl = new URL(this.serverUrl+"/downloads/" + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
 
 
-                System.out.println("[GameUpdater] Téléchargement du fichier: "+ fileUrl.toString());
+                GameUpdater.LOGGER.info("Téléchargement du fichier: "+ fileUrl.toString());
                 BufferedInputStream bis = new BufferedInputStream(fileUrl.openStream());
                 FileOutputStream fos = new FileOutputStream(new File(cursor.toString().replaceAll("#var#", ".var")));
-                final byte[] data = new byte[64];
+                final byte[] data = new byte[1024];
                 int count;
                 while ((count = bis.read(data, 0, 32)) != -1) {
                     bytesDownloaded += count;
-                    updateProgress(bytesDownloaded, downloadSize);
                     fos.write(data, 0, count);
                 }
                 threadsNumber--;
-                fileDownloaded++;
-                GameUpdater.LOGGER.info("[GameUpdater] Téléchargement du fichier terminé :"+fileName);
                 bis.close();
                 fos.flush();
                 fos.close();
+                fileDownloaded++;
+                GameUpdater.LOGGER.info("Téléchargement du fichier terminé :"+fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -305,8 +294,10 @@ public class Updater extends Task<Void> {
         return downloadSize;
     }
 
+    boolean finished = false;
+
     @Override
-    protected Void call() throws Exception {
+    protected Void call() {
 
 
         Thread updateBar = null;
@@ -316,13 +307,12 @@ public class Updater extends Task<Void> {
         verification();
         threadsNumber = 0;
 
-        updateBar = new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                updateProgress(bytesDownloaded, downloadSize);
-            }
-        };
+
+        updateBar = new Thread(() -> {
+            while (!finished)
+                this.updateProgress(bytesDownloaded, bytesTodownload);
+
+        });
         updateBar.start();
 
         for (Object array : toDownload){
@@ -340,11 +330,13 @@ public class Updater extends Task<Void> {
             }
         }
 
-        boolean finished = false;
         while (!finished){
 
-            if (fileDownloaded >= filesToDownload)
+            if (fileDownloaded >= toDownload.size()){
+
                 finished = true;
+            }
+
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
