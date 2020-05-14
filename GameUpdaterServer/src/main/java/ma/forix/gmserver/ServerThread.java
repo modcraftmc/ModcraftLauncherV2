@@ -1,13 +1,8 @@
 package ma.forix.gmserver;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 
 public class ServerThread extends Thread implements Runnable {
@@ -16,56 +11,11 @@ public class ServerThread extends Thread implements Runnable {
     private PrintWriter writer;
     private BufferedInputStream reader;
     private String prelauncherJson, bootstrapJson;
-    private final File bootstrap = new File(System.getProperty("user.dir")+"/prelauncher/bootstrap.jar");
-    private final File launcher = new File(System.getProperty("user.dir")+"/bootstrap/launcher.jar");
 
     public static String contentCache = readContent();
 
     public ServerThread(Socket client){
         this.client = client;
-
-        //generatePrelauncher();
-        //generateBootstrap();
-
-    }
-
-    public void generatePrelauncher() {
-
-        JSONArray prelauncher = new JSONArray();
-        JSONObject object = new JSONObject();
-        object.put("path", "/prelauncher/");
-        object.put("filename", "bootstrap.jar");
-        try {
-            MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-            //Get the checksum
-            String checksum = ContentGenerator.getFileChecksum(md5Digest, bootstrap);
-            object.put("md5", checksum);
-        } catch (NoSuchAlgorithmException | IOException e) {
-            e.printStackTrace();
-        }
-        object.put("size", bootstrap.length());
-        prelauncher.add(object);
-        prelauncherJson = prelauncher.toJSONString();
-
-    }
-
-    public void generateBootstrap() {
-
-        JSONArray bootstrap = new JSONArray();
-        JSONObject object = new JSONObject();
-        object.put("path", "/bootstrap/");
-        object.put("filename", "launcher.jar");
-        try {
-            MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-            //Get the checksum
-            String checksum = ContentGenerator.getFileChecksum(md5Digest, launcher);
-            object.put("md5", checksum);
-        } catch (NoSuchAlgorithmException | IOException e) {
-            e.printStackTrace();
-        }
-        object.put("size", launcher.length());
-        bootstrap.add(object);
-        bootstrapJson = bootstrap.toJSONString();
 
     }
 
