@@ -9,7 +9,7 @@ public class FilesManager {
     public static String base = windows ? System.getenv("appdata") : System.getenv("HOME");
     public static File DEFAULT_PATH = new File(base + "/.modcraftmc/");
     public static File LAUNCHER_PATH = new File(DEFAULT_PATH, "launcher");
-    public static File OPTIONS_PATH = new File(DEFAULT_PATH, "modcraftlauncher.json");
+    public static File OPTIONS_PATH = new File(LAUNCHER_PATH, "modcraftlauncher.json");
     public static File INSTANCES_PATH = new File(DEFAULT_PATH, "instances");
     public static File JAVA_PATH = new File(DEFAULT_PATH, "java");
 

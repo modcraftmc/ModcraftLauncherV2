@@ -59,7 +59,7 @@ jar {
         attributes 'Main-Class': 'fr.modcraftmc.launcher.core.ModcraftLauncher'
     }
 
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it)}
 }
 
 jfx {

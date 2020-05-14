@@ -44,19 +44,16 @@ public class GameUpdater {
         }
     }
 
-    private final Updater downloader;
 
     public GameUpdater(String url, File gameDir, ProgressBar bar){
         this.url = url;
         this.gameDir = gameDir;
         this.progressBar = bar;
-        downloader = new Updater(url, gameDir, bar);
     }
 
     public GameUpdater(String url, File gameDir){
         this.url = url;
         this.gameDir = gameDir;
-        downloader = new Updater(url, gameDir, new ProgressBar());
 
     }
 
