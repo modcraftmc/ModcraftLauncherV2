@@ -12,6 +12,7 @@ import fr.theshark34.openlauncherlib.external.ExternalLauncher;
 import fr.theshark34.openlauncherlib.minecraft.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import ma.forix.gameUpdater.EnumModcraft;
@@ -29,18 +30,23 @@ public class DownloadController {
     @FXML
     public AnchorPane container;
 
+    @FXML
+    public Label loadtest;
+
+
 
 
     public void download(Server server) {
+
         Platform.runLater(()-> progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS));
 
         Thread update = new Thread(() -> {
 
 
             GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
-            GameUpdater gameUpdater = new GameUpdater(server.update_url, new File(ModcraftLauncher.filesManager.getInstancesPath(), server.name), progressBar);
-
-            gameUpdater.updater().setOnSucceeded(event -> new Thread(() -> launch()).start());
+            GameUpdater gameUpdater = new GameUpdater(server.update_url, new File(ModcraftLauncher.filesManager.getInstancesPath(), server.name.toLowerCase()), progressBar, loadtest);
+            boolean download = GameUpdater.downloading;
+            gameUpdater.updater().setOnSucceeded(event -> new Thread(() -> launch(server)).start());
 
             gameUpdater.setDeleter(true);
             gameUpdater.start();
@@ -49,17 +55,19 @@ public class DownloadController {
         update.start();
     }
 
-    public void launch() {
+
+    public void launch(Server server) {
         try {
 
-            GameVersion VERSION = new GameVersion("1.15.2", GameType.V_1_15_2_FORGE);
-            GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "skyblock"), VERSION, new GameTweak[]{}, "31.1.87");
+            GameVersion VERSION = new GameVersion("1.12.2", GameType.V1_8_HIGHER);
+            GameInfos INFOS = new GameInfos("modcraftmc", new File(ModcraftLauncher.filesManager.getInstancesPath(), "mc-eternal"), VERSION, new GameTweak[]{GameTweak.FORGE}, "31.2.0");
 
             ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(INFOS, GameFolder.BASIC, Authenticator.authInfos);
             profile.getVmArgs().add("-Xmx8G");
             ExternalLauncher launcher = new ExternalLauncher(profile);
             Process p = null;
             try {
+                ModcraftApplication.window.hide();
                 p = launcher.launch();
                 hide();
                 sleep(5000);
@@ -68,8 +76,10 @@ public class DownloadController {
                 e.printStackTrace();
 
             }
-        } catch (Exception ignored) {} finally {
-            System.exit(0);
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
+        } finally {
+            exit();
         }
     }
 

@@ -1,5 +1,6 @@
 package fr.modcraftmc.launcher.libs.authentification;
 
+import com.azuriom.azauth.AzAuthenticator;
 import fr.litarvan.openauth.AuthPoints;
 import fr.litarvan.openauth.AuthenticationException;
 import fr.litarvan.openauth.model.AuthAgent;
@@ -7,6 +8,8 @@ import fr.litarvan.openauth.model.response.AuthResponse;
 import fr.litarvan.openauth.model.response.RefreshResponse;
 import fr.modcraftmc.launcher.libs.authentification.exception.AuthentificationException;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
+
+import java.io.IOException;
 
 public class Authenticator {
     public static AuthInfos authInfos;
@@ -18,12 +21,20 @@ public class Authenticator {
         AuthResponse response = null;
         try {
             response = authenticator.authenticate(AuthAgent.MINECRAFT, email, password, "");
+            authInfos = new AuthInfos(response.getSelectedProfile().getName(), response.getAccessToken(), response.getSelectedProfile().getId());
+            isLogged = true;
         } catch (AuthenticationException e) {
-            throw new AuthentificationException("Erreur avec mojang", 4);
-        }
-        authInfos = new AuthInfos(response.getSelectedProfile().getName(), response.getAccessToken(), response.getSelectedProfile().getId());
 
-        isLogged = true;
+            try {
+                AzAuthenticator authenticator = new AzAuthenticator("https://modcraftmc.fr");
+                authInfos = authenticator.authenticate(email, password, AuthInfos.class);
+            } catch (IOException | com.azuriom.azauth.AuthenticationException ioException) {
+                isLogged = false;
+                ioException.printStackTrace();
+                throw new AuthentificationException("Erreur de connexion", 5);
+            }
+
+        }
 
     }
 

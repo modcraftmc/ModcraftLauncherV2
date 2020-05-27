@@ -1,6 +1,8 @@
 package ma.forix.gameUpdater;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
@@ -26,12 +28,13 @@ public class Updater extends Task<Void> {
     public final String serverUrl;
     public final File directory;
     public final ProgressBar progressBar;
+    private final Label label;
 
     //REMOTE CONTENT
     public JSONArray remoteContent, toDownload;
     public List<String> ignoreList;
 
-    public Updater(String serverUrl, File directory, ProgressBar progressBar) {
+    public Updater(String serverUrl, File directory, ProgressBar progressBar, Label label) {
         String os = System.getProperty("os.name");
         GameUpdater.LOGGER.info("OS: " + os);
 
@@ -41,6 +44,7 @@ public class Updater extends Task<Void> {
         this.serverUrl = serverUrl;
         this.directory = directory;
         this.progressBar = progressBar;
+        this.label = label;
         if (!directory.exists()) directory.mkdir();
 
         GameUpdater.LOGGER.info("Starting updater");
@@ -157,6 +161,10 @@ public class Updater extends Task<Void> {
             }
 
             GameUpdater.LOGGER.info("current file : " + current.getName());
+
+            Platform.runLater(()-> label.setText("Analyse des fichiers en cours... " + (int)(this.progressProperty().getValue() * 100) + "%"
+                    + " fichier " + fileAnalyzed + " sur " + localFileList.size()));
+
             this.updateProgress(fileAnalyzed, localFileList.size());
 
         }
@@ -236,7 +244,7 @@ public class Updater extends Task<Void> {
         }
        // GameUpdater.LOGGER.info("[VERIFICATION] temps écoulé vérif: "+(System.currentTimeMillis()-temp));
        // GameUpdater.LOGGER.info("[VERIFICATION] Download size: "+GetDownloadSize(toDownload)/1024+"Ko");
-        GameUpdater.LOGGER.info("[VERIFICATION] Files to download: "+toDownload);
+        GameUpdater.LOGGER.info("[VERIFICATION] Files to download: "+ toDownload);
         bytesTodownload = GetDownloadSize(toDownload);
 
     }
@@ -253,7 +261,7 @@ public class Updater extends Task<Void> {
                     fileUrl = new URL(this.serverUrl+"/downloads/" + path.replace("\\", "/").replaceAll(" ", "%20").replaceAll("#", "%23") + fileName.replaceAll(" ", "%20").replaceAll("#", "%23"));
 
 
-                GameUpdater.LOGGER.info("Téléchargement du fichier: "+ fileUrl.toString());
+                System.out.println("Téléchargement du fichier: "+ fileUrl);
                 BufferedInputStream bis = new BufferedInputStream(fileUrl.openStream());
                 FileOutputStream fos = new FileOutputStream(new File(cursor.toString().replaceAll("#var#", ".var")));
                 final byte[] data = new byte[1024];
@@ -315,11 +323,13 @@ public class Updater extends Task<Void> {
         });
         updateBar.start();
 
+
         for (Object array : toDownload){
             JSONObject object = (JSONObject) array;
 
             String path = object.get("path").toString().replace("\\", "/");
             cursor = new File(directory.toString() + "/" + path.replace("\\", "/") + object.get("filename").toString());
+
             if (cursor.getParentFile().exists()) {
                 if (!cursor.exists()) {
                     download(cursor, object);
@@ -328,6 +338,8 @@ public class Updater extends Task<Void> {
                 cursor.getParentFile().mkdirs();
                 download(cursor, object);
             }
+
+
         }
 
         while (!finished){

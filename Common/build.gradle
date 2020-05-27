@@ -5,6 +5,8 @@ plugins {
 group 'fr.modcraftmc.launcher'
 version '1.0-SNAPSHOT'
 
+compileJava.options.encoding = 'UTF-8'
+
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
@@ -23,4 +25,8 @@ dependencies {
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     compile 'com.google.code.gson:gson:2.8.6'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }

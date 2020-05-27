@@ -16,7 +16,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
-import java.io.FileNotFoundException;
 import java.util.regex.Pattern;
 
 public class LoginController {
@@ -61,7 +60,7 @@ public class LoginController {
         try {
 
             if (emailField.getText().length() == 0 || !emailPattern.matcher(emailField.getText()).find()) {
-                throw new AuthentificationException("L'email est invalide", 1);
+                //throw new AuthentificationException("L'email est invalide", 1);
             }
             if (passwordField.getText().length() == 0) {
                 throw new AuthentificationException("Le mot de passe est invalide", 2);
@@ -71,9 +70,9 @@ public class LoginController {
 
             Authenticator.auth(emailField.getText(), passwordField.getText());
         } catch (AuthentificationException e) {
+            ModcraftLauncher.LOGGER.warning(e.getMessage());
             loginEvent.setSucces(false);
             changeState(false);
-            ModcraftLauncher.LOGGER.warning(e.getMessage());
         }
 
         ModcraftLauncher.settingsManager.getSettings().keepLogin = keepLogin.isSelected();
@@ -88,6 +87,8 @@ public class LoginController {
     }
 
     public boolean checkToken() {
+        return false;
+        /*
         boolean logged = false;
         try {
 
@@ -105,6 +106,8 @@ public class LoginController {
         } finally {
             return logged;
         }
+
+         */
 
     }
 

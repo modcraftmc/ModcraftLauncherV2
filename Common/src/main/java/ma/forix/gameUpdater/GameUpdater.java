@@ -3,6 +3,7 @@ package ma.forix.gameUpdater;
 import fr.modcraftmc.modal.ModalBuilder;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import net.wytrem.logging.Logger;
 import net.wytrem.logging.LoggerFactory;
@@ -17,21 +18,20 @@ public class GameUpdater {
 
     private final String url;
     private final File gameDir;
-    private ProgressBar progressBar;
+    private final ProgressBar progressBar;
+    private final Label label;
     private Task<Void> task;
     public static Thread update;
     public static EnumModcraft toDownload;
     public boolean deleter = true;
+    public static boolean downloading = false;
 
     //EXCEPTION HANDLER
-    public static Thread.UncaughtExceptionHandler exceptionHandler = new Thread.UncaughtExceptionHandler() {
-        @Override
-        public void uncaughtException(Thread t, Throwable e) {
-            //TODO: CRASH REPORTTER
-            e.printStackTrace();
-            update.interrupt();
+    public static Thread.UncaughtExceptionHandler exceptionHandler = (t, e) -> {
+        //TODO: CRASH REPORTTER
+        e.printStackTrace();
+        t.interrupt();
 
-        }
     };
 
     public static void checkServer() {
@@ -45,16 +45,11 @@ public class GameUpdater {
     }
 
 
-    public GameUpdater(String url, File gameDir, ProgressBar bar){
+    public GameUpdater(String url, File gameDir, ProgressBar bar, Label label){
         this.url = url;
         this.gameDir = gameDir;
         this.progressBar = bar;
-    }
-
-    public GameUpdater(String url, File gameDir){
-        this.url = url;
-        this.gameDir = gameDir;
-
+        this.label = label;
     }
 
 
@@ -68,10 +63,10 @@ public class GameUpdater {
     }
 
     public Task updater(){
-        task = new Updater(url, gameDir, progressBar);
+        task = new Updater(url, gameDir, progressBar, label);
         if (progressBar != null) {
             Platform.runLater(() -> {
-                     progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+                progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
                 progressBar.progressProperty().unbind();
                 progressBar.progressProperty().bind(task.progressProperty());
             });

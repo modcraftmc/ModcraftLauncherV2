@@ -29,6 +29,7 @@ repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
     maven { url "http://wytrem.github.io/maven/" }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     jcenter()
 }
 
@@ -43,8 +44,10 @@ dependencies {
     compile files('libs/openauth-1.0.4.jar')
     compile files('libs/openlauncherlib-3.1.0-FLOWARGVERSION.jar')
     compile files("libs/jfoenix-8.0.8.jar")
+    compile 'com.azuriom:azauth:1.0-SNAPSHOT'
 
     compile 'club.minnced:discord-webhooks:0.3.1'
+    compile files('libs/jshortcut-0.4.jar')
 
     compile group: 'org.json', name: 'json', version: '20190722'
     compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
