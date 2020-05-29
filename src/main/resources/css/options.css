@@ -1,0 +1,21 @@
+.background {
+    -fx-background-color: #202020;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+
+.jfx-slider > .colored-track {
+    -fx-background-color: #4484FC;
+}
+.jfx-slider > .thumb {
+    -fx-background-color: #4484FC;
+}
+
+.jfx-slider > .animated-thumb {
+    -fx-background-color: #4484FC;
+}
+
+.save {
+    -fx-background-color: radial-gradient(radius 180%, #4D78FF, #5378FF); -fx-text-fill: white;
+    -fx-font-size: 15px;
+}

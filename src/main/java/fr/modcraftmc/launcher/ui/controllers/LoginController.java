@@ -92,7 +92,7 @@ public class LoginController {
 
         ModcraftLauncher.settingsManager.getSettings().keepLogin = keepLogin.isSelected();
         if (keepLogin.isSelected() && loginEvent.getSucces()) {
-            ModcraftLauncher.settingsManager.getSettings().accesToken = Authenticator.authInfos.getAccessToken() + ";" + Authenticator.authInfos.getClientToken();
+            ModcraftLauncher.settingsManager.getSettings().accesToken = Authenticator.authInfos.getAccessToken();
         }
 
         ModcraftLauncher.settingsManager.save();
@@ -108,13 +108,8 @@ public class LoginController {
             return false;
         }
 
-        try {
-            Authenticator.refresh(tokens[0], tokens[1]);
-            logged = true;
-        } catch (AuthentificationException e) {
-            e.printStackTrace();
-            logged = false;
-        }
+        if (tokens[0] == null || tokens[1] == null) return false;
+
 
         return logged;
 

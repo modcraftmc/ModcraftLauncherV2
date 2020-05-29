@@ -20,7 +20,7 @@ public class Authenticator {
 
         AuthResponse response = null;
         try {
-            response = authenticator.authenticate(AuthAgent.MINECRAFT, email, password, "");
+            response = authenticator.authenticate(AuthAgent.MINECRAFT, email, password, "ouiouioui");
             authInfos = new AuthInfos(response.getSelectedProfile().getName(), response.getAccessToken(), response.getSelectedProfile().getId());
             isLogged = true;
         } catch (AuthenticationException e) {
