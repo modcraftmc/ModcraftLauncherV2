@@ -1,6 +1,5 @@
 package fr.modcraftmc.launcher.libs.serverpinger;
 
-import fr.modcraftmc.launcher.libs.discord.DiscordIntegration;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class ServerPingerThread implements Runnable {
 
                 try {
                     response = new MinecraftPing().getPing(options);
-                    DiscordIntegration.setState(response.getPlayers().getOnline(), response.getPlayers().getMax());
+                    //DiscordIntegration.setState(response.getPlayers().getOnline(), response.getPlayers().getMax());
 
                     if (ModcraftApplication.mainLoaded) ModcraftApplication.mainController.setPlayerlist(
                             response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + "joueurs");

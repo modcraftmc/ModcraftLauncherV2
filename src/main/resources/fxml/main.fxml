@@ -5,6 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
 <AnchorPane fx:id="container" prefHeight="600.0" prefWidth="1000.0" styleClass="container" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.MainController">
@@ -57,6 +58,9 @@
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" prefHeight="17.0" prefWidth="228.0" text="Joueurs" textAlignment="CENTER" textFill="WHITE" />
             <Label fx:id="playerlist" alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="24.0" prefHeight="25.0" prefWidth="228.0" textAlignment="CENTER" textFill="WHITE" />
          </children></Pane>
-      <Button fx:id="options" layoutX="801.0" layoutY="475.0" mnemonicParsing="false" onMouseClicked="#options" prefHeight="49.0" prefWidth="185.0" styleClass="play" stylesheets="@../css/main.css" text="OPTIONS" />
+      <Button fx:id="options" layoutX="801.0" layoutY="475.0" mnemonicParsing="false" onAction="#toGoSettings" onMouseClicked="#options" prefHeight="49.0" prefWidth="185.0" styleClass="play" stylesheets="@../css/main.css" text="OPTIONS" />
+      <Rectangle fx:id="drag" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="208.0" layoutX="103.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="839.0" />
+
    </children>
+
 </AnchorPane>

@@ -14,14 +14,21 @@ import fr.modcraftmc.launcher.ui.events.PlayEvent;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static javafx.scene.input.MouseEvent.MOUSE_DRAGGED;
+import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 
 public class MainController {
@@ -29,7 +36,7 @@ public class MainController {
     private Server selectedServer = ServerManager.getServerList().get(0);
 
     @FXML
-    public Pane container;
+    public AnchorPane container;
 
     @FXML
     public ImageView userlogo;
@@ -39,6 +46,9 @@ public class MainController {
 
     @FXML
     public HBox newsbox;
+
+    @FXML
+    public Rectangle drag;
 
     @FXML
     public VBox vboxmenu;
@@ -53,6 +63,11 @@ public class MainController {
 
 
     public void load() {
+
+        drag.setFill(Color.TRANSPARENT);
+        AtomicReference<Double> sx = new AtomicReference<>((double) 0), sy = new AtomicReference<>((double) 0);
+        drag.addEventFilter(MOUSE_PRESSED, e -> { sx.set(e.getScreenX() - ModcraftApplication.window.getX()); sy.set(e.getScreenY() - ModcraftApplication.window.getY()); });
+        drag.addEventFilter(MOUSE_DRAGGED, e -> { ModcraftApplication.window.setX(e.getScreenX() - sx.get()); ModcraftApplication.window.setY(e.getScreenY() - sy.get()); });
 
         userlogo.setImage(new Image("https://minotar.net/avatar/" + Authenticator.authInfos.getUsername()));
         username.setText(Authenticator.authInfos.getUsername());
@@ -128,4 +143,12 @@ public class MainController {
         ModcraftLauncher.serverPingerThread.run();
         Platform.runLater(()-> playerlist.setText(text));
     }
+
+    public void toGoSettings() {
+        Scene switchto = ModcraftApplication.optionScene;
+        switchto.getStylesheets().add(ModcraftApplication.resourcesManager.getResource("global.css").toExternalForm());
+        switchto.setFill(Color.TRANSPARENT);
+        ModcraftApplication.window.setScene(switchto);
+    }
+
 }

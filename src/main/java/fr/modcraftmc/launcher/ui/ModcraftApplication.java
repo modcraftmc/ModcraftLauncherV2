@@ -24,10 +24,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static javafx.scene.input.MouseEvent.MOUSE_DRAGGED;
-import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class ModcraftApplication extends Application {
 
@@ -36,15 +32,16 @@ public class ModcraftApplication extends Application {
     public static Stage window;
     private FXMLLoader loader;
     private static Parent login;
+    public static Parent options;
+    public static Scene mainScene;
+    public static Scene optionScene;
 
-    private static Parent main;
+    public static Parent main;
     public static MainController mainController;
+    public static OptionsController optionsController;
     public static boolean mainLoaded = false;
 
     private static Parent download;
-
-    private static Parent options;
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -60,9 +57,9 @@ public class ModcraftApplication extends Application {
         loader = new FXMLLoader(resourcesManager.getResource("login.fxml"));
         login = loader.load();
         LoginController logincontroller = loader.getController();
+        logincontroller.setup();
 
         logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSettings().keepLogin);
-
 
         loader = new FXMLLoader(resourcesManager.getResource("main.fxml"));
         main = loader.load();
@@ -74,7 +71,9 @@ public class ModcraftApplication extends Application {
 
         loader = new FXMLLoader(resourcesManager.getResource("options.fxml"));
         options = loader.load();
-        OptionsController optionsController = loader.getController();
+        optionsController = loader.getController();
+        optionsController.setup();
+        optionScene = new Scene(options);
 
         Scene scene = new Scene(logincontroller.checkToken() ? main : login);
 
@@ -85,11 +84,6 @@ public class ModcraftApplication extends Application {
         stage.setScene(scene);
         stage.getIcons().add(new Image(resourcesManager.getResource("favicon.png").toString()));
         stage.show();
-
-        AtomicReference<Double> sx = new AtomicReference<>((double) 0), sy = new AtomicReference<>((double) 0);
-        stage.addEventFilter(MOUSE_PRESSED, e -> { sx.set(e.getScreenX() - window.getX()); sy.set(e.getScreenY() - window.getY()); });
-        stage.addEventFilter(MOUSE_DRAGGED, e -> { window.setX(e.getScreenX() - sx.get()); window.setY(e.getScreenY() - sy.get()); });
-
 
 
         logincontroller.passwordLost.setOnAction(event -> {
@@ -129,10 +123,10 @@ public class ModcraftApplication extends Application {
     }
 
     public void switchScene(Parent scene) {
-        Scene switchto = new Scene(scene);
-        switchto.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
-        switchto.setFill(Color.TRANSPARENT);
-        window.setScene(switchto);
+        mainScene = new Scene(scene);
+        mainScene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
+        mainScene.setFill(Color.TRANSPARENT);
+        window.setScene(mainScene);
     }
 
 

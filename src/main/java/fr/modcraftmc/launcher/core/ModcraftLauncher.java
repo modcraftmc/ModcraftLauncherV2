@@ -40,7 +40,12 @@ public class ModcraftLauncher {
         ServerManager.init();
         NewsManager.init();
 
-        Application.launch(ModcraftApplication.class, args);
+        try {
+            Application.launch(ModcraftApplication.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
     }
 

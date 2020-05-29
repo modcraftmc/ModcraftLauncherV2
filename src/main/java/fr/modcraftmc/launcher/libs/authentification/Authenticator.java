@@ -38,10 +38,10 @@ public class Authenticator {
 
     }
 
-    public static void auth(String accesToken) throws AuthentificationException {
+    public static void refresh(String accesToken, String clientToken) throws AuthentificationException {
 
         try {
-            RefreshResponse refresh = authenticator.refresh(accesToken, accesToken);
+            RefreshResponse refresh = authenticator.refresh(accesToken, clientToken);
             authInfos = new AuthInfos(refresh.getSelectedProfile().getName(), refresh.getAccessToken(), refresh.getSelectedProfile().getId());
         } catch (AuthenticationException e) {
             e.printStackTrace();

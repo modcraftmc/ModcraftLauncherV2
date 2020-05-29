@@ -23,8 +23,6 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     compile 'com.google.code.gson:gson:2.8.6'
     compile project(":Common")
-    compile files('libs/jshortcut-0.4.jar')
-    compile files('jshortcut_amd64-0.4.dll')
 }
 
 jar {

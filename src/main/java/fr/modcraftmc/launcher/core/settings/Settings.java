@@ -14,14 +14,17 @@ public class Settings {
 
     public String locale;
 
+    public int ram;
 
-    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin, Boolean keepLauncherOpen,String locale) {
+
+    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin, Boolean keepLauncherOpen,String locale, int ram) {
         this.version = version;
         this.accesToken = accesToken;
         this.discordRPC = discordRPC;
         this.keepLogin = keepLogin;
         this.keepLauncherOpen = keepLauncherOpen;
         this.locale = locale;
+        this.ram = ram;
     }
 
 }

@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -91,7 +92,7 @@ public class Bootstrap extends Application {
     public static void doUpdate() {
 
         GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
-        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", FilesManager.LAUNCHER_PATH, progressBar);
+        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", FilesManager.LAUNCHER_PATH, progressBar, new Label());
         gameUpdater.setDeleter(false);
         gameUpdater.updater().setOnSucceeded((event -> new Thread(Bootstrap::launchLauncher).start()));
         gameUpdater.start();

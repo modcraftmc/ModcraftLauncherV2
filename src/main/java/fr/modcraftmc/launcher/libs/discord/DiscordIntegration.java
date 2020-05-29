@@ -38,14 +38,13 @@ public class DiscordIntegration {
     }
 
 
-    public static void setState(int size, int max) {
+    public static void updateState(String state) {
+        ModcraftApplication.statusDiscord = state;
         DiscordRichPresence presence = new DiscordRichPresence();
         presence.state = ModcraftApplication.statusDiscord;
         presence.startTimestamp = start;
         presence.details = "joue sur ModcraftMC";
         presence.largeImageKey = "logo";
-        presence.partySize = size;
-        presence.partyMax = max;
         lib.Discord_UpdatePresence(presence);
     }
 

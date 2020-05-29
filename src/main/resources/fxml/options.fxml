@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fr.modcraftmc.launcher.ui.controllers.OptionsController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<AnchorPane fx:id="container" prefHeight="600.0" prefWidth="1000.0" styleClass="container" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.OptionsController">
+    <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="400.0" layoutY="45.0" prefHeight="56.0" prefWidth="201.0" text="ModcraftMC" textAlignment="CENTER" textFill="#6a7187">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="370.0" layoutY="116.0" prefHeight="43.0" prefWidth="262.0" text="Options" textAlignment="CENTER" textFill="#6a7187">
+            <font>
+                <Font size="24.0" />
+            </font></Label>
+      <Pane layoutX="88.0" layoutY="180.0" prefHeight="315.0" prefWidth="827.0">
+         <children>
+            <VBox layoutX="154.0" layoutY="-5.0" prefHeight="326.0" prefWidth="519.0">
+               <children>
+                  <Pane prefHeight="72.0" prefWidth="519.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="13.0" prefHeight="43.0" prefWidth="136.0" text="Discord RPC" textFill="WHITE">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="discordrpc" graphicTextGap="5.0" layoutX="475.0" layoutY="21.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="30.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="72.0" prefWidth="519.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="13.0" prefHeight="43.0" prefWidth="201.0" text="Se souvenir de moi" textFill="WHITE">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="saveme" graphicTextGap="5.0" layoutX="475.0" layoutY="21.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="30.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="10.0" layoutY="82.0" prefHeight="72.0" prefWidth="519.0">
+                     <children>
+                        <Label layoutX="9.0" layoutY="13.0" prefHeight="43.0" prefWidth="59.0" text="RAM" textFill="WHITE">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <Slider fx:id="ramS" layoutX="178.0" layoutY="25.0" prefHeight="19.0" prefWidth="318.0" />
+                        <Label fx:id="ramLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="12.0" prefHeight="43.0" prefWidth="76.0" text="0G" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <Button fx:id="back" layoutX="476.0" layoutY="507.0" mnemonicParsing="false" onAction="#back" text="Retour" /></children>
+    <stylesheets>
+        <URL value="@../css/login.css" />
+        <URL value="@../css/global.css" />
+    </stylesheets></AnchorPane>

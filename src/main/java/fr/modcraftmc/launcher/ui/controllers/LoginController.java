@@ -14,16 +14,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
+
+import static javafx.scene.input.MouseEvent.MOUSE_DRAGGED;
+import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class LoginController {
 
 
     @FXML
-    public Pane container;
-
+    public AnchorPane container;
 
     @FXML
     public TextField emailField;
@@ -38,9 +43,10 @@ public class LoginController {
     public JFXCheckBox keepLogin;
 
     @FXML
-    public Hyperlink passwordLost;
+    public Rectangle drag;
 
-    private final int logRounds = 3;
+    @FXML
+    public Hyperlink passwordLost;
 
 
     public void close() {
@@ -50,6 +56,15 @@ public class LoginController {
         close.setResetOnFinished(true);
         close.play();
         close.setOnFinished(event -> System.exit(0));
+    }
+
+    public void setup() {
+
+        drag.setFill(Color.TRANSPARENT);
+        AtomicReference<Double> sx = new AtomicReference<>((double) 0), sy = new AtomicReference<>((double) 0);
+        drag.addEventFilter(MOUSE_PRESSED, e -> { sx.set(e.getScreenX() - ModcraftApplication.window.getX()); sy.set(e.getScreenY() - ModcraftApplication.window.getY()); });
+        drag.addEventFilter(MOUSE_DRAGGED, e -> { ModcraftApplication.window.setX(e.getScreenX() - sx.get()); ModcraftApplication.window.setY(e.getScreenY() - sy.get()); });
+
     }
 
     public void tryLogin() {
@@ -77,37 +92,31 @@ public class LoginController {
 
         ModcraftLauncher.settingsManager.getSettings().keepLogin = keepLogin.isSelected();
         if (keepLogin.isSelected() && loginEvent.getSucces()) {
-            ModcraftLauncher.settingsManager.getSettings().accesToken = Authenticator.authInfos.getAccessToken();
+            ModcraftLauncher.settingsManager.getSettings().accesToken = Authenticator.authInfos.getAccessToken() + ";" + Authenticator.authInfos.getClientToken();
         }
-
-
 
         ModcraftLauncher.settingsManager.save();
         Event.fireEvent(ModcraftApplication.window, loginEvent);
     }
 
     public boolean checkToken() {
-        return false;
-        /*
+
         boolean logged = false;
-        try {
 
-            String token = "a";
-            if (token == null) {
-                throw new FileNotFoundException();
-            }
-
-            Authenticator.auth(token);
-            logged = true;
-            
-        } catch (FileNotFoundException | AuthentificationException e) {
-            logged = false;
-
-        } finally {
-            return logged;
+        String[] tokens = ModcraftLauncher.settingsManager.getSettings().accesToken.split(";");
+        if (tokens.length != 2) {
+            return false;
         }
 
-         */
+        try {
+            Authenticator.refresh(tokens[0], tokens[1]);
+            logged = true;
+        } catch (AuthentificationException e) {
+            e.printStackTrace();
+            logged = false;
+        }
+
+        return logged;
 
     }
 
