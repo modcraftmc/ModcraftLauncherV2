@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+<AnchorPane fx:id="container" prefHeight="600.0" prefWidth="1000.0" styleClass="container" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.modcraftmc.launcher.ui.controllers.MainController">
+   <stylesheets>
+      <URL value="@../css/global.css" />
+      <URL value="@../css/main.css" />
+   </stylesheets>
+   <children>
+      <Button fx:id="close" layoutX="976.0" mnemonicParsing="false" onMouseReleased="#close" prefHeight="17.0" prefWidth="20.0" styleClass="close">
+         <stylesheets>
+            <URL value="@../css/global.css" />
+            <URL value="@../css/main.css" />
+         </stylesheets>
+         <effect>
+            <Blend />
+         </effect></Button>
+      <Button fx:id="play" layoutX="801.0" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#play" prefHeight="49.0" prefWidth="185.0" styleClass="play" stylesheets="@../css/main.css" text="JOUER" />
+      <Pane fx:id="accountbox" prefHeight="107.0" prefWidth="295.0" styleClass="accountbox" stylesheets="@../css/main.css">
+         <children>
+            <ImageView fx:id="userlogo" fitHeight="66.0" fitWidth="72.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="https://minotar.net/avatar/manugame_" />
+               </image>
+            </ImageView>
+            <Label fx:id="username" layoutX="91.0" layoutY="14.0" prefHeight="17.0" prefWidth="127.0" text="manugame_" textFill="WHITE">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <VBox fx:id="vboxmenu" layoutY="105.0" prefHeight="493.0" prefWidth="295.0" styleClass="vboxmenu" stylesheets="@../css/main.css">
+         <children>
+            <Label alignment="CENTER" prefHeight="62.0" prefWidth="281.0" text="Nos serveurs" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Regular" size="21.0" />
+               </font>
+            </Label>
+            <Label prefHeight="27.0" prefWidth="281.0" />
+         </children></VBox>
+      <Pane fx:id="hboxmenu" layoutX="297.0" layoutY="105.0" prefHeight="352.0" prefWidth="694.0" styleClass="hboxmenu" stylesheets="@../css/main.css">
+         <children>
+            <HBox fx:id="newsbox" layoutX="14.0" layoutY="60.0" prefHeight="259.0" prefWidth="659.0" styleClass="hbox" stylesheets="@../css/main.css" />
+         </children>
+      </Pane>
+      <Pane layoutX="311.0" layoutY="481.0" prefHeight="107.0" prefWidth="463.0" styleClass="serverinfos" stylesheets="@../css/main.css">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="9.0" prefHeight="17.0" prefWidth="236.0" text="Serveur " textFill="WHITE" />
+            <Label fx:id="servername" alignment="CENTER" contentDisplay="CENTER" layoutY="24.0" prefHeight="25.0" prefWidth="236.0" textAlignment="CENTER" textFill="WHITE" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" prefHeight="17.0" prefWidth="228.0" text="Joueurs" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="playerlist" alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="24.0" prefHeight="25.0" prefWidth="228.0" textAlignment="CENTER" textFill="WHITE" />
+         </children></Pane>
+      <Button fx:id="options" layoutX="801.0" layoutY="475.0" mnemonicParsing="false" onAction="#toGoSettings" onMouseClicked="#options" prefHeight="49.0" prefWidth="185.0" styleClass="play" stylesheets="@../css/main.css" text="OPTIONS" />
+      <Rectangle fx:id="drag" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="208.0" layoutX="103.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="839.0" />
+
+   </children>
+
+</AnchorPane>

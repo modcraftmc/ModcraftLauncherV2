@@ -31,20 +31,27 @@ public class ModcraftApplication extends Application {
     public static String statusDiscord = "Sur le launcher";
     public static Stage window;
     private FXMLLoader loader;
-    private static Parent login;
-    public static Parent options;
-    public static Scene mainScene;
-    public static Scene optionScene;
 
     public static Parent main;
+    private static Parent login;
+    private static Parent download;
+    public static Parent options;
+
+    public static Scene mainScene;
+    public static Scene optionScene;
+    public static Scene loginScene;
+    public static Scene downloadScene;
+
+    public static ModcraftApplication instance;
+
     public static MainController mainController;
     public static OptionsController optionsController;
     public static boolean mainLoaded = false;
 
-    private static Parent download;
 
     @Override
     public void start(Stage stage) throws Exception {
+        instance = this;
 
         window = stage;
 
@@ -73,9 +80,14 @@ public class ModcraftApplication extends Application {
         options = loader.load();
         optionsController = loader.getController();
         optionsController.setup();
-        optionScene = new Scene(options);
 
-        Scene scene = new Scene(logincontroller.checkToken() ? main : login);
+        mainScene = new Scene(main);
+        loginScene = new Scene(login);
+        optionScene = new Scene(options);
+        downloadScene = new Scene(download);
+
+
+        Scene scene = logincontroller.checkToken() ? mainScene : loginScene;
 
         scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
@@ -96,17 +108,17 @@ public class ModcraftApplication extends Application {
         });
 
 
+
         window.addEventHandler(LoginEvent.LOGIN, event -> {
             if (event.getSucces())  {
-                mainController.load();
-                mainLoaded = true;
-                switchScene(main);
+                switchToMain();
             }
 
         });
 
+
         window.addEventHandler(PlayEvent.PLAY, event -> {
-                switchScene(download);
+                switchToDownload();
                 new Thread(() -> downloadController.download(event.getServer())).start();
 
         });
@@ -119,15 +131,40 @@ public class ModcraftApplication extends Application {
             }
         });
 
-        window.setOnCloseRequest(event -> ModcraftLauncher.settingsManager.save());
+        window.setOnCloseRequest(event -> {
+            ModcraftLauncher.settingsManager.save();
+            System.exit(0);
+        });
     }
 
-    public void switchScene(Parent scene) {
-        mainScene = new Scene(scene);
+    public void switchToMain() {
+        mainController.load();
+        mainLoaded = true;
         mainScene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
         mainScene.setFill(Color.TRANSPARENT);
         window.setScene(mainScene);
     }
 
+    public void switchToDownload() {
+        downloadScene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
+        downloadScene.setFill(Color.TRANSPARENT);
+        window.setScene(downloadScene);
+    }
+
+    public void switchToOptions() {
+        optionScene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
+        optionScene.setFill(Color.TRANSPARENT);
+        window.setScene(optionScene);
+    }
+
+    public void switchToLogin() {
+        loginScene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
+        loginScene.setFill(Color.TRANSPARENT);
+        window.setScene(loginScene);
+    }
+
+    public static ModcraftApplication getInstance() {
+        return instance;
+    }
 
 }

@@ -3,6 +3,16 @@
     -fx-font-size: 15px;
 }
 
+.serverList{
+    -fx-background-color: #202020;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+
+.comboboxServers {
+    -fx-text-fill: white;
+}
+
 .serverinfos {
     -fx-background-color: #202020;
 }

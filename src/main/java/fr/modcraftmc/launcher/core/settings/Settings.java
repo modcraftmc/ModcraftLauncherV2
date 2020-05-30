@@ -16,8 +16,10 @@ public class Settings {
 
     public int ram;
 
+    public boolean autoram;
 
-    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin, Boolean keepLauncherOpen,String locale, int ram) {
+
+    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin, Boolean keepLauncherOpen,String locale, int ram, boolean autoram) {
         this.version = version;
         this.accesToken = accesToken;
         this.discordRPC = discordRPC;
@@ -25,6 +27,7 @@ public class Settings {
         this.keepLauncherOpen = keepLauncherOpen;
         this.locale = locale;
         this.ram = ram;
+        this.autoram = autoram;
     }
 
 }

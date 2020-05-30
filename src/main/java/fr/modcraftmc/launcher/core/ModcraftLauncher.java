@@ -34,7 +34,7 @@ public class ModcraftLauncher {
         LOGGER.info("Loading launcher at " + filesManager.getDefaultPath());
 
 
-        new Thread(serverPingerThread).start();
+        //new Thread(serverPingerThread).start();
         if (settingsManager.getSettings().discordRPC) new DiscordIntegration();
 
         ServerManager.init();

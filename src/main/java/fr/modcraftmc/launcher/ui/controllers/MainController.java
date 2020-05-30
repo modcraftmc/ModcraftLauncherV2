@@ -3,13 +3,10 @@ package fr.modcraftmc.launcher.ui.controllers;
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
-import fr.modcraftmc.launcher.core.news.News;
-import fr.modcraftmc.launcher.core.news.NewsManager;
 import fr.modcraftmc.launcher.core.servers.Server;
 import fr.modcraftmc.launcher.core.servers.ServerManager;
 import fr.modcraftmc.launcher.libs.authentification.Authenticator;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
-import fr.modcraftmc.launcher.ui.events.OptionsEvent;
 import fr.modcraftmc.launcher.ui.events.PlayEvent;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -19,16 +16,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static javafx.scene.input.MouseEvent.MOUSE_DRAGGED;
-import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 
 public class MainController {
@@ -37,12 +32,6 @@ public class MainController {
 
     @FXML
     public AnchorPane container;
-
-    @FXML
-    public ImageView userlogo;
-
-    @FXML
-    public Label username;
 
     @FXML
     public HBox newsbox;
@@ -61,17 +50,28 @@ public class MainController {
 
     public List<Button> buttonList = new ArrayList<>();
 
+    //new
+
+    @FXML
+    public ImageView userlogo;
+
+    @FXML
+    public Label username;
+
 
     public void load() {
 
-        drag.setFill(Color.TRANSPARENT);
-        AtomicReference<Double> sx = new AtomicReference<>((double) 0), sy = new AtomicReference<>((double) 0);
-        drag.addEventFilter(MOUSE_PRESSED, e -> { sx.set(e.getScreenX() - ModcraftApplication.window.getX()); sy.set(e.getScreenY() - ModcraftApplication.window.getY()); });
-        drag.addEventFilter(MOUSE_DRAGGED, e -> { ModcraftApplication.window.setX(e.getScreenX() - sx.get()); ModcraftApplication.window.setY(e.getScreenY() - sy.get()); });
 
-        userlogo.setImage(new Image("https://minotar.net/avatar/" + Authenticator.authInfos.getUsername()));
+
+        Image userimage = new Image("https://minotar.net/avatar/" + Authenticator.authInfos.getUsername());
+
+        if (userimage.getWidth() == 0.0) {
+            userimage = new Image("https://minotar.net/avatar/steve");
+        }
+
+        userlogo.setImage(userimage);
         username.setText(Authenticator.authInfos.getUsername());
-
+      /*
         servername.setText(ServerManager.getServerList().get(0).name);
         playerlist.setText(ModcraftLauncher.serverPingerThread.getResponse().getPlayers().getOnline() + "/" + ModcraftLauncher.serverPingerThread.getResponse().getPlayers().getMax());
 
@@ -104,6 +104,8 @@ public class MainController {
             button.setText(ServerManager.getServerList().get(Integer.parseInt(button.getId()) - 1).name);
             button.setOnMouseClicked(event -> switchServer(Integer.parseInt(button.getId()) - 1));
         }
+
+         */
         
 
     }
@@ -128,11 +130,6 @@ public class MainController {
 
     }
 
-    public void options() {
-        OptionsEvent event = new OptionsEvent();
-        Event.fireEvent(ModcraftApplication.window, event);
-
-    }
 
     public void switchServer(int server) {
         selectedServer = ServerManager.getServerList().get(server);

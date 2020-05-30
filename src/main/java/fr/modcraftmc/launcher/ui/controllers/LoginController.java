@@ -92,7 +92,7 @@ public class LoginController {
 
         ModcraftLauncher.settingsManager.getSettings().keepLogin = keepLogin.isSelected();
         if (keepLogin.isSelected() && loginEvent.getSucces()) {
-            ModcraftLauncher.settingsManager.getSettings().accesToken = Authenticator.authInfos.getAccessToken();
+            ModcraftLauncher.settingsManager.getSettings().accesToken = emailField.getText() + ";" + passwordField.getText();
         }
 
         ModcraftLauncher.settingsManager.save();
@@ -100,6 +100,8 @@ public class LoginController {
     }
 
     public boolean checkToken() {
+
+        if (!ModcraftLauncher.settingsManager.getSettings().keepLogin) return false;
 
         boolean logged = false;
 
@@ -110,7 +112,27 @@ public class LoginController {
 
         if (tokens[0] == null || tokens[1] == null) return false;
 
+        emailField.setText(tokens[0]);
+        passwordField.setText(tokens[1]);
+        LoginEvent loginEvent = new LoginEvent();
 
+        try {
+
+            if (passwordField.getText().length() == 0) {
+                throw new AuthentificationException("Le mot de passe est invalide", 2);
+            }
+
+            loginEvent.setSucces(true);
+            logged = true;
+
+            Authenticator.auth(emailField.getText(), passwordField.getText());
+        } catch (AuthentificationException e) {
+            logged = false;
+            ModcraftLauncher.LOGGER.warning(e.getMessage());
+            loginEvent.setSucces(false);
+            changeState(false);
+        }
+        Event.fireEvent(ModcraftApplication.window, loginEvent);
         return logged;
 
     }

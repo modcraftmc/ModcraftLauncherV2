@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SettingsManager {
 
-    private Settings settings = new Settings("1", "oh no no no no", true, true, true, "FR_fr", 4);
+    private Settings settings = new Settings("1", "oh no no no no", true, true, true, "FR_fr", 4, true);
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public void load() {

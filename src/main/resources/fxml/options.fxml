@@ -14,7 +14,7 @@
    <children>
       <Pane id="background" fx:id="background" layoutX="92.0" layoutY="64.0" prefHeight="473.0" prefWidth="816.0" styleClass="background" stylesheets="@../css/options.css">
          <children>
-            <JFXSlider fx:id="ramSlider" cache="true" layoutX="408.0" layoutY="265.0" max="16.0" min="3.0" prefHeight="14.0" prefWidth="381.0" showTickLabels="true" stylesheets="@../css/options.css" value="4.0" />
+            <JFXSlider fx:id="ramSlider" cache="true" layoutX="408.0" layoutY="255.0" max="16.0" min="3.0" prefHeight="14.0" prefWidth="381.0" showTickLabels="true" stylesheets="@../css/options.css" value="4.0" />
             <Label layoutX="16.0" layoutY="8.0" prefHeight="42.0" prefWidth="222.0" text="Paramètre du launcher" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
