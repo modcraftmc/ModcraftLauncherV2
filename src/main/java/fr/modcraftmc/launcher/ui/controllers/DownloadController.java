@@ -62,8 +62,9 @@ public class DownloadController {
 
             ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(INFOS, GameFolder.BASIC, Authenticator.authInfos);
             profile.getVmArgs().add(String.format("-Xmx%sG", ModcraftApplication.optionsController.getRam()));
+            profile.getArgs().add("-Dfml.readTimeout=400");
             ExternalLauncher launcher = new ExternalLauncher(profile);
-            Process p = null;
+            Process p;
             DiscordIntegration.updateState("en jeu");
             try {
                 Platform.runLater(() -> ModcraftApplication.window.hide());

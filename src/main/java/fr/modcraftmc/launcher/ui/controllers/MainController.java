@@ -62,7 +62,6 @@ public class MainController {
     public void load() {
 
 
-
         Image userimage = new Image("https://minotar.net/avatar/" + Authenticator.authInfos.getUsername());
 
         if (userimage.getWidth() == 0.0) {

@@ -29,7 +29,7 @@
                   <Font name="Berlin Sans FB" size="21.0" />
                </font>
             </Label>
-            <Label fx:id="stats_players" alignment="CENTER" layoutX="21.0" layoutY="218.0" prefHeight="17.0" prefWidth="200.0" text="10/50 joueurs" textFill="WHITE">
+            <Label fx:id="stats_players" alignment="CENTER" layoutX="21.0" layoutY="218.0" prefHeight="17.0" prefWidth="200.0" text="Nan/50 joueurs" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

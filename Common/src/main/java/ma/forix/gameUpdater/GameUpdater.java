@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import ma.forix.gameUpdater.tasks.DownloadTask;
 import net.wytrem.logging.Logger;
 import net.wytrem.logging.LoggerFactory;
 
@@ -63,7 +64,7 @@ public class GameUpdater {
     }
 
     public Task updater(){
-        task = new Updater(url, gameDir, progressBar, label);
+        task = new DownloadTask(url, gameDir, progressBar, label);
         if (progressBar != null) {
             Platform.runLater(() -> {
                 progressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);

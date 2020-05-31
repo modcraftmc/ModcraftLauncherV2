@@ -55,8 +55,6 @@ dependencies {
 
 }
 
-
-
 jar {
     manifest {
         attributes 'Main-Class': 'fr.modcraftmc.launcher.core.ModcraftLauncher'

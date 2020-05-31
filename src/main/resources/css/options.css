@@ -19,3 +19,7 @@
     -fx-background-color: radial-gradient(radius 180%, #4D78FF, #5378FF); -fx-text-fill: white;
     -fx-font-size: 15px;
 }
+
+.scroll {
+    -fx-background-color: #202020;
+}

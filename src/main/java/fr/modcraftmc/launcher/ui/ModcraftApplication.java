@@ -87,7 +87,16 @@ public class ModcraftApplication extends Application {
         downloadScene = new Scene(download);
 
 
-        Scene scene = logincontroller.checkToken() ? mainScene : loginScene;
+
+        Scene scene;
+        if (logincontroller.checkToken()) {
+            scene = mainScene;
+            mainController.load();
+
+        } else {
+            scene = loginScene;
+        }
+
 
         scene.getStylesheets().add(resourcesManager.getResource("login.css").toExternalForm());
         scene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());

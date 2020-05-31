@@ -37,7 +37,7 @@ public class JSONUtils {
             return gson.fromJson(reader, clazz);
         } catch (IOException ignored) {}
 
-        return new Settings("1", "oh no no no no", true, true, true,"FR_fr", 4, true);
+        return new Settings("1", "oh no no no no", true, true, true,"FR_fr", 4, true, false, "");
     }
 
     public static List<News> fetchNews(String URL, Type clazz)  {

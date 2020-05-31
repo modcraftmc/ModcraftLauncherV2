@@ -1,9 +1,11 @@
-package ma.forix.gameUpdater;
+package ma.forix.gameUpdater.tasks;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import ma.forix.gameUpdater.GameUpdater;
+import ma.forix.gameUpdater.Os;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -19,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class Updater extends Task<Void> {
+public class DownloadTask extends Task<Void> {
 
     private int downloadSize, bytesDownloaded, fileDownloaded, filesToDownload, threadsNumber, bytesTodownload;
 
@@ -34,7 +36,7 @@ public class Updater extends Task<Void> {
     public JSONArray remoteContent, toDownload;
     public List<String> ignoreList;
 
-    public Updater(String serverUrl, File directory, ProgressBar progressBar, Label label) {
+    public DownloadTask(String serverUrl, File directory, ProgressBar progressBar, Label label) {
         String os = System.getProperty("os.name");
         GameUpdater.LOGGER.info("OS: " + os);
 
@@ -319,7 +321,6 @@ public class Updater extends Task<Void> {
         updateBar = new Thread(() -> {
             while (!finished)
                 this.updateProgress(bytesDownloaded, bytesTodownload);
-
         });
         updateBar.start();
 
@@ -331,6 +332,8 @@ public class Updater extends Task<Void> {
             cursor = new File(directory.toString() + "/" + path.replace("\\", "/") + object.get("filename").toString());
 
             if (cursor.getParentFile().exists()) {
+                Platform.runLater(()-> label.setText("Téléchargement en cours... " + (int)(this.progressProperty().getValue() * 100) + "%"
+                        + " fichier " + fileDownloaded + " sur " + toDownload.size()));
                 if (!cursor.exists()) {
                     download(cursor, object);
                 }

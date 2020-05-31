@@ -18,8 +18,13 @@ public class Settings {
 
     public boolean autoram;
 
+    public boolean customFolder;
 
-    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin, Boolean keepLauncherOpen,String locale, int ram, boolean autoram) {
+    public String customFolderPath;
+
+
+    public Settings(String version, String accesToken, Boolean discordRPC, Boolean keepLogin, Boolean keepLauncherOpen,String locale, int ram, boolean autoram,
+                    boolean customFolder, String customFolderPath) {
         this.version = version;
         this.accesToken = accesToken;
         this.discordRPC = discordRPC;
@@ -28,6 +33,8 @@ public class Settings {
         this.locale = locale;
         this.ram = ram;
         this.autoram = autoram;
+        this.customFolder = customFolder;
+        this.customFolderPath = customFolderPath;
     }
 
 }

@@ -103,7 +103,7 @@ public class LoginController {
 
         if (!ModcraftLauncher.settingsManager.getSettings().keepLogin) return false;
 
-        boolean logged = false;
+        boolean logged;
 
         String[] tokens = ModcraftLauncher.settingsManager.getSettings().accesToken.split(";");
         if (tokens.length != 2) {
