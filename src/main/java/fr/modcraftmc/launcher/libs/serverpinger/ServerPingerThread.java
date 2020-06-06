@@ -15,14 +15,6 @@ public class ServerPingerThread implements Runnable {
     private MinecraftPingReply response;
 
 
-    public static void main(String[] args) {
-
-
-    }
-
-    public MinecraftPingReply getResponse() {
-        return response;
-    }
 
     @Override
     public void run() {
@@ -34,11 +26,7 @@ public class ServerPingerThread implements Runnable {
                 try {
                     response = new MinecraftPing().getPing(options);
                     DiscordIntegration.updatePlayer(response.getPlayers().getOnline(), response.getPlayers().getMax());
-                    System.out.println(response);
-
-                    ModcraftApplication.mainController.setPlayerlist(
-                            response.getPlayers().getOnline() + " / " + response.getPlayers().getMax() + " joueurs");
-
+                    ModcraftApplication.mainController.setPlayerlist(response.getPlayers().getOnline() + " / " + response.getPlayers().getMax() + " joueurs");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -46,6 +34,7 @@ public class ServerPingerThread implements Runnable {
 
             }
         }, 100, 60000);
+
 
     }
 

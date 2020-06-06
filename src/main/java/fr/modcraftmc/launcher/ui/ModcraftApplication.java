@@ -29,6 +29,9 @@ public class ModcraftApplication extends Application {
 
     public static ResourcesManager resourcesManager = new ResourcesManager();
     public static String statusDiscord = "Sur le launcher";
+    public static int players = 0;
+    public static int maxplayers = 0;
+
     public static Stage window;
     private FXMLLoader loader;
 
