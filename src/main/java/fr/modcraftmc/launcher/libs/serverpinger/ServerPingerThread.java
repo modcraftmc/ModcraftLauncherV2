@@ -1,5 +1,6 @@
 package fr.modcraftmc.launcher.libs.serverpinger;
 
+import fr.modcraftmc.launcher.libs.discord.DiscordIntegration;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
 
 import java.io.IOException;
@@ -14,6 +15,15 @@ public class ServerPingerThread implements Runnable {
     private MinecraftPingReply response;
 
 
+    public static void main(String[] args) {
+
+
+    }
+
+    public MinecraftPingReply getResponse() {
+        return response;
+    }
+
     @Override
     public void run() {
 
@@ -23,21 +33,21 @@ public class ServerPingerThread implements Runnable {
 
                 try {
                     response = new MinecraftPing().getPing(options);
-                    //DiscordIntegration.setState(response.getPlayers().getOnline(), response.getPlayers().getMax());
+                    DiscordIntegration.updatePlayer(response.getPlayers().getOnline(), response.getPlayers().getMax());
+                    System.out.println(response);
 
-                    if (ModcraftApplication.mainLoaded) ModcraftApplication.mainController.setPlayerlist(
-                            response.getPlayers().getOnline() + "/" + response.getPlayers().getMax() + "joueurs");
+                    ModcraftApplication.mainController.setPlayerlist(
+                            response.getPlayers().getOnline() + " / " + response.getPlayers().getMax() + " joueurs");
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }
-        }, 0, 60000);
+        }, 100, 60000);
 
     }
 
-    public MinecraftPingReply getResponse() {
-        return response;
-    }
+
 }

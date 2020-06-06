@@ -27,7 +27,7 @@ public class ResourcesManager {
         } else if (cssExtentions.contains(extention)) {
             return getClass().getClassLoader().getResource("css/" + name);
         } else if (jsonExtentions.contains(extention)) {
-            return getClass().getClassLoader().getResource("json" + name);
+            return getClass().getClassLoader().getResource("json/" + name);
         } else {
             return getClass().getClassLoader().getResource(name);
         }

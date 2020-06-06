@@ -5,7 +5,9 @@ import fr.modcraftmc.launcher.maintenance.MaintenanceManager;
 import fr.modcraftmc.launcher.utils.JavaUtils;
 import fr.modcraftmc.modal.AlertBuilder;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -37,7 +39,7 @@ public class Bootstrap extends Application {
 
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         Bootstrap.LOGGER.info("Starting system check...");
 
 
@@ -53,6 +55,20 @@ public class Bootstrap extends Application {
         LOGGER.info("Java version : " + JavaUtils.getVersion());
         Bootstrap.stage = stage;
         stage.initStyle(StageStyle.DECORATED);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("welcome.fxml"));
+        Parent welcome = loader.load();
+
+        Scene scene = new Scene(welcome);
+        stage.setScene(scene);
+        stage.show();
+
+        //downloader();
+
+    }
+
+    public void downloader() {
+
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
         stage.setTitle("ModcraftMC");
@@ -72,6 +88,7 @@ public class Bootstrap extends Application {
         initComponents(root);
 
         new Thread(Bootstrap::run).start();
+
     }
 
     private void initComponents(StackPane root) {

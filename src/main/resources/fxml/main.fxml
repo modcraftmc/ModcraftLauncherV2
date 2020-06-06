@@ -29,19 +29,22 @@
                   <Font name="Berlin Sans FB" size="21.0" />
                </font>
             </Label>
-            <Label fx:id="stats_players" alignment="CENTER" layoutX="21.0" layoutY="218.0" prefHeight="17.0" prefWidth="200.0" text="Nan/50 joueurs" textFill="WHITE">
+            <Label fx:id="stats_players" alignment="CENTER" layoutX="21.0" layoutY="218.0" prefHeight="17.0"
+                   prefWidth="200.0" text="making request..." textFill="WHITE">
                <font>
-                  <Font size="15.0" />
+                  <Font size="15.0"/>
                </font>
             </Label>
-            <Label fx:id="stats_ping" alignment="CENTER" layoutX="21.0" layoutY="178.0" prefHeight="17.0" prefWidth="200.0" text="Ping 12ms" textFill="WHITE">
+            <Label fx:id="stats_ping" alignment="CENTER" layoutX="21.0" layoutY="178.0" prefHeight="17.0"
+                   prefWidth="200.0" text="making request..." textFill="WHITE">
                <font>
-                  <Font size="15.0" />
+                  <Font size="15.0"/>
                </font>
             </Label>
-            <Label fx:id="stats_state" alignment="CENTER" layoutX="21.0" layoutY="260.0" prefHeight="17.0" prefWidth="200.0" text="En maintenance" textFill="WHITE">
+            <Label fx:id="stats_state" alignment="CENTER" layoutX="21.0" layoutY="260.0" prefHeight="17.0"
+                   prefWidth="200.0" text="Serveur ouvert" textFill="WHITE">
                <font>
-                  <Font size="15.0" />
+                  <Font size="15.0"/>
                </font>
             </Label>
          </children></Pane>

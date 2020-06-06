@@ -48,4 +48,15 @@ public class DiscordIntegration {
         lib.Discord_UpdatePresence(presence);
     }
 
+    public static void updatePlayer(int player, int max) {
+        DiscordRichPresence presence = new DiscordRichPresence();
+        presence.state = ModcraftApplication.statusDiscord;
+        presence.startTimestamp = start;
+        presence.details = "joue sur ModcraftMC";
+        presence.largeImageKey = "logo";
+        presence.partySize = player;
+        presence.partyMax = max;
+        lib.Discord_UpdatePresence(presence);
+    }
+
 }

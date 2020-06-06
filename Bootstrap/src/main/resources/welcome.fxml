@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="423.0" prefWidth="795.0" stylesheets="@welcome.css"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="fr.modcraftmc.launcher.Bootstrap">
+   <children>
+      <Pane layoutX="213.0" layoutY="66.0" prefHeight="30.0" prefWidth="370.0">
+         <children>
+            <Circle fill="#7a90fd" layoutX="356.0" layoutY="13.0" radius="13.0" stroke="#ffffff00" strokeType="INSIDE"/>
+            <Circle fill="#7a90fd" layoutX="14.0" layoutY="13.0" radius="13.0" stroke="#ffffff00" strokeType="INSIDE"/>
+            <Circle fill="#7a90fd" layoutX="185.0" layoutY="15.0" radius="13.0" stroke="#ffffff00" strokeType="INSIDE"/>
+            <ProgressBar layoutX="39.0" layoutY="12.0" prefHeight="5.0" prefWidth="121.0" progress="0.0"
+                         scaleShape="false"/>
+            <ProgressBar layoutX="209.0" layoutY="12.0" prefHeight="5.0" prefWidth="121.0" progress="0.0"/>
+         </children>
+      </Pane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="284.0" layoutY="139.0" prefHeight="27.0"
+             prefWidth="229.0" text="Bienvenue sur ModcraftMC" textAlignment="CENTER">
+         <font>
+            <Font size="18.0"/>
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="158.0" layoutY="203.0" prefHeight="17.0"
+             prefWidth="480.0"
+             text="le launcher va installer les pré-requis pour pouvoir vous connecter sur ModcraftMC,"
+             textAlignment="CENTER"/>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="158.0" layoutY="223.0" prefHeight="17.0"
+             prefWidth="480.0" text="merci de suivre les étapes indiqués par le launcher." textAlignment="CENTER"/>
+      <Button id="start" fx:id="start" layoutX="300.0" layoutY="309.0" mnemonicParsing="false" prefHeight="40.0"
+              prefWidth="195.0" styleClass="start" stylesheets="@welcome.css" text="Démarrer ">
+         <font>
+            <Font name="Droid Sans" size="18.0"/>
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

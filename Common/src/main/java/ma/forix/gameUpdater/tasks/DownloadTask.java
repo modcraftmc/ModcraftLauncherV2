@@ -56,6 +56,7 @@ public class DownloadTask extends Task<Void> {
 
         GameUpdater.LOGGER.info("Fetching remote ignorelist");
         ignoreList = getIgnoreList();
+        System.out.println(ignoreList);
 
 
     }

@@ -6,7 +6,6 @@ import fr.modcraftmc.launcher.core.resources.ResourcesManager;
 import fr.modcraftmc.launcher.core.servers.ServerManager;
 import fr.modcraftmc.launcher.core.settings.SettingsManager;
 import fr.modcraftmc.launcher.libs.discord.DiscordIntegration;
-import fr.modcraftmc.launcher.libs.serverpinger.ServerPingerThread;
 import fr.modcraftmc.launcher.ui.ModcraftApplication;
 import javafx.application.Application;
 import net.wytrem.logging.Logger;
@@ -21,7 +20,6 @@ public class ModcraftLauncher {
     public final static FilesManager filesManager = new FilesManager();
     public final static SettingsManager settingsManager = new SettingsManager();
     public static ResourcesManager resourcesManager = new ResourcesManager();
-    public static ServerPingerThread serverPingerThread = new ServerPingerThread();
 
 
     public static void main(String[] args) {
@@ -33,8 +31,6 @@ public class ModcraftLauncher {
         LOGGER.info("By Modcraftmc developpement team");
         LOGGER.info("Loading launcher at " + filesManager.getDefaultPath());
 
-
-        //new Thread(serverPingerThread).start();
         if (settingsManager.getSettings().discordRPC) new DiscordIntegration();
 
         ServerManager.init();
