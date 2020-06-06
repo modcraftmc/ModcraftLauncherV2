@@ -17,12 +17,15 @@
       <JFXButton layoutX="747.0" layoutY="540.0" mnemonicParsing="false" onMouseReleased="#play" prefHeight="51.0" prefWidth="241.0" styleClass="play" stylesheets="@../css/main.css" text="Jouer" textFill="WHITE" />
       <Pane fx:id="serverList" layoutX="747.0" layoutY="149.0" prefHeight="317.0" prefWidth="241.0" styleClass="serverList" stylesheets="@../css/main.css">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="8.0" prefHeight="29.0" prefWidth="137.0" text="Modpack" textAlignment="CENTER" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="8.0" prefHeight="29.0"
+                   prefWidth="137.0" text="Modpack" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Berlin Sans FB" size="21.0" />
+                  <Font name="Berlin Sans FB" size="21.0"/>
                </font>
             </Label>
-            <JFXButton buttonType="RAISED" layoutX="38.0" layoutY="55.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="166.0" styleClass="play" stylesheets="@../css/main.css" text="MC-Eternal " textFill="WHITE" />
+            <JFXButton fx:id="modpacks" buttonType="RAISED" layoutX="38.0" layoutY="55.0" mnemonicParsing="false"
+                       prefHeight="44.0" prefWidth="166.0" styleClass="play" stylesheets="@../css/main.css"
+                       text="MC-Eternal " textFill="WHITE"/>
             <Separator layoutX="21.0" layoutY="121.0" prefWidth="200.0" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="135.0" prefHeight="29.0" prefWidth="137.0" text="Statistiques" textAlignment="CENTER" textFill="WHITE">
                <font>

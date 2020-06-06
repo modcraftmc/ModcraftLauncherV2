@@ -322,6 +322,8 @@ public class DownloadTask extends Task<Void> {
         updateBar = new Thread(() -> {
             while (!finished)
                 this.updateProgress(bytesDownloaded, bytesTodownload);
+            Platform.runLater(() -> label.setText("Téléchargement en cours... " + (int) (this.progressProperty().getValue() * 100) + "%"
+                    + " fichier " + fileDownloaded + " sur " + toDownload.size()));
         });
         updateBar.start();
 
@@ -333,8 +335,6 @@ public class DownloadTask extends Task<Void> {
             cursor = new File(directory.toString() + "/" + path.replace("\\", "/") + object.get("filename").toString());
 
             if (cursor.getParentFile().exists()) {
-                Platform.runLater(()-> label.setText("Téléchargement en cours... " + (int)(this.progressProperty().getValue() * 100) + "%"
-                        + " fichier " + fileDownloaded + " sur " + toDownload.size()));
                 if (!cursor.exists()) {
                     download(cursor, object);
                 }

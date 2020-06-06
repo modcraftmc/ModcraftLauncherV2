@@ -2,6 +2,7 @@ package fr.modcraftmc.launcher.ui.controllers;
 
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
+import com.jfoenix.controls.JFXButton;
 import fr.modcraftmc.launcher.core.ModcraftLauncher;
 import fr.modcraftmc.launcher.core.servers.Server;
 import fr.modcraftmc.launcher.core.servers.ServerManager;
@@ -19,6 +20,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 
 public class MainController {
 
@@ -29,6 +35,7 @@ public class MainController {
 
     @FXML
     public Label servername;
+
     private final Server selectedServer = ServerManager.getServerList().get(0);
 
 
@@ -42,7 +49,19 @@ public class MainController {
     @FXML
     public Label stats_ping;
 
+    @FXML
+    public JFXButton modpacks;
+
     public void load() {
+
+        modpacks.setOnMouseClicked(event -> {
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://www.curseforge.com/minecraft/modpacks/minecraft-eternal"));
+                } catch (IOException | URISyntaxException ignored) {
+                }
+            }
+        });
 
 
         Image userimage = new Image("https://minotar.net/avatar/" + Authenticator.authInfos.getUsername());
@@ -55,6 +74,7 @@ public class MainController {
         username.setText(Authenticator.authInfos.getUsername());
 
         new Thread(serverPingerThread).start();
+
 
     }
 
