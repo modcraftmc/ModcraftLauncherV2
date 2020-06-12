@@ -3,3 +3,12 @@
     -fx-text-fill: white;
     -fx-font-size: 15px;
 }
+
+.container {
+    -fx-background-color: #181818;
+}
+
+.progress-bar > .bar {
+    -fx-background-insets: 1 1 2 1;
+    -fx-padding: 0.10em;
+}

@@ -18,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ma.forix.gameUpdater.GameUpdater;
 
 import java.awt.*;
 import java.io.IOException;
@@ -28,6 +27,7 @@ import java.net.URISyntaxException;
 public class ModcraftApplication extends Application {
 
     public static ResourcesManager resourcesManager = new ResourcesManager();
+
     public static String statusDiscord = "Sur le launcher";
     public static int players = 0;
     public static int maxplayers = 0;
@@ -48,17 +48,18 @@ public class ModcraftApplication extends Application {
     public static ModcraftApplication instance;
 
     public static MainController mainController;
+    public static LoginController logincontroller;
     public static OptionsController optionsController;
+
     public static boolean mainLoaded = false;
 
 
     @Override
     public void start(Stage stage) throws Exception {
         instance = this;
-
         window = stage;
 
-        GameUpdater.checkServer();
+        //GameUpdater.checkServer();
 
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setTitle(Constants.TITLE);
@@ -66,7 +67,7 @@ public class ModcraftApplication extends Application {
 
         loader = new FXMLLoader(resourcesManager.getResource("login.fxml"));
         login = loader.load();
-        LoginController logincontroller = loader.getController();
+        logincontroller = loader.getController();
         logincontroller.setup();
 
         logincontroller.keepLogin.setSelected(ModcraftLauncher.settingsManager.getSettings().keepLogin);
@@ -170,6 +171,7 @@ public class ModcraftApplication extends Application {
     }
 
     public void switchToLogin() {
+        logincontroller.setup();
         loginScene.getStylesheets().add(resourcesManager.getResource("global.css").toExternalForm());
         loginScene.setFill(Color.TRANSPARENT);
         window.setScene(loginScene);

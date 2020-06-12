@@ -1,5 +1,5 @@
 .container {
-    -fx-background-color: #181818;
+    -fx-background-image: url("http://v1.modcraftmc.fr/dl/background.png");
 }
 .dialog-pane{
     -fx-border-color:#181818;

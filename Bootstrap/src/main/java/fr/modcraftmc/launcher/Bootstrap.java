@@ -27,16 +27,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import static javafx.scene.input.MouseEvent.MOUSE_DRAGGED;
+import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
+
 public class Bootstrap extends Application {
 
     public final static Logger LOGGER = LoggerFactory.getLogger("ModcraftMC-Bootstrap");
 
     public static MaintenanceManager maintenanceManager = new MaintenanceManager();
 
+    private double sx = 0, sy = 0;
+
 
     private static final ProgressBar progressBar = new ProgressBar();
     public static Stage stage;
 
+    public static void doUpdate() {
+
+        GameUpdater.setToDownload(EnumModcraft.BOOTSTRAP);
+        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", FilesManager.LAUNCHER_PATH, progressBar, new Label());
+        gameUpdater.setDeleter(false);
+        gameUpdater.updater().setOnSucceeded((event -> new Thread(Bootstrap::launchLauncher).start()));
+        gameUpdater.start();
+
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -54,16 +68,13 @@ public class Bootstrap extends Application {
         LOGGER.info("Java architecture : " + JavaUtils.getArchitecture());
         LOGGER.info("Java version : " + JavaUtils.getVersion());
         Bootstrap.stage = stage;
-        stage.initStyle(StageStyle.DECORATED);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("welcome.fxml"));
-        Parent welcome = loader.load();
 
-        Scene scene = new Scene(welcome);
-        stage.setScene(scene);
-        stage.show();
-
-        //downloader();
+        if (FilesManager.OPTIONS_PATH.exists() && FilesManager.OPTIONS_PATH.isFile()) {
+            downloader();
+        } else {
+            welcome();
+        }
 
     }
 
@@ -102,17 +113,35 @@ public class Bootstrap extends Application {
 
     public static void run() {
 
-         doUpdate();
+        doUpdate();
 
     }
 
-    public static void doUpdate() {
+    public void welcome() {
 
-        GameUpdater.setToDownload(EnumModcraft.LAUNCHER);
-        GameUpdater gameUpdater = new GameUpdater("http://v1.modcraftmc.fr:100/beta/", FilesManager.LAUNCHER_PATH, progressBar, new Label());
-        gameUpdater.setDeleter(false);
-        gameUpdater.updater().setOnSucceeded((event -> new Thread(Bootstrap::launchLauncher).start()));
-        gameUpdater.start();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("favicon.png")));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("welcome.fxml"));
+        Parent welcome = null;
+        try {
+            welcome = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scene scene = new Scene(welcome);
+        stage.setScene(scene);
+        stage.show();
+
+        stage.addEventFilter(MOUSE_PRESSED, e -> {
+            sx = e.getScreenX() - stage.getX();
+            sy = e.getScreenY() - stage.getY();
+        });
+        stage.addEventFilter(MOUSE_DRAGGED, e -> {
+            stage.setX(e.getScreenX() - sx);
+            stage.setY(e.getScreenY() - sy);
+        });
 
     }
 

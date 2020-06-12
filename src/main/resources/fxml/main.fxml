@@ -63,6 +63,7 @@
                   <Image url="https://minotar.net/avatar/manugame_/128" />
                </image>
             </ImageView>
+            <Label layoutX="80.0" layoutY="105.0" onMouseReleased="#logout" text="Se déconnecter" textFill="#c6c4c4"/>
          </children>
       </Pane>
       <JFXButton layoutX="747.0" layoutY="479.0" mnemonicParsing="false" onMouseReleased="#toGoSettings" prefHeight="51.0" prefWidth="241.0" styleClass="play" stylesheets="@../css/main.css" text="Paramètres" textFill="WHITE" />

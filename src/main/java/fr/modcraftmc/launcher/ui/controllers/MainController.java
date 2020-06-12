@@ -54,6 +54,7 @@ public class MainController {
 
     public void load() {
 
+
         modpacks.setOnMouseClicked(event -> {
             if (Desktop.isDesktopSupported()) {
                 try {
@@ -86,6 +87,14 @@ public class MainController {
         close.setResetOnFinished(true);
         close.play();
         close.setOnFinished(event -> System.exit(0));
+    }
+
+    public void logout() {
+        Authenticator.authInfos = null;
+        ModcraftLauncher.settingsManager.getSettings().accesToken = "";
+        ModcraftLauncher.settingsManager.save();
+        ModcraftApplication.instance.switchToLogin();
+
     }
 
     public void play() {

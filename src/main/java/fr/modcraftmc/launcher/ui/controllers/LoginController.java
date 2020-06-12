@@ -15,13 +15,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-import java.util.concurrent.atomic.AtomicReference;
-
-import static javafx.scene.input.MouseEvent.MOUSE_DRAGGED;
-import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class LoginController {
 
@@ -59,10 +53,9 @@ public class LoginController {
 
     public void setup() {
 
-        drag.setFill(Color.TRANSPARENT);
-        AtomicReference<Double> sx = new AtomicReference<>((double) 0), sy = new AtomicReference<>((double) 0);
-        drag.addEventFilter(MOUSE_PRESSED, e -> { sx.set(e.getScreenX() - ModcraftApplication.window.getX()); sy.set(e.getScreenY() - ModcraftApplication.window.getY()); });
-        drag.addEventFilter(MOUSE_DRAGGED, e -> { ModcraftApplication.window.setX(e.getScreenX() - sx.get()); ModcraftApplication.window.setY(e.getScreenY() - sy.get()); });
+        emailField.clear();
+        passwordField.clear();
+        changeState(false);
 
     }
 
