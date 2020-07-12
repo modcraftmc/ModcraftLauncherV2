@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+
     }
 
     repositories {
@@ -16,7 +16,6 @@ plugins {
 
 compileJava.options.encoding = 'UTF-8'
 
-apply plugin: 'javafx-gradle-plugin'
 
 group 'fr.modcraftmc.launcher'
 version ''
@@ -63,13 +62,4 @@ jar {
     }
 
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it)}
-}
-
-jfx {
-    // minimal requirement for jfxJar-task
-    mainClass = 'fr.modcraftmc.launcher.core.ModcraftLauncher'
-    version '1'
-
-    // minimal requirement for jfxNative-task
-    vendor = 'Modcraftmc'
 }
