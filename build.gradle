@@ -30,6 +30,9 @@ repositories {
     maven { url "https://jitpack.io" }
     maven { url "http://wytrem.github.io/maven/" }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url("https://raw.githubusercontent.com/modcraftmc/ModcraftMaven/master/") }
+    maven { url("https://raw.githubusercontent.com/modcraftmc/DeadBushUnpowered/repository/") }
+
     jcenter()
 }
 
@@ -41,13 +44,12 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.6'
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
     compile project(':Common')
-    compile files('libs/openauth-1.0.4.jar')
-    compile files('libs/openlauncherlib-3.1.0-FLOWARGVERSION.jar')
-    compile files("libs/jfoenix-8.0.8.jar")
+    compile 'fr.modcraftmc:openauth:1.0.4'
+    compile 'fr.modcraftmc:openlauncherlib:3.1.0-FLOWARGVERSION'
+    compile 'fr.modcraftmc:jfoenix:8.0.8'
     compile 'com.azuriom:azauth:1.0-SNAPSHOT'
 
     compile 'club.minnced:discord-webhooks:0.3.1'
-    compile files('libs/jshortcut-0.4.jar')
 
     compile group: 'org.json', name: 'json', version: '20190722'
     compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
